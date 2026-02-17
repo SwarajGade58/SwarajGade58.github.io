@@ -1,41 +1,167 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Swaraj Gade | Civil Engineer</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body{font-family:Arial,sans-serif;background:#f4f6f9;margin:0;padding:0;}
-        header{background:#0f172a;color:white;text-align:center;padding:40px;}
-        section{background:white;margin:20px;padding:30px;border-radius:10px;box-shadow:0 5px 15px rgba(0,0,0,0.1);}
-        h2{border-bottom:2px solid #0f172a;padding-bottom:5px;}
-        footer{background:#0f172a;color:white;text-align:center;padding:15px;}
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Swaraj Gade | Civil Engineer</title>
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background: #ffffff; /* white background */
+        color: #1a1a1a;
+    }
+
+    header {
+        background: #0f172a; /* dark blue header */
+        color: #fff;
+        text-align: center;
+        padding: 50px 20px;
+    }
+
+    header h1 { font-size: 36px; margin-bottom: 10px; }
+    header p { font-size: 18px; color: #9ca3af; }
+
+    .container { width: 90%; max-width: 1000px; margin: 30px auto; }
+
+    /* Hero Photo */
+    .hero-photo { display:flex; justify-content:center; margin-bottom:30px; }
+    .hero-photo img {
+        width:160px;
+        height:160px;
+        border-radius:50%;
+        border:4px solid #0f172a;
+        transition: transform 0.3s;
+    }
+    .hero-photo img:hover { transform: scale(1.05); }
+
+    section {
+        background: #f9fafb;
+        margin-bottom: 25px;
+        padding: 25px 30px;
+        border-radius: 12px;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+    section:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+    }
+
+    h2 {
+        color: #0f172a;
+        border-bottom: 3px solid #0f172a;
+        display: inline-block;
+        padding-bottom: 5px;
+        margin-bottom: 15px;
+    }
+
+    .skills, .projects {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .skills div, .projects div {
+        flex: 1 1 45%;
+        margin: 8px;
+        background: #0f172a;
+        color: white;
+        padding: 8px 12px;
+        border-radius: 6px;
+        font-size: 14px;
+        text-align: center;
+        transition: background 0.3s;
+    }
+    .skills div:hover, .projects div:hover { background: #1e3a8a; }
+
+    .resume-btn {
+        display: inline-block;
+        margin-top: 15px;
+        padding: 10px 22px;
+        background: #0f172a;
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+        font-weight: bold;
+        transition: background 0.3s;
+        pointer-events: none; /* disabled until you add resume PDF */
+        opacity: 0.6;
+    }
+
+    .resume-btn:hover { background: #1e3a8a; }
+
+    footer {
+        background: #0f172a;
+        color: white;
+        text-align: center;
+        padding: 15px;
+        margin-top: 30px;
+    }
+
+    @media(max-width:600px){
+        header h1 { font-size:28px; }
+        header p { font-size:16px; }
+        .skills div, .projects div { flex: 1 1 100%; }
+    }
+</style>
 </head>
 <body>
+
 <header>
     <h1>Swaraj Gade</h1>
     <p>BE Civil Engineering Student | SPPU</p>
 </header>
-<section>
-    <h2>About Me</h2>
-    <p>Motivated Civil Engineering student with diploma background, passionate about structural design, construction management and site execution.</p>
-</section>
-<section>
-    <h2>Education</h2>
-    <p>BE Civil Engineering – SPPU (Pursuing)</p>
-    <p>Diploma in Civil Engineering</p>
-</section>
-<section>
-    <h2>Skills</h2>
-    <p>AutoCAD | ETABS | STAAD Pro | Quantity Surveying | Site Supervision</p>
-</section>
-<section>
-    <h2>Contact</h2>
-    <p>Email: yourmail@gmail.com</p>
-    <p>Phone: +91-XXXXXXXXXX</p>
-</section>
+
+<div class="container">
+
+    <div class="hero-photo">
+        <img src="https://g.co/gemini/share/d636f52ce9e5" alt="Swaraj Gade Photo">
+    </div>
+
+    <section>
+        <h2>About Me</h2>
+        <p>Motivated Civil Engineering student with diploma background, passionate about structural design, construction management, and site execution. Seeking internship or placement opportunities in civil engineering.</p>
+    </section>
+
+    <section>
+        <h2>Education</h2>
+        <p><strong>BE Civil Engineering</strong> – SPPU (Pursuing)</p>
+        <p><strong>Diploma in Civil Engineering</strong></p>
+    </section>
+
+    <section>
+        <h2>Skills</h2>
+        <div class="skills">
+            <div>AutoCAD</div>
+            <div>ETABS</div>
+            <div>STAAD Pro</div>
+            <div>Quantity Surveying</div>
+            <div>Site Supervision</div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Projects</h2>
+        <div class="projects">
+            <div>Residential Building Planning</div>
+            <div>Concrete Mix Design</div>
+            <div>Quantity Estimation G+2</div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Contact</h2>
+        <p>Email: <a href="mailto:swarajgade58@gmail.com">swarajgade58@gmail.com</a></p>
+        <p>Phone: +91-8177918199</p>
+        <p>LinkedIn: <a href="https://www.linkedin.com/in/swaraj-gade-4481b83a5?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" target="_blank">Swaraj Gade LinkedIn</a></p>
+        <a class="resume-btn">Download Resume (Coming Soon)</a>
+    </section>
+
+</div>
+
 <footer>
-    © 2026 Swaraj Gade
+    © 2026 Swaraj Gade | Civil Engineer
 </footer>
+
 </body>
 </html>
