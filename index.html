@@ -37,7 +37,7 @@ overflow-x:hidden;
 transition:0.4s;
 }
 
-/* Blueprint Background */
+/* Animated Blueprint Background */
 body::before{
 content:"";
 position:fixed;
@@ -54,8 +54,8 @@ z-index:-1;
 }
 
 @keyframes moveGrid{
-0%{background-position:0 0;}
-100%{background-position:40px 40px;}
+0%{background-position:0 0,0 0;}
+100%{background-position:40px 40px,40px 40px;}
 }
 
 /* NAV */
@@ -72,7 +72,9 @@ backdrop-filter:blur(10px);
 z-index:1000;
 }
 
-nav h2{color:var(--accent);}
+nav h2{
+color:var(--accent);
+}
 
 nav ul{
 display:flex;
@@ -98,7 +100,7 @@ font-size:20px;
 color:var(--accent);
 }
 
-/* HERO */
+/* HERO with Parallax */
 .hero{
 height:100vh;
 background:url('https://images.unsplash.com/photo-1503387762-592deb58ef4e');
@@ -118,6 +120,12 @@ font-size:55px;
 color:var(--accent);
 }
 
+.hero p{
+margin-top:10px;
+font-size:20px;
+height:28px;
+}
+
 .hero button{
 margin-top:30px;
 padding:14px 40px;
@@ -130,7 +138,9 @@ cursor:pointer;
 box-shadow:0 10px 25px rgba(56,189,248,0.4);
 transition:0.3s;
 }
-.hero button:hover{transform:scale(1.07);}
+.hero button:hover{
+transform:scale(1.07);
+}
 
 /* Sections */
 section{
@@ -161,37 +171,27 @@ align-items:center;
 }
 
 .about img{
-width:300px;
-height:350px;
+width:280px;
+height:320px;
 object-fit:cover;
 border-radius:20px;
 box-shadow:0 15px 50px rgba(56,189,248,0.5);
 }
 
-.resume-btn{
+.about p{flex:1;}
+
+.skills{
+display:flex;
+flex-wrap:wrap;
+gap:12px;
 margin-top:20px;
-padding:10px 25px;
-border:none;
-border-radius:30px;
-background:var(--accent);
-color:#0f172a;
-font-weight:600;
-cursor:pointer;
 }
-
-/* SKILLS */
-.skills-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-gap:20px;
-}
-
-.skill-card{
+.skills span{
 background:var(--card);
-padding:20px;
-border-radius:15px;
-text-align:center;
+padding:8px 15px;
+border-radius:20px;
 border:1px solid var(--accent);
+font-size:14px;
 }
 
 /* PROJECTS */
@@ -214,11 +214,14 @@ object-fit:cover;
 transition:0.4s;
 }
 
-.project-card:hover img{transform:scale(1.1);}
+.project-card:hover img{
+transform:scale(1.1);
+}
 
 .project-overlay{
 position:absolute;
 bottom:0;
+left:0;
 width:100%;
 background:rgba(0,0,0,0.7);
 color:white;
@@ -239,7 +242,6 @@ justify-content:center;
 gap:25px;
 margin-top:20px;
 }
-
 .icon{
 width:55px;
 height:55px;
@@ -268,7 +270,11 @@ margin-top:50px;
 
 /* MOBILE */
 @media(max-width:768px){
-.menu-toggle{display:block;}
+
+.menu-toggle{
+display:block;
+}
+
 nav ul{
 position:absolute;
 top:70px;
@@ -279,9 +285,19 @@ width:200px;
 padding:20px;
 display:none;
 }
-nav ul.active{display:flex;}
-.about{flex-direction:column;text-align:center;}
-.hero h1{font-size:36px;}
+
+nav ul.active{
+display:flex;
+}
+
+.about{
+flex-direction:column;
+text-align:center;
+}
+
+.hero h1{
+font-size:36px;
+}
 }
 </style>
 </head>
@@ -290,44 +306,40 @@ nav ul.active{display:flex;}
 
 <nav>
 <h2>Swaraj Vikas Gade</h2>
+
 <div>
 <i class="fas fa-moon toggle-mode" onclick="toggleMode()"></i>
 <i class="fas fa-bars menu-toggle" onclick="toggleMenu()"></i>
 </div>
+
 <ul id="navLinks">
 <li><a href="#about">About</a></li>
-<li><a href="#skills">Skills</a></li>
-<li><a href="#projects">Engineering Works</a></li>
+<li><a href="#projects">Projects</a></li>
 <li><a href="#contact">Contact</a></li>
 </ul>
 </nav>
 
 <div class="hero">
 <h1>Swaraj Vikas Gade</h1>
+<p id="typing"></p>
 <button onclick="document.getElementById('about').scrollIntoView()">Explore</button>
 </div>
 
 <section id="about">
 <h2 class="section-title">About Me</h2>
 <div class="about">
-<img src="https://images.unsplash.com/photo-1603415526960-f8f0a4c03d4a">
-<div>
+<img src="https://i.ibb.co/fzDzYpDF/798095-DE-7-E1-F-4385-9-E59-3382-BF37015-D.png">
 <p>
-I am a confident and highly motivated Civil Engineering student pursuing my Bachelor's degree. I am a quick learner and always eager to explore new tools and technologies. I have basic working knowledge of AutoCAD and a strong interest in structural planning and estimation.
+Civil Engineer with Diploma background and currently pursuing BE at DY Patil School of Engineering (SPPU).
 </p>
 </div>
-</div>
-</section>
-
-<section id="skills">
-<h2 class="section-title">My Skills</h2>
-<div class="skills-grid">
-<div class="skill-card">AutoCAD</div>
-<div class="skill-card">Revit</div>
-<div class="skill-card">Estimation</div>
-<div class="skill-card">Structural Basics</div>
-<div class="skill-card">MS Excel</div>
-<div class="skill-card">Site Supervision</div>
+<div class="skills">
+<span>AutoCAD</span>
+<span>Revit</span>
+<span>Structural Design</span>
+<span>Site Management</span>
+<span>MS Excel</span>
+<span>Quantity Estimation</span>
 </div>
 </section>
 
@@ -336,18 +348,23 @@ I am a confident and highly motivated Civil Engineering student pursuing my Bach
 <div class="projects">
 
 <div class="project-card">
-<img src="https://images.unsplash.com/photo-1581093458791-9f3c3900df3f">
-<div class="project-overlay">2D Residential Floor Plan Drafting</div>
-</div>
-
-<div class="project-card">
-<img src="https://images.unsplash.com/photo-1590496793929-36417d3117de">
-<div class="project-overlay">Bus Terminal Structural Concept</div>
-</div>
-
-<div class="project-card">
 <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c">
-<div class="project-overlay">Modern 3D Indian House Design</div>
+<div class="project-overlay">2D House Floor Plan</div>
+</div>
+
+<div class="project-card">
+<img src="https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6">
+<div class="project-overlay">3D Indian House Render</div>
+</div>
+
+<div class="project-card">
+<img src="https://images.unsplash.com/photo-1501594907352-04cda38ebc29">
+<div class="project-overlay">Bridge Structure</div>
+</div>
+
+<div class="project-card">
+<img src="https://images.unsplash.com/photo-1494526585095-c41746248156">
+<div class="project-overlay">Modern Residential House</div>
 </div>
 
 </div>
@@ -359,6 +376,7 @@ I am a confident and highly motivated Civil Engineering student pursuing my Bach
 <a href="tel:+918177918199" class="icon"><i class="fas fa-phone"></i></a>
 <a href="https://wa.me/918177918199" target="_blank" class="icon"><i class="fab fa-whatsapp"></i></a>
 <a href="mailto:swarajgade58@gmail.com" class="icon"><i class="fas fa-envelope"></i></a>
+<a href="https://www.linkedin.com/" target="_blank" class="icon"><i class="fab fa-linkedin-in"></i></a>
 </div>
 </section>
 
@@ -367,6 +385,27 @@ I am a confident and highly motivated Civil Engineering student pursuing my Bach
 </footer>
 
 <script>
+/* Typing */
+const words=["Civil Engineer","Structural Enthusiast","Site Engineer"];
+let wordIndex=0,charIndex=0,isDeleting=false;
+const typing=document.getElementById("typing");
+
+function typeEffect(){
+const current=words[wordIndex];
+if(!isDeleting){
+typing.textContent=current.substring(0,charIndex+1);
+charIndex++;
+if(charIndex===current.length){setTimeout(()=>isDeleting=true,1000);}
+}else{
+typing.textContent=current.substring(0,charIndex-1);
+charIndex--;
+if(charIndex===0){isDeleting=false;wordIndex=(wordIndex+1)%words.length;}
+}
+setTimeout(typeEffect,isDeleting?50:100);
+}
+typeEffect();
+
+/* Scroll Fade In/Out */
 const sections=document.querySelectorAll("section");
 function reveal(){
 sections.forEach(sec=>{
@@ -381,10 +420,12 @@ sec.classList.remove("show");
 window.addEventListener("scroll",reveal);
 reveal();
 
+/* Dark Mode */
 function toggleMode(){
 document.body.classList.toggle("light");
 }
 
+/* Mobile Menu */
 function toggleMenu(){
 document.getElementById("navLinks").classList.toggle("active");
 }
