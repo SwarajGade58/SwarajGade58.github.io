@@ -37,7 +37,7 @@ overflow-x:hidden;
 transition:0.4s;
 }
 
-/* Animated Blueprint Background */
+/* Blueprint Background */
 body::before{
 content:"";
 position:fixed;
@@ -54,8 +54,8 @@ z-index:-1;
 }
 
 @keyframes moveGrid{
-0%{background-position:0 0,0 0;}
-100%{background-position:40px 40px,40px 40px;}
+0%{background-position:0 0;}
+100%{background-position:40px 40px;}
 }
 
 /* NAV */
@@ -72,14 +72,12 @@ backdrop-filter:blur(10px);
 z-index:1000;
 }
 
-nav h2{
-color:var(--accent);
-}
+nav h2{color:var(--accent);}
 
 nav ul{
 display:flex;
-list-style:none;
 gap:25px;
+list-style:none;
 }
 
 nav a{
@@ -98,12 +96,13 @@ cursor:pointer;
 cursor:pointer;
 font-size:20px;
 color:var(--accent);
+margin-right:15px;
 }
 
-/* HERO with Parallax */
+/* HERO */
 .hero{
 height:100vh;
-background:url('https://images.unsplash.com/photo-1503387762-592deb58ef4e');
+background:url('/mnt/data/E136C109-43BA-4143-B1CD-5D842D4FCB97.jpeg');
 background-size:cover;
 background-position:center;
 background-attachment:fixed;
@@ -112,18 +111,11 @@ flex-direction:column;
 justify-content:center;
 align-items:center;
 text-align:center;
-padding:20px;
 }
 
 .hero h1{
 font-size:55px;
 color:var(--accent);
-}
-
-.hero p{
-margin-top:10px;
-font-size:20px;
-height:28px;
 }
 
 .hero button{
@@ -163,38 +155,48 @@ color:var(--accent);
 }
 
 /* ABOUT */
-.about{
+.about-container{
 display:flex;
 gap:40px;
 flex-wrap:wrap;
 align-items:center;
 }
 
-.about img{
-width:280px;
-height:320px;
+.about-container img{
+width:300px;
+height:350px;
 object-fit:cover;
 border-radius:20px;
 box-shadow:0 15px 50px rgba(56,189,248,0.5);
 }
 
-.about p{flex:1;}
-
-.skills{
-display:flex;
-flex-wrap:wrap;
-gap:12px;
+.resume-btn{
+display:inline-block;
 margin-top:20px;
-}
-.skills span{
-background:var(--card);
-padding:8px 15px;
-border-radius:20px;
-border:1px solid var(--accent);
-font-size:14px;
+padding:10px 25px;
+background:var(--accent);
+color:#0f172a;
+border-radius:30px;
+text-decoration:none;
+font-weight:600;
 }
 
-/* PROJECTS */
+/* SKILLS */
+.skills-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+gap:20px;
+}
+
+.skill-card{
+background:var(--card);
+padding:20px;
+border-radius:15px;
+text-align:center;
+border:1px solid var(--accent);
+}
+
+/* PROJECT GRID */
 .projects{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
@@ -221,7 +223,6 @@ transform:scale(1.1);
 .project-overlay{
 position:absolute;
 bottom:0;
-left:0;
 width:100%;
 background:rgba(0,0,0,0.7);
 color:white;
@@ -242,6 +243,7 @@ justify-content:center;
 gap:25px;
 margin-top:20px;
 }
+
 .icon{
 width:55px;
 height:55px;
@@ -254,27 +256,16 @@ color:var(--accent);
 font-size:22px;
 transition:0.3s;
 }
+
 .icon:hover{
 background:var(--accent);
 color:#0f172a;
 transform:scale(1.1);
 }
 
-/* FOOTER */
-footer{
-text-align:center;
-padding:30px;
-background:#020617;
-margin-top:50px;
-}
-
 /* MOBILE */
 @media(max-width:768px){
-
-.menu-toggle{
-display:block;
-}
-
+.menu-toggle{display:block;}
 nav ul{
 position:absolute;
 top:70px;
@@ -285,19 +276,8 @@ width:200px;
 padding:20px;
 display:none;
 }
-
-nav ul.active{
-display:flex;
-}
-
-.about{
-flex-direction:column;
-text-align:center;
-}
-
-.hero h1{
-font-size:36px;
-}
+nav ul.active{display:flex;}
+.about-container{flex-direction:column;text-align:center;}
 }
 </style>
 </head>
@@ -306,67 +286,79 @@ font-size:36px;
 
 <nav>
 <h2>Swaraj Vikas Gade</h2>
-
 <div>
 <i class="fas fa-moon toggle-mode" onclick="toggleMode()"></i>
 <i class="fas fa-bars menu-toggle" onclick="toggleMenu()"></i>
 </div>
-
 <ul id="navLinks">
 <li><a href="#about">About</a></li>
-<li><a href="#projects">Projects</a></li>
+<li><a href="#skills">Skills</a></li>
+<li><a href="#design2d">2D Designs</a></li>
+<li><a href="#design3d">3D Renders</a></li>
 <li><a href="#contact">Contact</a></li>
 </ul>
 </nav>
 
 <div class="hero">
 <h1>Swaraj Vikas Gade</h1>
-<p id="typing"></p>
 <button onclick="document.getElementById('about').scrollIntoView()">Explore</button>
 </div>
 
 <section id="about">
 <h2 class="section-title">About Me</h2>
-<div class="about">
-<img src="https://i.ibb.co/fzDzYpDF/798095-DE-7-E1-F-4385-9-E59-3382-BF37015-D.png">
+<div class="about-container">
+<img src="/mnt/data/42584D02-1B72-470E-A778-119DF060820B.jpeg">
+<div>
 <p>
-Civil Engineer with Diploma background and currently pursuing BE at DY Patil School of Engineering (SPPU).
+I am a confident and highly motivated Civil Engineering student currently pursuing my Bachelor’s degree at Savitribai Phule Pune University. With a diploma background in Civil Engineering, I have developed both practical site exposure and strong technical fundamentals.
+<br><br>
+I am a quick learner who is always eager to explore new concepts, tools, and technologies. I believe in doing every task with precision and professionalism.
+<br><br>
+I have working knowledge of basic AutoCAD and a good understanding of construction drawings, estimation fundamentals, and material planning.
+<br><br>
+My goal is to continuously upgrade my skills and grow into a technically sound and responsible civil engineer.
 </p>
+
+<a href="resume.jpg" target="_blank" class="resume-btn">View Resume</a>
+
 </div>
-<div class="skills">
-<span>AutoCAD</span>
-<span>Revit</span>
-<span>Structural Design</span>
-<span>Site Management</span>
-<span>MS Excel</span>
-<span>Quantity Estimation</span>
 </div>
 </section>
 
-<section id="projects">
-<h2 class="section-title">Engineering Works</h2>
+<section id="skills">
+<h2 class="section-title">My Skills</h2>
+<div class="skills-grid">
+<div class="skill-card">AutoCAD</div>
+<div class="skill-card">Revit</div>
+<div class="skill-card">Structural Basics</div>
+<div class="skill-card">Estimation</div>
+<div class="skill-card">MS Excel</div>
+<div class="skill-card">Site Management</div>
+</div>
+</section>
+
+<section id="design2d">
+<h2 class="section-title">2D House Designs</h2>
 <div class="projects">
-
 <div class="project-card">
-<img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c">
-<div class="project-overlay">2D House Floor Plan</div>
+<img src="/mnt/data/DDB9AF8B-C624-4E33-BABE-17D7BAF20C43.png">
+<div class="project-overlay">Residential 2D Floor Plan</div>
+</div>
+</div>
+</section>
+
+<section id="design3d">
+<h2 class="section-title">3D Engineering Renders</h2>
+<div class="projects">
+<div class="project-card">
+<img src="/mnt/data/E136C109-43BA-4143-B1CD-5D842D4FCB97.jpeg">
+<div class="project-overlay">MSRTC Bus Terminal Concept</div>
 </div>
 
 <div class="project-card">
-<img src="https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6">
-<div class="project-overlay">3D Indian House Render</div>
+<img src="/mnt/data/809E4692-9AA1-4E3D-956C-7AA1541D059A.jpeg">
+<div class="project-overlay">3D Residential Rendering</div>
 </div>
-
-<div class="project-card">
-<img src="https://images.unsplash.com/photo-1501594907352-04cda38ebc29">
-<div class="project-overlay">Bridge Structure</div>
-</div>
-
-<div class="project-card">
-<img src="https://images.unsplash.com/photo-1494526585095-c41746248156">
-<div class="project-overlay">Modern Residential House</div>
-</div>
-
 </div>
 </section>
 
@@ -376,56 +368,24 @@ Civil Engineer with Diploma background and currently pursuing BE at DY Patil Sch
 <a href="tel:+918177918199" class="icon"><i class="fas fa-phone"></i></a>
 <a href="https://wa.me/918177918199" target="_blank" class="icon"><i class="fab fa-whatsapp"></i></a>
 <a href="mailto:swarajgade58@gmail.com" class="icon"><i class="fas fa-envelope"></i></a>
-<a href="https://www.linkedin.com/" target="_blank" class="icon"><i class="fab fa-linkedin-in"></i></a>
 </div>
 </section>
 
-<footer>
-©️ 2026 Swaraj Vikas Gade | Civil Engineering Portfolio
-</footer>
-
 <script>
-/* Typing */
-const words=["Civil Engineer","Structural Enthusiast","Site Engineer"];
-let wordIndex=0,charIndex=0,isDeleting=false;
-const typing=document.getElementById("typing");
-
-function typeEffect(){
-const current=words[wordIndex];
-if(!isDeleting){
-typing.textContent=current.substring(0,charIndex+1);
-charIndex++;
-if(charIndex===current.length){setTimeout(()=>isDeleting=true,1000);}
-}else{
-typing.textContent=current.substring(0,charIndex-1);
-charIndex--;
-if(charIndex===0){isDeleting=false;wordIndex=(wordIndex+1)%words.length;}
-}
-setTimeout(typeEffect,isDeleting?50:100);
-}
-typeEffect();
-
-/* Scroll Fade In/Out */
 const sections=document.querySelectorAll("section");
 function reveal(){
 sections.forEach(sec=>{
 const rect=sec.getBoundingClientRect();
-if(rect.top<window.innerHeight-100 && rect.bottom>100){
-sec.classList.add("show");
-}else{
-sec.classList.remove("show");
-}
+if(rect.top<window.innerHeight-100){sec.classList.add("show");}
 });
 }
 window.addEventListener("scroll",reveal);
 reveal();
 
-/* Dark Mode */
 function toggleMode(){
 document.body.classList.toggle("light");
 }
 
-/* Mobile Menu */
 function toggleMenu(){
 document.getElementById("navLinks").classList.toggle("active");
 }
