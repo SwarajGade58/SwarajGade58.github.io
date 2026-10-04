@@ -2,69 +2,68 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-
-<title>Swaraj Vikas Gade | Civil Engineering Portfolio</title>
-
-<meta name="description"
-content="Swaraj Vikas Gade — Civil Engineering portfolio, site experience, surveying, AutoCAD, projects and academic work.">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#050607">
+<title>Swaraj Vikas Gade — Civil Engineering</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-
 :root{
-    --bg:#050607;
-    --panel:rgba(8,10,12,.88);
-    --panel2:rgba(18,20,23,.94);
+    --black:#050607;
+    --black2:#080a0c;
+    --white:#f5f7f6;
+    --muted:#969d9f;
+    --line:rgba(255,255,255,.12);
 
-    --white:#f4f4f1;
-    --muted:#a2a7aa;
-    --line:rgba(255,255,255,.13);
+    --red:#ff4538;
+    --red2:#ff766d;
 
-    --red:#ff4b3e;
-    --red2:#ff8077;
+    --yellow:#ffd34a;
+    --blue:#4ca3ff;
+    --green:#57dc91;
+    --orange:#ff914d;
 
-    --yellow:#ffd34d;
-
-    --blue:#4da3ff;
-
-    --green:#58d68d;
-
-    --orange:#ff9b4a;
-
-    --black:#030405;
+    --panel:rgba(8,10,12,.72);
+    --panel2:rgba(13,16,19,.88);
 }
 
 *{
     box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
 html{
     scroll-behavior:auto;
+    background:var(--black);
 }
 
 body{
-    margin:0;
-    background:var(--bg);
+    background:var(--black);
     color:var(--white);
     font-family:Inter,Arial,sans-serif;
     overflow-x:hidden;
 }
 
-a{
-    text-decoration:none;
-    color:inherit;
+button,a{
+    font:inherit;
 }
 
 button{
-    font:inherit;
+    border:0;
 }
+
+a{
+    color:inherit;
+    text-decoration:none;
+}
+
+/* =========================
+   WEBGL
+========================= */
 
 #webgl{
     position:fixed;
@@ -75,1092 +74,694 @@ button{
     display:block;
 }
 
-.vignette{
+.siteGlow{
     position:fixed;
     inset:0;
-    z-index:2;
     pointer-events:none;
-
+    z-index:1;
     background:
-    radial-gradient(
-        circle at 50% 45%,
-        transparent 30%,
-        rgba(0,0,0,.3) 75%,
-        rgba(0,0,0,.82) 100%
-    );
+        radial-gradient(circle at 50% 45%,transparent 0%,rgba(0,0,0,.08) 45%,rgba(0,0,0,.7) 100%);
 }
 
-.grain{
+.noise{
     position:fixed;
     inset:0;
-    z-index:3;
     pointer-events:none;
-    opacity:.045;
-
-    background-image:url(
-        "data:image/svg+xml,%3Csvg viewBox='0 0 180 180'
-        xmlns='http://www.w3.org/2000/svg'%3E
-        %3Cfilter id='n'%3E
-        %3CfeTurbulence type='fractalNoise'
-        baseFrequency='.8'
-        numOctaves='3'
-        stitchTiles='stitch'/%3E
-        %3C/filter%3E
-        %3Crect width='100%25'
-        height='100%25'
-        filter='url(%23n)'
-        opacity='.55'/%3E
-        %3C/svg%3E"
-    );
+    z-index:50;
+    opacity:.035;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
 }
-
 
 /* =========================
-   NAVIGATION
+   HEADER
 ========================= */
 
-nav{
+header{
     position:fixed;
     top:0;
     left:0;
     right:0;
-
-    height:72px;
-
-    z-index:20;
-
+    z-index:100;
+    height:78px;
+    padding:0 34px;
     display:flex;
     align-items:center;
     justify-content:space-between;
 
-    padding:0 4vw;
+    background:linear-gradient(
+        180deg,
+        rgba(4,5,6,.94),
+        rgba(4,5,6,.58),
+        transparent
+    );
 
-    border-bottom:1px solid rgba(255,255,255,.08);
-
-    background:
-        linear-gradient(
-            180deg,
-            rgba(3,4,5,.92),
-            rgba(3,4,5,.25)
-        );
-
-    backdrop-filter:blur(14px);
+    pointer-events:none;
 }
 
 .brand{
     display:flex;
     align-items:center;
-    gap:12px;
+    gap:14px;
+    pointer-events:auto;
+}
 
+.logo{
+    width:43px;
+    height:43px;
+    display:grid;
+    place-items:center;
+    border:1px solid var(--red);
+    color:white;
     font-family:"Space Grotesk";
     font-weight:700;
     letter-spacing:.08em;
+    position:relative;
 }
 
-.brandMark{
-    width:31px;
-    height:31px;
-
-    border:2px solid var(--red);
-
-    display:grid;
-    place-items:center;
-
-    font-size:11px;
+.logo:after{
+    content:"";
+    position:absolute;
+    width:7px;
+    height:7px;
+    right:-4px;
+    bottom:-4px;
+    background:var(--yellow);
 }
 
-.brand span{
-    color:#888;
-    font-size:10px;
+.brandText{
+    font-family:"Space Grotesk";
+    font-weight:700;
+    font-size:18px;
+    letter-spacing:.06em;
 }
 
-.navlinks{
+.brandText span{
+    color:#626a6c;
+    font-size:12px;
+    margin-left:5px;
+}
+
+nav{
     display:flex;
-    gap:24px;
+    gap:5px;
+    pointer-events:auto;
 }
 
-.navlinks a{
-    font-size:10px;
+.navBtn{
+    padding:9px 12px;
+    background:rgba(0,0,0,.25);
+    color:#8f9698;
+    font-size:9px;
     letter-spacing:.14em;
     text-transform:uppercase;
-
-    color:#a9abad;
-
-    transition:.25s;
+    cursor:pointer;
+    transition:.3s;
+    border:1px solid transparent;
 }
 
-.navlinks a:hover{
+.navBtn:hover,
+.navBtn.active{
     color:#fff;
+    border-color:rgba(255,255,255,.12);
+    background:rgba(255,255,255,.055);
 }
 
+/* =========================
+   HUD
+========================= */
+
+.hud{
+    position:fixed;
+    z-index:90;
+    left:28px;
+    top:50%;
+    transform:translateY(-50%);
+    display:flex;
+    flex-direction:column;
+    gap:9px;
+    pointer-events:none;
+}
+
+.hudLine{
+    width:1px;
+    height:210px;
+    background:linear-gradient(
+        transparent,
+        rgba(255,255,255,.22),
+        transparent
+    );
+    position:absolute;
+    left:4px;
+    top:10px;
+}
+
+.hudItem{
+    display:flex;
+    align-items:center;
+    gap:11px;
+    opacity:.35;
+    transition:.4s;
+}
+
+.hudDot{
+    width:9px;
+    height:9px;
+    border:1px solid #747b7d;
+    background:#070809;
+    position:relative;
+    z-index:2;
+}
+
+.hudItem.active{
+    opacity:1;
+}
+
+.hudItem.active .hudDot{
+    border-color:var(--red);
+    background:var(--red);
+    box-shadow:0 0 16px rgba(255,69,56,.7);
+}
+
+.hudText{
+    font-size:8px;
+    letter-spacing:.14em;
+    color:#969d9f;
+    white-space:nowrap;
+}
 
 /* =========================
    PROGRESS
 ========================= */
 
-.progressWrap{
+.progress{
     position:fixed;
-
-    top:71px;
-    left:0;
-    right:0;
-
-    height:2px;
-
-    background:rgba(255,255,255,.06);
-
-    z-index:21;
+    z-index:100;
+    right:25px;
+    top:50%;
+    transform:translateY(-50%);
+    width:2px;
+    height:180px;
+    background:rgba(255,255,255,.1);
 }
 
-.progressBar{
-    height:100%;
-    width:0;
-
-    background:
-        linear-gradient(
-            90deg,
-            var(--red),
-            var(--yellow),
-            var(--blue),
-            var(--green)
-        );
+.progressFill{
+    width:100%;
+    height:0%;
+    background:linear-gradient(
+        180deg,
+        var(--red),
+        var(--yellow),
+        var(--blue),
+        var(--green)
+    );
 }
-
 
 /* =========================
-   WORLD / SECTIONS
+   SCROLL WORLD
 ========================= */
 
 .scrollWorld{
     position:relative;
     z-index:5;
-
-    height:1800vh;
 }
 
 .scene{
-    height:100vh;
-
     position:relative;
-
-    display:flex;
-    align-items:center;
-
-    padding:80px 6vw;
+    min-height:100vh;
+    height:100vh;
+    pointer-events:none;
 }
 
 .sceneContent{
-    width:min(520px,90vw);
-    pointer-events:auto;
-}
-
-.sceneContent.left{
-    margin-right:auto;
+    position:absolute;
+    left:8vw;
+    top:50%;
+    transform:translateY(-50%);
+    width:min(510px,43vw);
+    pointer-events:none;
 }
 
 .sceneContent.right{
-    margin-left:auto;
+    left:auto;
+    right:8vw;
 }
 
-
-/* =========================
-   HERO
-========================= */
-
-.hero{
-    height:100vh;
-
-    display:flex;
-    align-items:flex-end;
-
-    padding-bottom:12vh;
+.sceneContent.center{
+    left:50%;
+    transform:translate(-50%,-50%);
 }
 
-.kicker,
-.sectionTag{
-    font-size:9px;
-    letter-spacing:.22em;
-    text-transform:uppercase;
+.sceneCard{
+    position:relative;
+    pointer-events:auto;
+    padding:30px 32px;
+    border:1px solid rgba(255,255,255,.11);
+    background:
+        linear-gradient(
+            135deg,
+            rgba(16,19,22,.86),
+            rgba(4,6,8,.72)
+        );
+    backdrop-filter:blur(22px);
+    -webkit-backdrop-filter:blur(22px);
+    box-shadow:
+        0 30px 100px rgba(0,0,0,.5),
+        inset 0 1px 0 rgba(255,255,255,.035);
 
-    color:#909699;
+    opacity:0;
+    transform:translateY(45px) scale(.97);
 }
 
-.kicker{
-    color:var(--red);
-    font-weight:700;
+.sceneCard:before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:0;
+    bottom:0;
+    width:3px;
+    background:var(--red);
 }
 
-.hero h1{
-    font-size:clamp(58px,10vw,150px);
-
-    line-height:.82;
-
-    letter-spacing:-.07em;
-
-    max-width:950px;
-}
-
-.hero h1 span{
-    display:block;
-
-    color:transparent;
-
-    -webkit-text-stroke:
-        1px rgba(255,255,255,.55);
-}
-
-.lead{
-    font-size:15px;
-    line-height:1.8;
-
-    color:#c0c4c5;
-
-    max-width:610px;
-}
-
-.hero .lead{
-    max-width:570px;
-    margin:28px 0;
-}
-
-.heroMeta{
-    display:flex;
-    gap:9px;
-    flex-wrap:wrap;
-}
+.sceneCard.blue:before{background:var(--blue);}
+.sceneCard.yellow:before{background:var(--yellow);}
+.sceneCard.green:before{background:var(--green);}
 
 .tag{
-    padding:9px 12px;
-
-    border:
-        1px solid rgba(255,255,255,.12);
-
-    background:
-        rgba(5,6,7,.7);
-
+    display:flex;
+    align-items:center;
+    gap:9px;
+    color:#8d9597;
     font-size:9px;
-
-    letter-spacing:.1em;
-
+    letter-spacing:.2em;
     text-transform:uppercase;
 }
 
-.tag.red{
-    border-color:rgba(255,75,62,.4);
-    color:var(--red2);
+.tag i{
+    width:6px;
+    height:6px;
+    background:var(--red);
+    box-shadow:0 0 12px rgba(255,69,56,.7);
 }
 
-.tag.yellow{
-    border-color:rgba(255,211,77,.35);
-    color:var(--yellow);
+h1,h2,h3{
+    font-family:"Space Grotesk";
 }
 
-.tag.blue{
-    border-color:rgba(77,163,255,.35);
-    color:#9dccff;
+.heroTitle{
+    margin-top:17px;
+    font-size:clamp(54px,7vw,105px);
+    line-height:.87;
+    letter-spacing:-.06em;
 }
 
-.tag.green{
-    border-color:rgba(88,214,141,.35);
-    color:#a9f3c5;
+.heroTitle span{
+    display:block;
 }
 
-.heroBtns{
-    display:flex;
+.heroTitle .red{
+    color:var(--red);
+}
 
-    gap:10px;
-
-    flex-wrap:wrap;
-
+.heroSub{
     margin-top:25px;
+    color:#aab0b1;
+    font-size:14px;
+    line-height:1.8;
+    max-width:470px;
 }
 
-
-/* =========================
-   BUTTONS
-========================= */
+.actions{
+    margin-top:28px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+}
 
 .btn{
+    min-height:43px;
+    padding:0 17px;
     display:inline-flex;
-
     align-items:center;
     justify-content:center;
-
     gap:9px;
-
-    padding:13px 17px;
-
-    border:
-        1px solid rgba(255,255,255,.16);
-
-    background:
-        rgba(8,10,12,.76);
-
-    color:#fff;
-
-    font-size:10px;
-
-    font-weight:800;
-
-    letter-spacing:.12em;
-
+    border:1px solid rgba(255,255,255,.15);
+    color:#e9ebea;
+    background:rgba(255,255,255,.035);
+    font-size:9px;
+    letter-spacing:.14em;
     text-transform:uppercase;
-
     cursor:pointer;
-
-    transition:.25s;
+    transition:.3s;
 }
 
 .btn:hover{
-    transform:translateY(-2px);
-
-    border-color:
-        rgba(255,255,255,.4);
+    transform:translateY(-3px);
+    background:rgba(255,255,255,.08);
 }
 
 .btn.primary{
     background:var(--red);
-
     border-color:var(--red);
-
-    box-shadow:
-        0 8px 30px
-        rgba(255,75,62,.18);
+    color:#fff;
+    box-shadow:0 12px 35px rgba(255,69,56,.2);
 }
 
 .btn.primary:hover{
-    background:#ff6257;
-
-    border-color:#ff6257;
+    background:#ff6258;
 }
-
 
 /* =========================
-   PANELS
+   TITLES
 ========================= */
 
-.panel{
-    padding:30px;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(19,22,25,.92),
-            rgba(5,7,8,.88)
-        );
-
-    border:
-        1px solid rgba(255,255,255,.13);
-
-    box-shadow:
-        0 30px 100px
-        rgba(0,0,0,.5);
-
-    backdrop-filter:blur(18px);
+.sectionNumber{
+    position:absolute;
+    right:22px;
+    top:20px;
+    font-family:"Space Grotesk";
+    font-size:80px;
+    line-height:1;
+    color:rgba(255,255,255,.025);
+    font-weight:700;
 }
 
-.panel.red{
-    border-left:3px solid var(--red);
+.title{
+    margin-top:15px;
+    font-size:clamp(35px,4vw,62px);
+    line-height:.96;
+    letter-spacing:-.045em;
 }
 
-.panel.yellow{
-    border-left:3px solid var(--yellow);
+.description{
+    margin-top:19px;
+    color:#aeb4b5;
+    font-size:13px;
+    line-height:1.8;
 }
 
-.panel.blue{
-    border-left:3px solid var(--blue);
-}
-
-.panel.green{
-    border-left:3px solid var(--green);
-}
-
-.panel h2{
-    font-size:clamp(30px,4vw,55px);
-
-    line-height:.95;
-
-    margin:12px 0 18px;
-}
-
-.panel h3{
-    font-size:23px;
-
-    margin:9px 0;
-}
-
-.small{
-    font-size:12px;
-
-    line-height:1.75;
-
-    color:#aeb3b5;
-}
-
-
-/* =========================
-   METRICS
-========================= */
-
-.metrics{
+.dataGrid{
+    margin-top:23px;
     display:grid;
-
-    grid-template-columns:
-        repeat(3,1fr);
-
-    gap:8px;
-
-    margin-top:22px;
+    grid-template-columns:repeat(2,1fr);
+    gap:7px;
 }
 
-.metric{
-    padding:14px;
-
-    background:
-        rgba(255,255,255,.035);
-
-    border:
-        1px solid rgba(255,255,255,.08);
+.data{
+    padding:12px;
+    border:1px solid rgba(255,255,255,.08);
+    background:rgba(255,255,255,.025);
 }
 
-.metric b{
+.data strong{
     display:block;
-
-    font:
-        700 21px
-        "Space Grotesk";
-}
-
-.metric span{
-    font-size:8px;
-
-    letter-spacing:.1em;
-
+    font-size:9px;
+    color:#fff;
+    letter-spacing:.12em;
     text-transform:uppercase;
-
-    color:#777d80;
 }
 
-
-/* =========================
-   STAGES
-========================= */
-
-.stageList{
-    display:grid;
-
-    gap:8px;
-
-    margin-top:20px;
+.data span{
+    display:block;
+    margin-top:6px;
+    color:#777f81;
+    font-size:9px;
 }
-
-.stage{
-    display:flex;
-
-    align-items:center;
-
-    gap:13px;
-
-    padding:11px;
-
-    border:
-        1px solid rgba(255,255,255,.08);
-
-    background:
-        rgba(255,255,255,.025);
-}
-
-.stageNo{
-    font:
-        700 11px
-        "Space Grotesk";
-
-    color:var(--red);
-
-    width:25px;
-}
-
-.stageText{
-    font-size:10px;
-
-    text-transform:uppercase;
-
-    letter-spacing:.09em;
-}
-
 
 /* =========================
    EXPERIENCE
 ========================= */
 
-.timeline{
-    display:grid;
-
-    gap:12px;
-
+.experience{
     margin-top:20px;
+    display:grid;
+    gap:9px;
 }
 
-.job{
-    padding:18px;
-
-    border:
-        1px solid rgba(255,255,255,.09);
-
-    background:
-        rgba(255,255,255,.025);
+.exp{
+    padding:16px;
+    border-left:2px solid rgba(255,255,255,.12);
+    background:rgba(255,255,255,.025);
 }
 
-.jobTop{
-    display:flex;
-
-    justify-content:space-between;
-
-    gap:10px;
-
-    color:#888;
-
-    font-size:9px;
-
-    text-transform:uppercase;
-
-    letter-spacing:.12em;
+.exp:hover{
+    border-left-color:var(--red);
 }
 
-.job h3{
-    font-size:21px;
-
-    margin:10px 0 3px;
-}
-
-.jobRole{
-    font-size:10px;
-
-    color:#c3c6c7;
-}
-
-.bullets{
-    margin:12px 0 0;
-
-    padding-left:16px;
-
-    color:#aeb3b5;
-
-    font-size:11px;
-
-    line-height:1.8;
-}
-
-
-/* =========================
-   TOOLS
-========================= */
-
-.tools{
-    display:flex;
-
-    flex-wrap:wrap;
-
-    gap:7px;
-
-    margin-top:16px;
-}
-
-.tool{
-    padding:8px 10px;
-
-    border:
-        1px solid rgba(255,255,255,.09);
-
+.expDate{
     font-size:8px;
-
-    text-transform:uppercase;
-
-    letter-spacing:.1em;
+    color:var(--red);
+    letter-spacing:.15em;
 }
 
-
-/* =========================
-   SURVEYING BLUEPRINT
-========================= */
-
-.blueprint{
-    padding:20px;
-
-    border:
-        1px solid rgba(77,163,255,.25);
-
-    background:
-        rgba(4,13,23,.7);
-
-    margin-top:18px;
+.exp h3{
+    margin-top:7px;
+    font-size:18px;
 }
 
-.blueprintGrid{
-    height:125px;
-
-    background-image:
-        linear-gradient(
-            rgba(77,163,255,.12) 1px,
-            transparent 1px
-        ),
-        linear-gradient(
-            90deg,
-            rgba(77,163,255,.12) 1px,
-            transparent 1px
-        );
-
-    background-size:18px 18px;
-
-    position:relative;
+.exp p{
+    margin-top:5px;
+    color:#8e9698;
+    font-size:10px;
 }
-
-.blueprintGrid:before{
-    content:"";
-
-    position:absolute;
-
-    left:18%;
-    right:18%;
-
-    top:22%;
-    bottom:20%;
-
-    border:
-        1px solid rgba(77,163,255,.7);
-}
-
-.blueprintGrid:after{
-    content:"";
-
-    position:absolute;
-
-    left:48%;
-
-    top:10%;
-    bottom:10%;
-
-    border-left:
-        1px dashed rgba(77,163,255,.7);
-}
-
 
 /* =========================
    PROJECTS
 ========================= */
 
-.projectGrid{
+.projects{
+    margin-top:22px;
     display:grid;
-
-    grid-template-columns:
-        1fr 1fr;
-
-    gap:9px;
-
-    margin-top:18px;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
 }
 
 .project{
-    min-height:125px;
-
+    min-height:110px;
     padding:16px;
-
+    border:1px solid rgba(255,255,255,.09);
+    background:rgba(255,255,255,.025);
     position:relative;
-
     overflow:hidden;
-
-    border:
-        1px solid rgba(255,255,255,.1);
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(30,32,34,.9),
-            rgba(6,7,8,.9)
-        );
+    transition:.35s;
 }
 
-.project:before{
+.project:after{
     content:"";
-
     position:absolute;
+    inset:auto 0 0 0;
+    height:2px;
+    background:var(--blue);
+    transform:scaleX(0);
+    transform-origin:left;
+    transition:.35s;
+}
 
-    inset:0;
+.project:hover{
+    transform:translateY(-5px);
+    background:rgba(255,255,255,.055);
+}
 
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255,75,62,.1),
-            transparent 50%,
-            rgba(77,163,255,.08)
-        );
+.project:hover:after{
+    transform:scaleX(1);
 }
 
 .projectNo{
-    font:
-        700 10px
-        "Space Grotesk";
-
-    color:var(--yellow);
+    color:var(--blue);
+    font-size:8px;
+    letter-spacing:.15em;
 }
 
 .project h3{
-    font-size:16px;
-
-    margin-top:35px;
-
-    position:relative;
+    margin-top:13px;
+    font-size:15px;
 }
 
 .project p{
+    margin-top:6px;
+    color:#7f8789;
     font-size:9px;
-
-    color:#888;
-
-    position:relative;
+    line-height:1.5;
 }
-
 
 /* =========================
-   AI DIGITAL TWIN
+   AI
 ========================= */
 
-.aiTwinCard{
-    width:min(480px,90vw);
-
-    padding:30px;
-
-    border:
-        1px solid rgba(88,214,141,.28);
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(10,14,13,.94),
-            rgba(5,7,8,.82)
-        );
-
-    backdrop-filter:blur(20px);
-
-    box-shadow:
-        0 30px 100px rgba(0,0,0,.5),
-        0 0 70px rgba(88,214,141,.08);
+.ai{
+    border-color:rgba(87,220,145,.18);
 }
 
-.aiTwinTitle{
-    font:
-        700 38px/1
-        "Space Grotesk";
-
-    margin-top:12px;
+.ai:before{
+    background:var(--green)!important;
 }
 
-.aiTwinStatus{
-    display:flex;
+.aiTitle{
+    font-size:clamp(36px,4.5vw,65px);
+    line-height:.92;
+    letter-spacing:-.05em;
+    margin-top:15px;
+}
 
-    align-items:center;
-
-    gap:8px;
-
+.status{
     margin-top:20px;
-
-    color:#9aa39f;
-
+    display:flex;
+    align-items:center;
+    gap:9px;
+    color:#9ba5a0;
     font-size:9px;
-
-    letter-spacing:.15em;
-
     text-transform:uppercase;
+    letter-spacing:.14em;
 }
 
-.aiTwinStatus i{
+.status i{
     width:7px;
     height:7px;
-
-    border-radius:50%;
-
     background:var(--green);
-
-    box-shadow:
-        0 0 15px var(--green);
+    border-radius:50%;
+    box-shadow:0 0 17px var(--green);
 }
 
-.aiTwinTags{
+.chips{
     display:flex;
-
     flex-wrap:wrap;
-
-    gap:7px;
-
-    margin-top:20px;
+    gap:6px;
+    margin-top:18px;
 }
 
-.aiTwinTags span{
+.chip{
     padding:8px 10px;
-
-    border:
-        1px solid rgba(255,255,255,.1);
-
     font-size:8px;
-
-    text-transform:uppercase;
-
     letter-spacing:.08em;
-}
-
-
-/* =========================
-   EDUCATION
-========================= */
-
-.education{
-    display:grid;
-
-    gap:10px;
-
-    margin-top:20px;
-}
-
-.edu{
-    padding:16px;
-
-    border:
-        1px solid rgba(255,255,255,.09);
-
-    background:
-        rgba(255,255,255,.025);
-}
-
-.edu b{
-    font:
-        600 16px
-        "Space Grotesk";
-
-    display:block;
-}
-
-.edu span{
-    font-size:9px;
-
-    color:#8f9496;
-
     text-transform:uppercase;
-
-    letter-spacing:.1em;
+    color:#b5bcbc;
+    border:1px solid rgba(255,255,255,.08);
+    background:rgba(255,255,255,.025);
 }
-
 
 /* =========================
    PROFILE
 ========================= */
 
-.profileCard{
+.profile{
     display:grid;
-
-    grid-template-columns:
-        150px 1fr;
-
-    gap:24px;
-
+    grid-template-columns:90px 1fr;
+    gap:20px;
     align-items:center;
 }
 
-.profileImg{
-    width:150px;
-    height:190px;
-
+.profile img{
+    width:90px;
+    height:90px;
     object-fit:cover;
-
-    object-position:center top;
-
-    border:
-        1px solid rgba(255,255,255,.15);
-
+    border-radius:50%;
+    border:1px solid rgba(255,255,255,.16);
     filter:saturate(.9);
 }
 
-.profileName{
-    font:
-        700 40px/1
-        "Space Grotesk";
-
-    margin:8px 0;
+.profile h2{
+    font-size:30px;
 }
 
-.skillGrid{
-    display:flex;
-
-    flex-wrap:wrap;
-
-    gap:7px;
-
-    margin:18px 0;
+.profile p{
+    margin-top:7px;
+    color:#8f9799;
+    font-size:10px;
+    line-height:1.6;
 }
-
-.skill{
-    padding:9px 11px;
-
-    background:#0b0d0f;
-
-    border:
-        1px solid rgba(255,255,255,.1);
-
-    font-size:8px;
-
-    text-transform:uppercase;
-
-    letter-spacing:.1em;
-}
-
 
 /* =========================
    CONTACT ICONS
 ========================= */
 
 .contactIcons{
+    margin-top:24px;
     display:flex;
-
-    flex-wrap:wrap;
-
-    gap:10px;
-
-    margin-top:22px;
+    gap:8px;
 }
 
 .contactIcon{
-    width:78px;
-    height:78px;
-
-    border:
-        1px solid rgba(255,255,255,.14);
-
-    background:
-        rgba(5,7,8,.82);
-
-    color:white;
-
+    width:55px;
+    height:55px;
+    border:1px solid rgba(255,255,255,.1);
+    background:rgba(255,255,255,.025);
+    color:#aaa;
+    display:grid;
+    place-items:center;
     cursor:pointer;
-
-    display:flex;
-
-    flex-direction:column;
-
-    align-items:center;
-
-    justify-content:center;
-
-    gap:7px;
-
     transition:.3s;
-
-    backdrop-filter:blur(15px);
+    position:relative;
 }
 
-.contactIcon span{
-    font-family:"Space Grotesk";
-
-    font-size:24px;
-
-    font-weight:700;
+.contactIcon svg{
+    width:20px;
+    height:20px;
+    stroke:currentColor;
 }
 
 .contactIcon small{
-    font-size:7px;
-
-    letter-spacing:.15em;
-
-    color:#888f8d;
+    position:absolute;
+    bottom:-18px;
+    font-size:6px;
+    letter-spacing:.13em;
+    color:#656d6f;
 }
 
 .contactIcon:hover{
     transform:translateY(-5px);
-
-    background:#111416;
+    color:#fff;
+    background:rgba(255,255,255,.08);
 }
 
-.contactIcon.email:hover{
-    border-color:var(--red);
-    color:var(--red);
-}
-
-.contactIcon.phone:hover{
-    border-color:var(--yellow);
-    color:var(--yellow);
-}
-
-.contactIcon.whatsapp:hover{
-    border-color:var(--green);
-    color:var(--green);
-}
-
-.contactIcon.linkedin:hover{
-    border-color:var(--blue);
-    color:var(--blue);
-}
-
+.contactIcon.email:hover{border-color:var(--red);color:var(--red);}
+.contactIcon.phone:hover{border-color:var(--yellow);color:var(--yellow);}
+.contactIcon.whatsapp:hover{border-color:var(--green);color:var(--green);}
+.contactIcon.linkedin:hover{border-color:var(--blue);color:var(--blue);}
 
 /* =========================
-   FIXED LABELS
+   SCROLL INDICATOR
 ========================= */
-
-.sceneLabel{
-    position:fixed;
-
-    right:4vw;
-    bottom:5vh;
-
-    z-index:10;
-
-    font:
-        600 9px
-        "Space Grotesk";
-
-    letter-spacing:.18em;
-
-    color:#777;
-
-    pointer-events:none;
-}
 
 .scrollHint{
     position:fixed;
-
-    left:4vw;
-    bottom:4vh;
-
-    z-index:10;
-
-    font-size:8px;
-
-    letter-spacing:.18em;
-
-    color:#777;
-
-    text-transform:uppercase;
-
-    writing-mode:vertical-rl;
-
+    z-index:70;
+    bottom:28px;
+    left:50%;
+    transform:translateX(-50%);
     display:flex;
-
-    gap:10px;
-
     align-items:center;
+    gap:10px;
+    color:#747b7d;
+    font-size:8px;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+    pointer-events:none;
+    transition:.5s;
 }
 
-.scrollHint:before{
+.scrollMouse{
+    width:18px;
+    height:28px;
+    border:1px solid #707779;
+    border-radius:12px;
+    position:relative;
+}
+
+.scrollMouse:after{
     content:"";
-
-    width:1px;
-
-    height:45px;
-
-    background:
-        linear-gradient(
-            var(--red),
-            transparent
-        );
+    width:2px;
+    height:5px;
+    background:var(--red);
+    position:absolute;
+    top:6px;
+    left:7px;
+    animation:scrollDot 1.5s infinite;
 }
 
+@keyframes scrollDot{
+    0%{transform:translateY(0);opacity:1}
+    70%{transform:translateY(8px);opacity:0}
+    100%{transform:translateY(0);opacity:0}
+}
 
 /* =========================
    MODALS
@@ -1168,15 +769,10 @@ nav{
 
 .modal{
     position:fixed;
-
     inset:0;
-
     z-index:1000;
-
     display:none;
-
     align-items:center;
-
     justify-content:center;
 }
 
@@ -1186,236 +782,104 @@ nav{
 
 .modalBackdrop{
     position:absolute;
-
     inset:0;
-
-    background:
-        rgba(0,0,0,.8);
-
-    backdrop-filter:blur(12px);
+    background:rgba(0,0,0,.82);
+    backdrop-filter:blur(16px);
 }
 
-
-/* CONTACT MODAL */
-
-.contactModalBox{
+.modalBox{
     position:relative;
-
     z-index:2;
-
-    width:min(440px,90vw);
-
-    padding:35px;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(22,24,27,.98),
-            rgba(7,8,9,.98)
-        );
-
-    border:
-        1px solid rgba(255,255,255,.15);
-
-    box-shadow:
-        0 35px 100px rgba(0,0,0,.65);
+    width:min(430px,90vw);
+    padding:32px;
+    background:#0b0d0f;
+    border:1px solid rgba(255,255,255,.13);
+    box-shadow:0 40px 120px rgba(0,0,0,.7);
 }
 
 .modalClose{
-    width:35px;
-    height:35px;
-
-    border:
-        1px solid rgba(255,255,255,.12);
-
-    background:transparent;
-
-    color:white;
-
-    font-size:22px;
-
-    cursor:pointer;
-}
-
-.contactModalBox>.modalClose{
     position:absolute;
-
+    right:15px;
     top:15px;
-    right:17px;
+    width:34px;
+    height:34px;
+    display:grid;
+    place-items:center;
+    border:1px solid rgba(255,255,255,.1);
+    background:transparent;
+    color:#fff;
+    cursor:pointer;
+    font-size:19px;
 }
 
-#contactIconLarge{
-    font-size:38px;
-
-    margin-bottom:18px;
+.modalBox h2{
+    margin-top:10px;
+    font-size:32px;
 }
 
-#contactModalTitle{
-    margin-top:8px;
-
-    font-size:30px;
-}
-
-#contactModalText{
+.modalText{
     margin-top:12px;
-}
-
-#contactModalActions{
-    margin-top:25px;
+    color:#91999b;
+    line-height:1.7;
+    font-size:12px;
 }
 
 .modalAction{
-    display:inline-flex;
-
-    padding:12px 18px;
-
-    background:var(--red);
-
-    color:white;
-
-    font-size:10px;
-
-    font-weight:700;
-
-    text-transform:uppercase;
-
-    letter-spacing:.1em;
+    margin-top:22px;
 }
 
-
-/* =========================
-   RESUME VIEWER
-========================= */
+/* Resume */
 
 .resumeViewer{
     position:relative;
-
     z-index:2;
-
     width:min(1050px,94vw);
-
     height:min(92vh,900px);
-
     background:#111;
-
-    border:
-        1px solid rgba(255,255,255,.15);
-
-    box-shadow:
-        0 40px 120px rgba(0,0,0,.75);
-
+    border:1px solid rgba(255,255,255,.14);
+    box-shadow:0 40px 120px rgba(0,0,0,.8);
     display:flex;
-
     flex-direction:column;
 }
 
-.resumeTopbar{
-    min-height:70px;
-
-    padding:12px 18px;
-
+.resumeTop{
+    min-height:65px;
+    padding:10px 18px;
     display:flex;
-
     align-items:center;
-
     justify-content:space-between;
+    background:#080a0b;
+    border-bottom:1px solid rgba(255,255,255,.1);
+}
 
-    gap:20px;
-
-    background:#0a0b0c;
-
-    border-bottom:
-        1px solid rgba(255,255,255,.1);
+.resumeTitle{
+    font-family:"Space Grotesk";
+    font-size:11px;
+    letter-spacing:.1em;
 }
 
 .resumeActions{
     display:flex;
-
+    gap:8px;
     align-items:center;
-
-    gap:10px;
-}
-
-.resumeActions .modalClose{
-    position:static;
 }
 
 .resumePage{
     flex:1;
-
     overflow:auto;
-
-    background:#252525;
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:flex-start;
-
     padding:25px;
+    background:#222;
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
 }
 
 .resumePage img{
-    display:block;
-
-    width:auto;
-
     max-width:100%;
-
     height:auto;
-
-    box-shadow:
-        0 15px 50px rgba(0,0,0,.55);
-}
-
-
-/* =========================
-   LOADING
-========================= */
-
-#loading{
-    position:fixed;
-
-    inset:0;
-
-    z-index:100;
-
-    background:#050607;
-
-    display:grid;
-
-    place-items:center;
-
-    transition:opacity .8s;
-}
-
-.loaderBox{
-    text-align:center;
-}
-
-.loaderBar{
-    width:220px;
-
-    height:2px;
-
-    background:#1d2022;
-
-    margin-top:15px;
-
-    overflow:hidden;
-}
-
-.loaderBar i{
     display:block;
-
-    width:0;
-
-    height:100%;
-
-    background:var(--red);
+    box-shadow:0 20px 70px rgba(0,0,0,.6);
 }
-
 
 /* =========================
    MOBILE
@@ -1423,1805 +887,1020 @@ nav{
 
 @media(max-width:800px){
 
-    nav{
-        height:62px;
-
-        padding:0 20px;
+    header{
+        height:68px;
+        padding:0 17px;
     }
 
-    .navlinks{
+    .logo{
+        width:38px;
+        height:38px;
+    }
+
+    .brandText{
+        font-size:15px;
+    }
+
+    nav{
         display:none;
     }
 
-    .progressWrap{
-        top:61px;
+    .hud{
+        left:13px;
+        top:auto;
+        bottom:76px;
+        transform:none;
+        gap:5px;
+    }
+
+    .hudLine{
+        display:none;
+    }
+
+    .hudItem:not(.active){
+        display:none;
+    }
+
+    .hudText{
+        font-size:7px;
+    }
+
+    .progress{
+        right:12px;
+        height:130px;
     }
 
     .scene{
-        padding:
-            70px 20px
-            10vh;
-        
-        align-items:flex-end;
+        min-height:100svh;
+        height:100svh;
     }
 
-    .sceneContent{
-        width:100%;
+    .sceneContent,
+    .sceneContent.right,
+    .sceneContent.center{
+        width:calc(100vw - 34px);
+        left:17px;
+        right:auto;
+        top:auto;
+        bottom:8vh;
+        transform:none;
     }
 
-    .hero h1{
-        font-size:19vw;
+    .sceneCard{
+        padding:23px 21px;
+        max-height:64vh;
+        overflow:auto;
     }
 
-    .panel{
-        padding:22px;
+    .heroTitle{
+        font-size:clamp(48px,15vw,76px);
     }
 
-    .panel h2{
-        font-size:36px;
+    .heroSub{
+        font-size:11px;
+        line-height:1.65;
+        margin-top:17px;
     }
 
-    .lead{
-        font-size:13px;
+    .actions{
+        margin-top:18px;
     }
 
-    .metrics{
-        grid-template-columns:
-            1fr 1fr;
+    .btn{
+        min-height:39px;
+        padding:0 13px;
+        font-size:8px;
     }
 
-    .metric:last-child{
-        display:none;
+    .title{
+        font-size:38px;
     }
 
-    .profileCard{
-        grid-template-columns:
-            95px 1fr;
-
-        gap:15px;
+    .description{
+        font-size:11px;
+        line-height:1.65;
     }
 
-    .profileImg{
-        width:95px;
-        height:125px;
+    .sectionNumber{
+        font-size:55px;
+        top:14px;
+        right:14px;
     }
 
-    .profileName{
-        font-size:27px;
+    .dataGrid{
+        gap:5px;
     }
 
-    .projectGrid{
-        grid-template-columns:
-            1fr 1fr;
+    .data{
+        padding:9px;
+    }
+
+    .data strong{
+        font-size:7px;
+    }
+
+    .data span{
+        font-size:7px;
+    }
+
+    .projects{
+        grid-template-columns:1fr 1fr;
     }
 
     .project{
-        min-height:120px;
+        min-height:95px;
+        padding:11px;
     }
 
-    .aiTwinTitle{
-        font-size:31px;
+    .project h3{
+        font-size:12px;
     }
 
-    .sceneLabel{
-        right:20px;
-        bottom:20px;
+    .project p{
+        font-size:7px;
+    }
+
+    .profile{
+        grid-template-columns:62px 1fr;
+        gap:13px;
+    }
+
+    .profile img{
+        width:62px;
+        height:62px;
+    }
+
+    .profile h2{
+        font-size:23px;
+    }
+
+    .contactIcon{
+        width:47px;
+        height:47px;
     }
 
     .scrollHint{
-        left:14px;
+        bottom:18px;
+    }
+
+    .resumeTop{
+        padding:8px 10px;
+    }
+
+    .resumeTitle{
+        font-size:8px;
+    }
+
+    .resumePage{
+        padding:10px;
     }
 }
-
-
-@media(max-width:480px){
-
-    .projectGrid{
-        grid-template-columns:1fr;
-    }
-
-    .heroBtns .btn{
-        width:100%;
-    }
-
-    .profileCard{
-        grid-template-columns:1fr;
-    }
-
-    .profileImg{
-        width:120px;
-        height:150px;
-    }
-}
-
 </style>
 </head>
 
-
 <body>
 
-
-<!-- =========================
-     LOADING SCREEN
-========================= -->
-
-<div id="loading">
-
-    <div class="loaderBox">
-
-        <div class="sectionTag">
-            CONSTRUCTION SYSTEM ONLINE
-        </div>
-
-        <div class="loaderBar">
-            <i></i>
-        </div>
-
-    </div>
-
-</div>
-
-
-<!-- =========================
-     3D WORLD
-========================= -->
-
 <canvas id="webgl"></canvas>
+<div class="siteGlow"></div>
+<div class="noise"></div>
 
-<div class="vignette"></div>
-
-<div class="grain"></div>
-
-
-<!-- =========================
-     NAVIGATION
-========================= -->
-
-<nav>
-
-    <a class="brand" href="#top">
-
-        <div class="brandMark">
-            SG
+<header>
+    <div class="brand">
+        <div class="logo">SG</div>
+        <div class="brandText">
+            SWARAJ <span>/ CIVIL</span>
         </div>
-
-        <div>
-            SWARAJ
-            <span>/ CIVIL</span>
-        </div>
-
-    </a>
-
-
-    <div class="navlinks">
-
-        <a href="#about">
-            About
-        </a>
-
-        <a href="#experience">
-            Experience
-        </a>
-
-        <a href="#surveying">
-            Surveying
-        </a>
-
-        <a href="#autocad">
-            AutoCAD
-        </a>
-
-        <a href="#projects">
-            Projects
-        </a>
-
-        <a href="#profile">
-            Profile
-        </a>
-
     </div>
 
-</nav>
+    <nav>
+        <button class="navBtn active" data-go="0">Foundation</button>
+        <button class="navBtn" data-go="3">Experience</button>
+        <button class="navBtn" data-go="5">Surveying</button>
+        <button class="navBtn" data-go="6">Digital</button>
+        <button class="navBtn" data-go="7">Projects</button>
+        <button class="navBtn" data-go="9">Profile</button>
+    </nav>
+</header>
 
+<div class="hud">
+    <div class="hudLine"></div>
 
-<div class="progressWrap">
-
-    <div
-        class="progressBar"
-        id="progressBar">
+    <div class="hudItem active">
+        <span class="hudDot"></span>
+        <span class="hudText">01 FOUNDATION</span>
     </div>
 
+    <div class="hudItem">
+        <span class="hudDot"></span>
+        <span class="hudText">02 FRAME</span>
+    </div>
+
+    <div class="hudItem">
+        <span class="hudDot"></span>
+        <span class="hudText">03 ABOUT</span>
+    </div>
+
+    <div class="hudItem">
+        <span class="hudDot"></span>
+        <span class="hudText">04 EXPERIENCE</span>
+    </div>
+
+    <div class="hudItem">
+        <span class="hudDot"></span>
+        <span class="hudText">05 SURVEY</span>
+    </div>
+
+    <div class="hudItem">
+        <span class="hudDot"></span>
+        <span class="hudText">06 CAD</span>
+    </div>
+
+    <div class="hudItem">
+        <span class="hudDot"></span>
+        <span class="hudText">07 PROJECTS</span>
+    </div>
+
+    <div class="hudItem">
+        <span class="hudDot"></span>
+        <span class="hudText">08 AI TWIN</span>
+    </div>
+
+    <div class="hudItem">
+        <span class="hudDot"></span>
+        <span class="hudText">09 EDUCATION</span>
+    </div>
+
+    <div class="hudItem">
+        <span class="hudDot"></span>
+        <span class="hudText">10 PROFILE</span>
+    </div>
 </div>
 
-
-<div
-    class="sceneLabel"
-    id="sceneLabel">
-
-    01 / FOUNDATION
-
+<div class="progress">
+    <div class="progressFill"></div>
 </div>
-
 
 <div class="scrollHint">
-
+    <div class="scrollMouse"></div>
     SCROLL TO CONSTRUCT
-
 </div>
 
+<main class="scrollWorld">
 
-<!-- =========================
-     PORTFOLIO WORLD
-========================= -->
+<!-- 00 HERO -->
 
-<main
-    class="scrollWorld"
-    id="top">
+<section class="scene" data-scene="0">
 
+    <div class="sceneContent">
+        <div class="sceneCard" data-card>
+            <div class="tag">
+                <i></i>
+                CONSTRUCTION SYSTEM ONLINE
+            </div>
 
-<!-- =========================
-     HERO
-========================= -->
+            <div class="heroTitle">
+                <span>BUILD</span>
+                <span class="red">THE FUTURE.</span>
+            </div>
 
-<section class="scene hero">
+            <p class="heroSub">
+                I am Swaraj Vikas Gade, a Civil Engineering student
+                focused on site execution, surveying, AutoCAD,
+                construction and practical engineering.
+            </p>
 
-    <div class="sceneContent left">
+            <div class="chips">
+                <span class="chip">SITE ENGINEERING</span>
+                <span class="chip">SURVEYING</span>
+                <span class="chip">AUTOCAD</span>
+                <span class="chip">CONSTRUCTION</span>
+            </div>
 
-        <div class="kicker">
+            <div class="actions">
+                <button class="btn primary" onclick="openResume()">
+                    View Resume
+                </button>
 
-            Civil Engineering Portfolio
-            · Construction System Online
-
+                <button class="btn" data-go="1">
+                    Enter Project Site →
+                </button>
+            </div>
         </div>
-
-
-        <h1>
-
-            BUILD
-
-            <br>
-
-            <span>
-                THE FUTURE.
-            </span>
-
-        </h1>
-
-
-        <p class="lead">
-
-            I am Swaraj Vikas Gade,
-            a Civil Engineering student focused
-            on site execution, surveying,
-            AutoCAD, construction and
-            practical engineering.
-
-        </p>
-
-
-        <div class="heroMeta">
-
-            <span class="tag red">
-                Site Engineering
-            </span>
-
-            <span class="tag yellow">
-                Surveying
-            </span>
-
-            <span class="tag blue">
-                AutoCAD
-            </span>
-
-            <span class="tag green">
-                Construction
-            </span>
-
-        </div>
-
-
-        <div class="heroBtns">
-
-            <button
-                class="btn primary"
-                onclick="openResume()">
-
-                View Resume
-
-            </button>
-
-
-            <a
-                class="btn"
-                href="#projects">
-
-                Enter Project Site ↓
-
-            </a>
-
-        </div>
-
     </div>
 
 </section>
 
 
-<!-- =========================
-     FOUNDATION
-========================= -->
+<!-- 01 FOUNDATION -->
 
-<section
-    class="scene"
-    id="foundation">
+<section class="scene" data-scene="1">
 
-    <div class="sceneContent left">
+    <div class="sceneContent">
+        <div class="sceneCard" data-card>
+            <div class="sectionNumber">01</div>
 
-        <div class="panel red">
-
-            <div class="sectionTag">
-
-                01 / Foundation
-
+            <div class="tag">
+                <i></i>
+                FOUNDATION
             </div>
 
-
-            <h2>
-
-                Every structure
+            <h2 class="title">
+                Every structure<br>
                 starts below ground.
-
             </h2>
 
-
-            <p class="lead">
-
-                Foundations establish
-                the geometry, stability
-                and load path of the
-                entire structure.
-
-                Scroll forward and watch
-                the construction rise
-                from the ground.
-
+            <p class="description">
+                Foundations establish geometry, stability and the
+                load path of the entire structure. Scroll forward
+                and watch the construction rise from the ground.
             </p>
 
-
-            <div class="stageList">
-
-                <div class="stage">
-
-                    <b class="stageNo">
-                        01
-                    </b>
-
-                    <span class="stageText">
-                        Setting out & levels
-                    </span>
-
+            <div class="dataGrid">
+                <div class="data">
+                    <strong>01 / SETTING OUT</strong>
+                    <span>Grid • Levels • Coordinates</span>
                 </div>
 
-
-                <div class="stage">
-
-                    <b class="stageNo">
-                        02
-                    </b>
-
-                    <span class="stageText">
-                        Footings & pedestals
-                    </span>
-
+                <div class="data">
+                    <strong>02 / FOOTINGS</strong>
+                    <span>Pedestals • Reinforcement</span>
                 </div>
 
-
-                <div class="stage">
-
-                    <b class="stageNo">
-                        03
-                    </b>
-
-                    <span class="stageText">
-                        Reinforcement & concrete
-                    </span>
-
+                <div class="data">
+                    <strong>03 / CONCRETE</strong>
+                    <span>RCC • Stability • Load</span>
                 </div>
 
+                <div class="data">
+                    <strong>04 / CONTROL</strong>
+                    <span>Accuracy • Execution</span>
+                </div>
             </div>
-
         </div>
-
     </div>
 
 </section>
 
 
-<!-- =========================
-     STRUCTURAL FRAME
-========================= -->
+<!-- 02 FRAME -->
 
-<section class="scene">
+<section class="scene" data-scene="2">
 
     <div class="sceneContent right">
+        <div class="sceneCard red" data-card>
 
-        <div class="panel yellow">
+            <div class="sectionNumber">02</div>
 
-            <div class="sectionTag">
-
-                02 / Structural Frame
-
+            <div class="tag">
+                <i></i>
+                STRUCTURAL FRAME
             </div>
 
-
-            <h2>
-
-                Columns.
-                Beams.
+            <h2 class="title">
+                Columns.<br>
+                Beams.<br>
                 Load paths.
-
             </h2>
 
-
-            <p class="lead">
-
-                RCC construction transforms
-                the foundation into a structural
-                frame through columns, beams
-                and slabs working together.
-
+            <p class="description">
+                RCC construction transforms the foundation into a
+                structural frame through columns, beams and slabs
+                working together.
             </p>
 
-
-            <div class="metrics">
-
-                <div class="metric">
-
-                    <b>RCC</b>
-
-                    <span>
-                        Structure
-                    </span>
-
+            <div class="dataGrid">
+                <div class="data">
+                    <strong>RCC</strong>
+                    <span>Structural system</span>
                 </div>
 
-
-                <div class="metric">
-
-                    <b>REBAR</b>
-
-                    <span>
-                        Reinforcement
-                    </span>
-
+                <div class="data">
+                    <strong>REBAR</strong>
+                    <span>Reinforcement</span>
                 </div>
 
-
-                <div class="metric">
-
-                    <b>LEVELS</b>
-
-                    <span>
-                        Execution
-                    </span>
-
+                <div class="data">
+                    <strong>SLABS</strong>
+                    <span>Floor system</span>
                 </div>
 
-            </div>
-
-
-            <div class="tools">
-
-                <span class="tool">
-                    Columns
-                </span>
-
-                <span class="tool">
-                    Beams
-                </span>
-
-                <span class="tool">
-                    Slabs
-                </span>
-
-                <span class="tool">
-                    Formwork
-                </span>
-
-                <span class="tool">
-                    Levels
-                </span>
-
+                <div class="data">
+                    <strong>LEVELS</strong>
+                    <span>Execution control</span>
+                </div>
             </div>
 
         </div>
-
     </div>
 
 </section>
 
 
-<!-- =========================
-     ABOUT
-========================= -->
+<!-- 03 ABOUT -->
 
-<section
-    class="scene"
-    id="about">
+<section class="scene" data-scene="3">
 
-    <div class="sceneContent left">
+    <div class="sceneContent">
+        <div class="sceneCard" data-card>
 
-        <div class="panel">
+            <div class="sectionNumber">03</div>
 
-            <div class="sectionTag">
-
-                03 / About Me
-
+            <div class="tag">
+                <i></i>
+                ABOUT ME
             </div>
 
-
-            <h2>
-
-                Engineering is
+            <h2 class="title">
+                Engineering is<br>
                 continuous learning.
-
             </h2>
 
-
-            <p class="lead">
-
-                I am a quick learner who
-                adapts to new environments
-                and technical concepts.
-
-                I approach work with
-                responsibility, discipline
-                and a team-oriented mindset.
-
+            <p class="description">
+                I am a quick learner who adapts to new environments
+                and technical concepts. I approach work with
+                responsibility, discipline and a team-oriented mindset.
             </p>
 
-
-            <p class="small">
-
-                I am confident communicating
-                in English and comfortable
-                working with technical
-                information, drawings and
-                practical civil-engineering
-                workflows.
-
-                I enjoy learning new tools
-                and turning concepts into
-                useful site and design knowledge.
-
+            <p class="description">
+                I am confident communicating in English and comfortable
+                working with technical information, drawings and
+                practical civil-engineering workflows.
             </p>
 
-
-            <div class="tools">
-
-                <span class="tool">
-                    Quick Learner
-                </span>
-
-                <span class="tool">
-                    Adaptable
-                </span>
-
-                <span class="tool">
-                    Responsible
-                </span>
-
-                <span class="tool">
-                    Team Oriented
-                </span>
-
-                <span class="tool">
-                    Technical Learning
-                </span>
-
+            <div class="chips">
+                <span class="chip">QUICK LEARNER</span>
+                <span class="chip">ADAPTABLE</span>
+                <span class="chip">RESPONSIBLE</span>
+                <span class="chip">TEAM ORIENTED</span>
+                <span class="chip">TECHNICAL LEARNING</span>
             </div>
 
         </div>
-
     </div>
 
 </section>
 
 
-<!-- =========================
-     EXPERIENCE
-========================= -->
+<!-- 04 EXPERIENCE -->
 
-<section
-    class="scene"
-    id="experience">
+<section class="scene" data-scene="4">
 
     <div class="sceneContent right">
+        <div class="sceneCard red" data-card>
 
-        <div class="panel red">
+            <div class="sectionNumber">04</div>
 
-            <div class="sectionTag">
-
-                04 / Site Experience
-
+            <div class="tag">
+                <i></i>
+                SITE EXPERIENCE
             </div>
 
-
-            <h2>
-
-                From classroom
+            <h2 class="title">
+                From classroom<br>
                 to construction site.
-
             </h2>
 
+            <div class="experience">
 
-            <div class="timeline">
-
-
-                <!-- KUNAL -->
-
-                <div class="job">
-
-                    <div class="jobTop">
-
-                        <span>
-                            JANUARY 2026
-                        </span>
-
-                        <span>
-                            INTERNSHIP
-                        </span>
-
+                <div class="exp">
+                    <div class="expDate">
+                        JANUARY 2026
                     </div>
 
+                    <h3>Kunal Khopade Associates</h3>
 
-                    <h3>
-                        Kunal Khopade Associates
-                    </h3>
+                    <p>
+                        Civil Engineering Internship
+                    </p>
 
-
-                    <div class="jobRole">
-
-                        Civil Engineering Intern
-
-                    </div>
-
-
-                    <ul class="bullets">
-
-                        <li>
-                            Professional exposure
-                            to civil engineering workflows.
-                        </li>
-
-                        <li>
-                            Observed and supported
-                            routine project-related
-                            activities.
-                        </li>
-
-                        <li>
-                            Developed practical
-                            understanding through
-                            site and professional
-                            exposure.
-                        </li>
-
-                    </ul>
-
+                    <p>
+                        Professional exposure to civil engineering
+                        workflows and project-related activities.
+                    </p>
                 </div>
 
-
-                <!-- BHOOMI -->
-
-                <div class="job">
-
-                    <div class="jobTop">
-
-                        <span>
-                            JUNE – JULY 2023
-                        </span>
-
-                        <span>
-                            AHILYANAGAR
-                        </span>
-
+                <div class="exp">
+                    <div class="expDate">
+                        JUNE — JULY 2023 · AHILYANAGAR
                     </div>
 
+                    <h3>Bhoomi Consultants</h3>
 
-                    <h3>
-                        Bhoomi Consultants
-                    </h3>
-
-
-                    <div class="jobRole">
-
+                    <p>
                         Site Civil Engineering Intern
+                    </p>
 
-                    </div>
-
-
-                    <ul class="bullets">
-
-                        <li>
-                            Took site measurements
-                            and checked levels.
-                        </li>
-
-                        <li>
-                            Observed brickwork,
-                            plaster, concrete
-                            and reinforcement.
-                        </li>
-
-                        <li>
-                            Maintained site diary
-                            and monitored labour
-                            activities.
-                        </li>
-
-                    </ul>
-
+                    <p>
+                        Site measurements, levels, brickwork,
+                        plaster, concrete, reinforcement,
+                        site diary and labour monitoring.
+                    </p>
                 </div>
-
 
             </div>
 
         </div>
-
     </div>
 
 </section>
 
 
-<!-- =========================
-     SURVEYING
-========================= -->
+<!-- 05 SURVEY -->
 
-<section
-    class="scene"
-    id="surveying">
+<section class="scene" data-scene="5">
 
-    <div class="sceneContent left">
+    <div class="sceneContent">
+        <div class="sceneCard blue" data-card>
 
-        <div class="panel blue">
+            <div class="sectionNumber">05</div>
 
-            <div class="sectionTag">
-
-                05 / Surveying
-
+            <div class="tag">
+                <i></i>
+                SURVEYING
             </div>
 
-
-            <h2>
-
-                Measure the
-                real world.
-
+            <h2 class="title">
+                Measure<br>
+                the real world.
             </h2>
 
-
-            <p class="lead">
-
-                Surveying connects drawings
-                with physical coordinates.
-
-                I have practical exposure
-                to Total Station and GPS
-                through advanced surveying
-                and land-surveying training.
-
+            <p class="description">
+                Surveying connects drawings with physical coordinates.
+                Practical exposure includes Total Station and GPS
+                through advanced surveying and land-surveying training.
             </p>
 
-
-            <div class="tools">
-
-                <span class="tool">
-                    Total Station
-                </span>
-
-                <span class="tool">
-                    GPS
-                </span>
-
-                <span class="tool">
-                    Auto Level
-                </span>
-
-                <span class="tool">
-                    Theodolite
-                </span>
-
-                <span class="tool">
-                    Land Surveying
-                </span>
-
-            </div>
-
-
-            <div class="blueprint">
-
-                <div
-                    class="sectionTag"
-                    style="color:#72b9ff">
-
-                    SURVEY CONTROL /
-                    DIGITAL PLAN
-
-                </div>
-
-
-                <div class="blueprintGrid"></div>
-
+            <div class="chips">
+                <span class="chip">TOTAL STATION</span>
+                <span class="chip">GPS</span>
+                <span class="chip">AUTO LEVEL</span>
+                <span class="chip">THEODOLITE</span>
+                <span class="chip">LAND SURVEYING</span>
             </div>
 
         </div>
-
     </div>
 
 </section>
 
 
-<!-- =========================
-     AUTOCAD
-========================= -->
+<!-- 06 CAD -->
 
-<section
-    class="scene"
-    id="autocad">
+<section class="scene" data-scene="6">
 
     <div class="sceneContent right">
+        <div class="sceneCard blue" data-card>
 
-        <div class="panel blue">
+            <div class="sectionNumber">06</div>
 
-            <div class="sectionTag">
-
-                06 / Digital Design
-
+            <div class="tag">
+                <i></i>
+                DIGITAL DESIGN
             </div>
 
-
-            <h2>
-
-                From site measurements
+            <h2 class="title">
+                From site<br>
+                measurements<br>
                 to drawings.
-
             </h2>
 
-
-            <p class="lead">
-
-                Basic AutoCAD 2D drafting
-                experience with plans,
-                elevations and sections.
-
-                Completed AutoCAD Essentials
+            <p class="description">
+                Basic AutoCAD 2D drafting experience with plans,
+                elevations and sections. Completed AutoCAD Essentials
                 training through SourceCAD.
-
             </p>
 
-
-            <div class="metrics">
-
-                <div class="metric">
-
-                    <b>2D</b>
-
-                    <span>
-                        Drafting
-                    </span>
-
+            <div class="dataGrid">
+                <div class="data">
+                    <strong>PLAN</strong>
+                    <span>2D Drafting</span>
                 </div>
 
-
-                <div class="metric">
-
-                    <b>PLAN</b>
-
-                    <span>
-                        Drawing
-                    </span>
-
+                <div class="data">
+                    <strong>ELEVATION</strong>
+                    <span>Building form</span>
                 </div>
 
-
-                <div class="metric">
-
-                    <b>SECTION</b>
-
-                    <span>
-                        Elevation
-                    </span>
-
+                <div class="data">
+                    <strong>SECTION</strong>
+                    <span>Technical drawing</span>
                 </div>
 
+                <div class="data">
+                    <strong>CAD</strong>
+                    <span>Digital workflow</span>
+                </div>
             </div>
 
-
-            <div class="tools">
-
-                <span class="tool">
-                    AutoCAD
-                </span>
-
-                <span class="tool">
-                    Plans
-                </span>
-
-                <span class="tool">
-                    Elevations
-                </span>
-
-                <span class="tool">
-                    Sections
-                </span>
-
-            </div>
-
-
-            <div style="margin-top:20px">
-
+            <div class="actions">
                 <a
                     class="btn"
                     href="https://www.sourcecad.com/"
                     target="_blank"
-                    rel="noopener">
-
+                    rel="noopener"
+                >
                     SourceCAD ↗
-
                 </a>
-
             </div>
 
         </div>
-
     </div>
 
 </section>
 
 
-<!-- =========================
-     PROJECTS
-========================= -->
+<!-- 07 PROJECTS -->
 
-<section
-    class="scene"
-    id="projects">
+<section class="scene" data-scene="7">
 
-    <div class="sceneContent left">
+    <div class="sceneContent">
+        <div class="sceneCard blue" data-card>
 
-        <div class="panel yellow">
+            <div class="sectionNumber">07</div>
 
-            <div class="sectionTag">
-
-                07 / Projects
-
-            </div>
-
-
-            <h2>
-
-                Ideas become
-                structures.
-
-            </h2>
-
-
-            <div class="projectGrid">
-
-
-                <div class="project">
-
-                    <div class="projectNo">
-                        01
-                    </div>
-
-                    <h3>
-                        2D House Floor Plan
-                    </h3>
-
-                    <p>
-                        Residential planning
-                        and architectural
-                        drawing concept.
-                    </p>
-
-                </div>
-
-
-                <div class="project">
-
-                    <div class="projectNo">
-                        02
-                    </div>
-
-                    <h3>
-                        3D Indian House
-                    </h3>
-
-                    <p>
-                        Residential 3D
-                        visualization and
-                        building form study.
-                    </p>
-
-                </div>
-
-
-                <div class="project">
-
-                    <div class="projectNo">
-                        03
-                    </div>
-
-                    <h3>
-                        Bridge Structure
-                    </h3>
-
-                    <p>
-                        Structural form and
-                        civil infrastructure
-                        visualization.
-                    </p>
-
-                </div>
-
-
-                <div class="project">
-
-                    <div class="projectNo">
-                        04
-                    </div>
-
-                    <h3>
-                        Modern Residence
-                    </h3>
-
-                    <p>
-                        Contemporary
-                        residential architecture
-                        concept.
-                    </p>
-
-                </div>
-
-
-            </div>
-
-
-            <p class="small"
-               style="margin-top:15px">
-
-                Project visuals shown on the
-                site are presentation/reference
-                imagery where original project
-                photography is not available.
-
-            </p>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =========================
-     AI DIGITAL TWIN
-========================= -->
-
-<section
-    class="scene"
-    id="digital-twin">
-
-    <div class="sceneContent right">
-
-        <div class="aiTwinCard">
-
-            <div
-                class="sectionTag"
-                style="color:#8de5af">
-
-                08 / AI Digital Twin
-
-            </div>
-
-
-            <div class="aiTwinTitle">
-
-                Meet the engineer
-                behind the build.
-
-            </div>
-
-
-            <p class="lead">
-
-                A 3D digital representation
-                of Swaraj travelling through
-                the construction environment
-                as the building develops
-                around him.
-
-            </p>
-
-
-            <div class="aiTwinStatus">
-
+            <div class="tag">
                 <i></i>
-
-                Digital twin active
-
+                PROJECTS
             </div>
 
-
-            <div class="aiTwinTags">
-
-                <span>
-                    Site Engineering
-                </span>
-
-                <span>
-                    Surveying
-                </span>
-
-                <span>
-                    AutoCAD
-                </span>
-
-                <span>
-                    Construction
-                </span>
-
-                <span>
-                    Technical Learning
-                </span>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =========================
-     ACADEMIC WORK
-========================= -->
-
-<section class="scene">
-
-    <div class="sceneContent left">
-
-        <div class="panel green">
-
-            <div class="sectionTag">
-
-                09 / Academic Work
-
-            </div>
-
-
-            <h2>
-
-                Engineering
-                beyond the site.
-
+            <h2 class="title">
+                Ideas become<br>
+                structures.
             </h2>
 
+            <div class="projects">
 
-            <div class="timeline">
-
-
-                <div class="job">
-
-                    <div class="jobTop">
-
-                        <span>
-                            ACADEMIC PROJECT
-                        </span>
-
-                        <span>
-                            GREEN ROOF
-                        </span>
-
-                    </div>
-
-
-                    <h3>
-                        Green Roof
-                    </h3>
-
-
-                    <p class="small">
-
-                        Academic report/project
-                        studying green roof
-                        systems and their
-                        applications.
-
-                    </p>
-
+                <div class="project">
+                    <div class="projectNo">01</div>
+                    <h3>2D House Floor Plan</h3>
+                    <p>Residential planning and architectural drawing.</p>
                 </div>
 
-
-                <div class="job">
-
-                    <div class="jobTop">
-
-                        <span>
-                            B.E. PBL
-                        </span>
-
-                        <span>
-                            WATER FILTRATION
-                        </span>
-
-                    </div>
-
-
-                    <h3>
-                        Biofiltration Bed
-                    </h3>
-
-
-                    <p class="small">
-
-                        Project concept focused
-                        on water filtration through
-                        a biofiltration bed.
-
-                    </p>
-
+                <div class="project">
+                    <div class="projectNo">02</div>
+                    <h3>3D Indian House</h3>
+                    <p>Residential 3D visualization and form study.</p>
                 </div>
 
+                <div class="project">
+                    <div class="projectNo">03</div>
+                    <h3>Bridge Structure</h3>
+                    <p>Structural form and infrastructure visualization.</p>
+                </div>
+
+                <div class="project">
+                    <div class="projectNo">04</div>
+                    <h3>Modern Residence</h3>
+                    <p>Contemporary residential architecture concept.</p>
+                </div>
 
             </div>
 
         </div>
-
     </div>
 
 </section>
 
 
-<!-- =========================
-     EDUCATION
-========================= -->
+<!-- 08 AI DIGITAL TWIN -->
 
-<section class="scene">
+<section class="scene" data-scene="8">
 
     <div class="sceneContent right">
+        <div class="sceneCard ai green" data-card>
 
-        <div class="panel">
+            <div class="sectionNumber">08</div>
 
-            <div class="sectionTag">
-
-                10 / Education
-
+            <div class="tag">
+                <i></i>
+                AI DIGITAL TWIN
             </div>
 
-
-            <h2>
-
-                Built on a
-                technical foundation.
-
+            <h2 class="aiTitle">
+                Meet the engineer<br>
+                behind the build.
             </h2>
 
+            <p class="description">
+                A 3D digital representation of Swaraj travelling
+                through the construction environment as the building
+                develops around him.
+            </p>
 
-            <div class="education">
+            <div class="status">
+                <i></i>
+                Digital twin active
+            </div>
 
-
-                <div class="edu">
-
-                    <b>
-                        Savitribai Phule Pune University
-                    </b>
-
-                    <span>
-                        B.E. Civil Engineering · Pursuing
-                    </span>
-
-                </div>
-
-
-                <div class="edu">
-
-                    <b>
-                        Government Polytechnic,
-                        Ahmednagar
-                    </b>
-
-                    <span>
-                        Diploma in Civil Engineering
-                        · First Class
-                    </span>
-
-                </div>
-
-
-                <div class="edu">
-
-                    <b>
-                        S.M.P. English Medium
-                        School, Akluj
-                    </b>
-
-                    <span>
-                        SSC · 80.43%
-                    </span>
-
-                </div>
-
-
+            <div class="chips">
+                <span class="chip">SITE ENGINEERING</span>
+                <span class="chip">SURVEYING</span>
+                <span class="chip">AUTOCAD</span>
+                <span class="chip">CONSTRUCTION</span>
+                <span class="chip">LEARNING</span>
             </div>
 
         </div>
-
     </div>
 
 </section>
 
 
-<!-- =========================
-     PROFILE
-========================= -->
+<!-- 09 EDUCATION -->
 
-<section
-    class="scene"
-    id="profile">
+<section class="scene" data-scene="9">
 
-    <div class="sceneContent left">
+    <div class="sceneContent">
+        <div class="sceneCard yellow" data-card>
 
-        <div class="panel red">
+            <div class="sectionNumber">09</div>
 
-            <div class="sectionTag">
+            <div class="tag">
+                <i></i>
+                EDUCATION
+            </div>
 
-                11 / Completed Structure
-                · Profile
+            <h2 class="title">
+                Built on a<br>
+                technical foundation.
+            </h2>
+
+            <div class="experience">
+
+                <div class="exp">
+                    <div class="expDate">CURRENT</div>
+                    <h3>Savitribai Phule Pune University</h3>
+                    <p>B.E. Civil Engineering</p>
+                </div>
+
+                <div class="exp">
+                    <div class="expDate">DIPLOMA</div>
+                    <h3>Government Polytechnic, Ahmednagar</h3>
+                    <p>Diploma in Civil Engineering · First Class</p>
+                </div>
+
+                <div class="exp">
+                    <div class="expDate">SSC · 80.43%</div>
+                    <h3>S.M.P. English Medium School, Akluj</h3>
+                    <p>Secondary School Certificate</p>
+                </div>
 
             </div>
 
+        </div>
+    </div>
 
-            <div class="profileCard">
+</section>
 
+
+<!-- 10 PROFILE -->
+
+<section class="scene" data-scene="10">
+
+    <div class="sceneContent center">
+        <div class="sceneCard" data-card>
+
+            <div class="tag">
+                <i></i>
+                COMPLETED STRUCTURE · PROFILE
+            </div>
+
+            <div class="profile" style="margin-top:22px;">
 
                 <img
-                    class="profileImg"
                     src="https://i.ibb.co/fzDzYpDF/798095-DE-7-E1F-4385-9-E59-3382-BF37015-D.png"
-                    alt="Swaraj Vikas Gade">
-
+                    alt="Swaraj Vikas Gade"
+                >
 
                 <div>
+                    <h2>Swaraj<br>Vikas Gade</h2>
 
-                    <div class="profileName">
-
-                        Swaraj
-                        <br>
-                        Vikas Gade
-
-                    </div>
-
-
-                    <div class="small">
-
-                        Civil Engineering Student
-                        · B.E. Civil Engineering
-
-                    </div>
-
+                    <p>
+                        Civil Engineering Student · B.E. Civil Engineering
+                    </p>
                 </div>
 
-
             </div>
 
-
-            <p
-                class="small"
-                style="margin-top:20px">
-
-                Civil Engineering student with
-                practical exposure to site
-                measurements, construction
-                activities, surveying, AutoCAD
-                2D drafting and quantity-estimation
-                concepts.
-
+            <p class="description">
+                Civil Engineering student with practical exposure to
+                site measurements, construction activities, surveying,
+                AutoCAD 2D drafting and quantity-estimation concepts.
             </p>
 
-
-            <div class="skillGrid">
-
-                <span class="skill">
-                    AutoCAD
-                </span>
-
-                <span class="skill">
-                    Revit
-                </span>
-
-                <span class="skill">
-                    Structural Design
-                </span>
-
-                <span class="skill">
-                    Site Management
-                </span>
-
-                <span class="skill">
-                    MS Excel
-                </span>
-
-                <span class="skill">
-                    Quantity Estimation
-                </span>
-
-                <span class="skill">
-                    MS Word
-                </span>
-
-                <span class="skill">
-                    MS PowerPoint
-                </span>
-
+            <div class="chips">
+                <span class="chip">AUTOCAD</span>
+                <span class="chip">REVIT</span>
+                <span class="chip">STRUCTURAL DESIGN</span>
+                <span class="chip">SITE MANAGEMENT</span>
+                <span class="chip">MS EXCEL</span>
+                <span class="chip">QUANTITY ESTIMATION</span>
+                <span class="chip">MS WORD</span>
+                <span class="chip">MS POWERPOINT</span>
             </div>
 
-
-            <div
-                style="
-                display:flex;
-                gap:10px;
-                flex-wrap:wrap;
-                ">
-
-                <button
-                    class="btn primary"
-                    onclick="openResume()">
-
+            <div class="actions">
+                <button class="btn primary" onclick="openResume()">
                     View Resume
-
                 </button>
-
 
                 <a
                     class="btn"
                     href="resume.jpg"
-                    download="Swaraj_Vikas_Gade_Resume.jpg">
-
+                    download="Swaraj_Vikas_Gade_Resume.jpg"
+                >
                     Download Resume
-
                 </a>
-
             </div>
-
-
-            <!-- CONTACT ICONS -->
 
             <div class="contactIcons">
 
-
-                <button
-                    class="contactIcon email"
-                    onclick="openContact('email')">
-
-                    <span>
-                        ✉
-                    </span>
-
-                    <small>
-                        EMAIL
-                    </small>
-
+                <button class="contactIcon email" onclick="openContact('email')" aria-label="Email">
+                    <svg viewBox="0 0 24 24" fill="none">
+                        <rect x="3" y="5" width="18" height="14" rx="1" stroke="currentColor" stroke-width="1.7"/>
+                        <path d="M4 7l8 6 8-6" stroke="currentColor" stroke-width="1.7"/>
+                    </svg>
+                    <small>EMAIL</small>
                 </button>
 
-
-                <button
-                    class="contactIcon phone"
-                    onclick="openContact('phone')">
-
-                    <span>
-                        ☎
-                    </span>
-
-                    <small>
-                        PHONE
-                    </small>
-
+                <button class="contactIcon phone" onclick="openContact('phone')" aria-label="Phone">
+                    <svg viewBox="0 0 24 24" fill="none">
+                        <path d="M7 3h3l1.4 4-2 1.7a15 15 0 006.9 6.9l1.7-2 4 1.4v3c0 1-1 1.7-2 1.7C11.8 19.7 4.3 12.2 4.3 3.9 4.3 3.4 4.7 3 5.2 3H7z"
+                        stroke="currentColor" stroke-width="1.6"/>
+                    </svg>
+                    <small>PHONE</small>
                 </button>
 
-
-                <button
-                    class="contactIcon whatsapp"
-                    onclick="openContact('whatsapp')">
-
-                    <span>
-                        ◉
-                    </span>
-
-                    <small>
-                        WHATSAPP
-                    </small>
-
+                <button class="contactIcon whatsapp" onclick="openContact('whatsapp')" aria-label="WhatsApp">
+                    <svg viewBox="0 0 24 24" fill="none">
+                        <path d="M20 11.5a8 8 0 01-11.8 7L4 20l1.5-4.1A8 8 0 1120 11.5z"
+                        stroke="currentColor" stroke-width="1.6"/>
+                        <path d="M9 8.5c.3 2 1.5 3.4 3.6 4.4 1.4.7 2 .7 2.5.2"
+                        stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                    </svg>
+                    <small>WHATSAPP</small>
                 </button>
 
-
-                <button
-                    class="contactIcon linkedin"
-                    onclick="openContact('linkedin')">
-
-                    <span>
-                        in
-                    </span>
-
-                    <small>
-                        LINKEDIN
-                    </small>
-
+                <button class="contactIcon linkedin" onclick="openContact('linkedin')" aria-label="LinkedIn">
+                    <svg viewBox="0 0 24 24" fill="none">
+                        <rect x="4" y="4" width="16" height="16" rx="2" stroke="currentColor" stroke-width="1.6"/>
+                        <path d="M8 10v6M8 8.2v.1M11.5 16v-3.3a2 2 0 014 0V16M11.5 10v6"
+                        stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                    </svg>
+                    <small>LINKEDIN</small>
                 </button>
-
 
             </div>
 
         </div>
-
     </div>
 
 </section>
 
 
-<!-- =========================
-     CONTACT
-========================= -->
+<!-- 11 CONTACT -->
 
-<section class="scene">
+<section class="scene" data-scene="11">
 
-    <div class="sceneContent right">
+    <div class="sceneContent center">
+        <div class="sceneCard red" data-card>
 
-        <div class="panel">
-
-            <div class="sectionTag">
-
-                12 / Contact
-
+            <div class="tag">
+                <i></i>
+                CONTACT
             </div>
 
-
-            <h2>
-
-                Let's build
+            <h2 class="title">
+                Let's build<br>
                 something useful.
-
             </h2>
 
-
-            <p class="lead">
-
+            <p class="description">
                 The structure is complete.
-                The next project starts
-                with a conversation.
-
+                The next project starts with a conversation.
             </p>
-
 
             <div class="contactIcons">
 
-
-                <button
-                    class="contactIcon email"
-                    onclick="openContact('email')">
-
-                    <span>
-                        ✉
-                    </span>
-
-                    <small>
-                        EMAIL
-                    </small>
-
+                <button class="contactIcon email" onclick="openContact('email')">
+                    <svg viewBox="0 0 24 24" fill="none">
+                        <rect x="3" y="5" width="18" height="14" rx="1" stroke="currentColor" stroke-width="1.7"/>
+                        <path d="M4 7l8 6 8-6" stroke="currentColor" stroke-width="1.7"/>
+                    </svg>
+                    <small>EMAIL</small>
                 </button>
 
-
-                <button
-                    class="contactIcon phone"
-                    onclick="openContact('phone')">
-
-                    <span>
-                        ☎
-                    </span>
-
-                    <small>
-                        PHONE
-                    </small>
-
+                <button class="contactIcon phone" onclick="openContact('phone')">
+                    <svg viewBox="0 0 24 24" fill="none">
+                        <path d="M7 3h3l1.4 4-2 1.7a15 15 0 006.9 6.9l1.7-2 4 1.4v3c0 1-1 1.7-2 1.7C11.8 19.7 4.3 12.2 4.3 3.9 4.3 3.4 4.7 3 5.2 3H7z"
+                        stroke="currentColor" stroke-width="1.6"/>
+                    </svg>
+                    <small>PHONE</small>
                 </button>
 
-
-                <button
-                    class="contactIcon whatsapp"
-                    onclick="openContact('whatsapp')">
-
-                    <span>
-                        ◉
-                    </span>
-
-                    <small>
-                        WHATSAPP
-                    </small>
-
+                <button class="contactIcon whatsapp" onclick="openContact('whatsapp')">
+                    <svg viewBox="0 0 24 24" fill="none">
+                        <path d="M20 11.5a8 8 0 01-11.8 7L4 20l1.5-4.1A8 8 0 1120 11.5z"
+                        stroke="currentColor" stroke-width="1.6"/>
+                    </svg>
+                    <small>WHATSAPP</small>
                 </button>
 
-
-                <button
-                    class="contactIcon linkedin"
-                    onclick="openContact('linkedin')">
-
-                    <span>
-                        in
-                    </span>
-
-                    <small>
-                        LINKEDIN
-                    </small>
-
+                <button class="contactIcon linkedin" onclick="openContact('linkedin')">
+                    <svg viewBox="0 0 24 24" fill="none">
+                        <rect x="4" y="4" width="16" height="16" rx="2" stroke="currentColor" stroke-width="1.6"/>
+                        <path d="M8 10v6M8 8.2v.1M11.5 16v-3.3a2 2 0 014 0V16M11.5 10v6"
+                        stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                    </svg>
+                    <small>LINKEDIN</small>
                 </button>
-
 
             </div>
 
         </div>
-
     </div>
 
 </section>
-
 
 </main>
 
 
-<!-- =========================
-     CONTACT MODAL
-========================= -->
+<!-- CONTACT MODAL -->
 
-<div
-    id="contactModal"
-    class="modal">
+<div class="modal" id="contactModal">
 
+    <div class="modalBackdrop" onclick="closeContact()"></div>
 
-    <div
-        class="modalBackdrop"
-        onclick="closeContact()">
-    </div>
+    <div class="modalBox">
 
+        <button class="modalClose" onclick="closeContact()">×</button>
 
-    <div class="contactModalBox">
-
-
-        <button
-            class="modalClose"
-            onclick="closeContact()">
-
-            ×
-
-        </button>
-
-
-        <div id="contactIconLarge"></div>
-
-
-        <div
-            class="sectionTag"
-            id="contactModalLabel">
-
+        <div class="tag" id="contactLabel">
             CONTACT
-
         </div>
 
-
-        <h3 id="contactModalTitle">
-
+        <h2 id="contactTitle">
             Contact
+        </h2>
 
-        </h3>
+        <p class="modalText" id="contactText"></p>
 
-
-        <p
-            class="small"
-            id="contactModalText">
-        </p>
-
-
-        <div
-            id="contactModalActions">
-        </div>
-
+        <div class="modalAction" id="contactAction"></div>
 
     </div>
 
 </div>
 
 
-<!-- =========================
-     RESUME MODAL
-========================= -->
+<!-- RESUME -->
 
-<div
-    id="resumeModal"
-    class="modal">
+<div class="modal" id="resumeModal">
 
-
-    <div
-        class="modalBackdrop"
-        onclick="closeResume()">
-    </div>
-
+    <div class="modalBackdrop" onclick="closeResume()"></div>
 
     <div class="resumeViewer">
 
+        <div class="resumeTop">
 
-        <div class="resumeTopbar">
-
-
-            <div>
-
-                <div class="sectionTag">
-
-                    DOCUMENT
-
-                </div>
-
-
-                <strong>
-
-                    SWARAJ VIKAS GADE
-                    — RESUME
-
-                </strong>
-
+            <div class="resumeTitle">
+                SWARAJ VIKAS GADE — RESUME
             </div>
 
-
             <div class="resumeActions">
-
 
                 <a
                     class="btn primary"
                     href="resume.jpg"
-                    download="Swaraj_Vikas_Gade_Resume.jpg">
-
+                    download="Swaraj_Vikas_Gade_Resume.jpg"
+                >
                     Download
-
                 </a>
 
-
-                <button
-                    class="modalClose"
-                    onclick="closeResume()">
-
+                <button class="modalClose" onclick="closeResume()">
                     ×
-
                 </button>
-
 
             </div>
 
-
         </div>
-
 
         <div class="resumePage">
 
             <img
                 src="resume.jpg"
-                alt="Swaraj Vikas Gade Resume">
+                alt="Swaraj Vikas Gade Resume"
+            >
 
         </div>
-
 
     </div>
 
 </div>
 
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
 <script>
 
@@ -3229,72 +1908,55 @@ gsap.registerPlugin(ScrollTrigger);
 
 
 /* =========================================================
-   THREE.JS SETUP
+   THREE.JS WORLD
 ========================================================= */
 
-const canvas =
-    document.getElementById("webgl");
+const canvas = document.getElementById("webgl");
 
+const renderer = new THREE.WebGLRenderer({
+    canvas,
+    antialias:true,
+    alpha:false,
+    powerPreference:"high-performance"
+});
 
-const renderer =
-    new THREE.WebGLRenderer({
-        canvas:canvas,
-        antialias:true,
-        alpha:false
-    });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio,1.7));
+renderer.setSize(window.innerWidth,window.innerHeight);
 
-
-renderer.setPixelRatio(
-    Math.min(devicePixelRatio,1.8)
-);
-
-
-renderer.setSize(
-    innerWidth,
-    innerHeight
-);
-
+renderer.outputEncoding = THREE.sRGBEncoding;
 
 renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
-renderer.shadowMap.type =
-    THREE.PCFSoftShadowMap;
-
-
-const scene =
-    new THREE.Scene();
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = .72;
 
 
-scene.background =
-    new THREE.Color(0x050607);
+const scene = new THREE.Scene();
 
+scene.background = new THREE.Color(0x050607);
 
-scene.fog =
-    new THREE.FogExp2(
-        0x050607,
-        0.0075
-    );
-
-
-const camera =
-    new THREE.PerspectiveCamera(
-        52,
-        innerWidth / innerHeight,
-        .1,
-        900
-    );
-
-
-camera.position.set(
-    48,
-    25,
-    62
+scene.fog = new THREE.FogExp2(
+    0x080a0c,
+    .009
 );
 
 
-const world =
-    new THREE.Group();
+const camera = new THREE.PerspectiveCamera(
+    52,
+    window.innerWidth/window.innerHeight,
+    .1,
+    600
+);
 
+camera.position.set(
+    42,
+    19,
+    58
+);
+
+
+const world = new THREE.Group();
 
 scene.add(world);
 
@@ -3303,79 +1965,79 @@ scene.add(world);
    LIGHTING
 ========================================================= */
 
-const hemi =
-    new THREE.HemisphereLight(
-        0xbfd3e8,
-        0x151515,
-        1.25
-    );
-
-scene.add(hemi);
-
-
-const sun =
-    new THREE.DirectionalLight(
-        0xffffff,
-        2.4
-    );
-
-sun.position.set(
-    55,
-    80,
-    25
+const ambient = new THREE.HemisphereLight(
+    0x9fb8c8,
+    0x08090a,
+    .85
 );
 
-sun.castShadow = true;
-
-sun.shadow.mapSize.width = 2048;
-sun.shadow.mapSize.height = 2048;
-
-scene.add(sun);
+scene.add(ambient);
 
 
-const redLight =
-    new THREE.PointLight(
-        0xff4b3e,
-        18,
-        80
-    );
+const moon = new THREE.DirectionalLight(
+    0xdbe9ff,
+    2.3
+);
+
+moon.position.set(
+    -45,
+    75,
+    35
+);
+
+moon.castShadow = true;
+
+moon.shadow.mapSize.width = 2048;
+moon.shadow.mapSize.height = 2048;
+
+moon.shadow.camera.left = -80;
+moon.shadow.camera.right = 80;
+moon.shadow.camera.top = 80;
+moon.shadow.camera.bottom = -80;
+
+scene.add(moon);
+
+
+const redLight = new THREE.PointLight(
+    0xff3d32,
+    8,
+    65
+);
 
 redLight.position.set(
-    10,
-    18,
-    5
+    -15,
+    12,
+    18
 );
 
 scene.add(redLight);
 
 
-const blueLight =
-    new THREE.PointLight(
-        0x4da3ff,
-        16,
-        90
-    );
+const blueLight = new THREE.PointLight(
+    0x3c9cff,
+    7,
+    75
+);
 
 blueLight.position.set(
-    -35,
-    15,
-    25
+    32,
+    18,
+    -18
 );
 
 scene.add(blueLight);
 
 
-const greenLight =
-    new THREE.PointLight(
-        0x58d68d,
-        10,
-        70
-    );
+const greenLight = new THREE.PointLight(
+    0x55dd90,
+    5,
+    45
+);
 
 greenLight.position.set(
-    -30,
-    20,
-    28
+    -32,
+    13,
+    25
 );
 
 scene.add(greenLight);
@@ -3385,90 +2047,73 @@ scene.add(greenLight);
    MATERIALS
 ========================================================= */
 
-const concrete =
-    new THREE.MeshStandardMaterial({
-        color:0x777a78,
-        roughness:.82,
-        metalness:.05
-    });
+const concrete = new THREE.MeshStandardMaterial({
+    color:0x7e8588,
+    roughness:.82,
+    metalness:.05
+});
 
+const concreteLight = new THREE.MeshStandardMaterial({
+    color:0xb0b5b5,
+    roughness:.72,
+    metalness:.04
+});
 
-const concreteLight =
-    new THREE.MeshStandardMaterial({
-        color:0xb6b7b1,
-        roughness:.7
-    });
+const darkConcrete = new THREE.MeshStandardMaterial({
+    color:0x252b2d,
+    roughness:.78,
+    metalness:.1
+});
 
+const steel = new THREE.MeshStandardMaterial({
+    color:0x4c5357,
+    roughness:.42,
+    metalness:.75
+});
 
-const concreteDark =
-    new THREE.MeshStandardMaterial({
-        color:0x34383a,
-        roughness:.82
-    });
+const rebar = new THREE.MeshStandardMaterial({
+    color:0x6b7478,
+    roughness:.3,
+    metalness:.85
+});
 
+const redMat = new THREE.MeshStandardMaterial({
+    color:0xa82c25,
+    roughness:.45,
+    metalness:.25,
+    emissive:0x210403,
+    emissiveIntensity:.35
+});
 
-const steel =
-    new THREE.MeshStandardMaterial({
-        color:0x202427,
-        roughness:.42,
-        metalness:.8
-    });
+const yellowMat = new THREE.MeshStandardMaterial({
+    color:0xe7b52e,
+    roughness:.5,
+    metalness:.2
+});
 
+const blueMat = new THREE.MeshStandardMaterial({
+    color:0x317fc4,
+    roughness:.4,
+    metalness:.35,
+    emissive:0x061728,
+    emissiveIntensity:.35
+});
 
-const rebar =
-    new THREE.MeshStandardMaterial({
-        color:0x7c8588,
-        roughness:.35,
-        metalness:.88
-    });
+const greenMat = new THREE.MeshStandardMaterial({
+    color:0x45bb78,
+    roughness:.42,
+    metalness:.2,
+    emissive:0x062a18,
+    emissiveIntensity:.5
+});
 
-
-const glass =
-    new THREE.MeshStandardMaterial({
-        color:0x16304a,
-        roughness:.15,
-        metalness:.25,
-        transparent:true,
-        opacity:.72
-    });
-
-
-const redMat =
-    new THREE.MeshStandardMaterial({
-        color:0xb8322a,
-        roughness:.48,
-        metalness:.25,
-        emissive:0x260604,
-        emissiveIntensity:.3
-    });
-
-
-const yellowMat =
-    new THREE.MeshStandardMaterial({
-        color:0xffc928,
-        roughness:.5,
-        metalness:.15
-    });
-
-
-const blueMat =
-    new THREE.MeshStandardMaterial({
-        color:0x3f91e8,
-        roughness:.4,
-        metalness:.35,
-        emissive:0x06182b,
-        emissiveIntensity:.35
-    });
-
-
-const greenMat =
-    new THREE.MeshStandardMaterial({
-        color:0x58d68d,
-        roughness:.42,
-        metalness:.3,
-        emissive:0x0a2a19,
-        emissiveIntensity:.5
-    });
+const glass = new THREE.MeshPhysicalMaterial({
+    color:0x5b8eaa,
+    transparent:true,
+    opacity:.28,
+    roughness:.08,
+    metalness:.15
+});
 
 
 /* =========================================================
@@ -3479,258 +2124,158 @@ function box(
     w,
     h,
     d,
-    mat,
-    x=0,
-    y=0,
-    z=0,
+    material,
+    x,
+    y,
+    z,
     parent=world
 ){
 
-    const m =
-        new THREE.Mesh(
-            new THREE.BoxGeometry(
-                w,
-                h,
-                d
-            ),
-            mat
-        );
-
-    m.position.set(
-        x,
-        y,
-        z
+    const mesh = new THREE.Mesh(
+        new THREE.BoxGeometry(w,h,d),
+        material
     );
 
-    m.castShadow = true;
+    mesh.position.set(x,y,z);
 
-    m.receiveShadow = true;
+    mesh.castShadow = true;
+    mesh.receiveShadow = true;
 
-    parent.add(m);
+    parent.add(mesh);
 
-    return m;
+    return mesh;
 }
 
 
-function cyl(
-    r1,
-    r2,
-    h,
-    mat,
-    x=0,
-    y=0,
-    z=0,
-    parent=world,
-    seg=16
-){
-
-    const m =
-        new THREE.Mesh(
-            new THREE.CylinderGeometry(
-                r1,
-                r2,
-                h,
-                seg
-            ),
-            mat
-        );
-
-    m.position.set(
-        x,
-        y,
-        z
-    );
-
-    m.castShadow = true;
-
-    m.receiveShadow = true;
-
-    parent.add(m);
-
-    return m;
-}
-
-
-function beamBetween(
-    a,
-    b,
+function cylinder(
     r,
-    mat,
+    h,
+    material,
+    x,
+    y,
+    z,
     parent=world
 ){
 
-    const dir =
-        new THREE.Vector3()
-        .subVectors(b,a);
-
-    const len =
-        dir.length();
-
-
-    const mid =
-        new THREE.Vector3()
-        .addVectors(a,b)
-        .multiplyScalar(.5);
-
-
-    const m =
-        cyl(
+    const mesh = new THREE.Mesh(
+        new THREE.CylinderGeometry(
             r,
             r,
-            len,
-            mat,
-            mid.x,
-            mid.y,
-            mid.z,
-            parent,
-            10
-        );
-
-
-    m.quaternion.setFromUnitVectors(
-        new THREE.Vector3(0,1,0),
-        dir.normalize()
+            h,
+            16
+        ),
+        material
     );
 
+    mesh.position.set(x,y,z);
 
-    return m;
+    mesh.castShadow = true;
+    mesh.receiveShadow = true;
+
+    parent.add(mesh);
+
+    return mesh;
+}
+
+
+function line(
+    x1,y1,z1,
+    x2,y2,z2,
+    material,
+    parent=world
+){
+
+    const geometry = new THREE.BufferGeometry();
+
+    geometry.setFromPoints([
+        new THREE.Vector3(x1,y1,z1),
+        new THREE.Vector3(x2,y2,z2)
+    ]);
+
+    const mesh = new THREE.Line(
+        geometry,
+        material
+    );
+
+    parent.add(mesh);
+
+    return mesh;
 }
 
 
 /* =========================================================
-   GROUND
+   MASSIVE SITE
 ========================================================= */
 
-const ground =
-    box(
-        170,
-        .6,
-        150,
-        concreteDark,
-        0,
-        -.3,
-        0
-    );
-
-
-/* GRID */
-
-for(
-    let i=-80;
-    i<=80;
-    i+=8
-){
-
-    box(
-        .04,
-        .012,
-        150,
-
-        new THREE.MeshBasicMaterial({
-            color:0x202527,
-            transparent:true,
-            opacity:.35
-        }),
-
-        i,
-        .02,
-        0
-    );
-
-}
-
-
-for(
-    let i=-72;
-    i<=72;
-    i+=8
-){
-
-    box(
-        170,
-        .012,
-        .04,
-
-        new THREE.MeshBasicMaterial({
-            color:0x202527,
-            transparent:true,
-            opacity:.35
-        }),
-
-        0,
-        .02,
-        i
-    );
-
-}
-
-
-/* =========================================================
-   ROADS
-========================================================= */
-
-const roadMat =
-    new THREE.MeshStandardMaterial({
-        color:0x171a1c,
-        roughness:.95
-    });
-
-
-box(
-    150,
-    .08,
-    8,
-    roadMat,
+const ground = box(
+    180,
+    .6,
+    180,
+    darkConcrete,
     0,
-    .08,
-    30
-);
-
-
-box(
-    8,
-    .08,
-    120,
-    roadMat,
-    32,
-    .08,
+    -.3,
     0
 );
 
 
-for(
-    let x=-68;
-    x<=68;
-    x+=16
-){
+/* construction grid */
+
+const grid = new THREE.GridHelper(
+    150,
+    75,
+    0x384248,
+    0x151b1e
+);
+
+grid.position.y=.02;
+
+grid.material.transparent=true;
+grid.material.opacity=.45;
+
+world.add(grid);
+
+
+/* roads */
+
+box(
+    18,
+    .12,
+    150,
+    new THREE.MeshStandardMaterial({
+        color:0x111416,
+        roughness:1
+    }),
+    36,
+    .08,
+    0
+);
+
+box(
+    150,
+    .12,
+    15,
+    new THREE.MeshStandardMaterial({
+        color:0x111416,
+        roughness:1
+    }),
+    0,
+    .09,
+    30
+);
+
+
+/* road markings */
+
+for(let i=-70;i<70;i+=10){
 
     box(
-        7,
-        .09,
-        .08,
+        1.8,
+        .03,
+        5,
         yellowMat,
-        x,
-        .14,
-        30
-    );
-
-}
-
-
-for(
-    let z=-55;
-    z<=55;
-    z+=16
-){
-
-    box(
-        .08,
-        .09,
-        7,
-        yellowMat,
-        32,
-        .14,
-        z
+        36,
+        .16,
+        i
     );
 
 }
@@ -3740,300 +2285,79 @@ for(
    BUILDING
 ========================================================= */
 
-const building =
-    new THREE.Group();
-
+const building = new THREE.Group();
 
 building.position.set(
-    4,
     0,
-    -5
+    0,
+    -3
 );
-
 
 world.add(building);
 
 
-const floorY = [
-    2,
-    6.2,
-    10.4,
-    14.6,
-    18.8,
-    23,
-    27.2,
-    31.4,
-    35.6
-];
+const floorHeight = 5.2;
+const floors = 9;
+
+const width = 30;
+const depth = 23;
 
 
-const colX = [
-    -11,
-    -3,
-    5,
-    13
-];
+/* footings */
 
+for(let x=-12;x<=12;x+=8){
 
-const colZ = [
-    -8,
-    2,
-    12
-];
-
-
-const constructionParts = [];
-
-
-function addConstruction(
-    m,
-    finalY=m.position.y,
-    startY=-5,
-    delay=0
-){
-
-    constructionParts.push({
-        m,
-        finalY,
-        startY,
-        delay,
-        scale:m.scale.clone()
-    });
-
-
-    m.position.y =
-        startY;
-
-
-    m.scale.multiplyScalar(
-        .15
-    );
-
-}
-
-
-/* =========================================================
-   COLUMNS
-========================================================= */
-
-for(
-    const x of colX
-){
-
-    for(
-        const z of colZ
-    ){
-
-        const m =
-            box(
-                .65,
-                35,
-                .65,
-                concrete,
-                x,
-                18,
-                z,
-                building
-            );
-
-
-        addConstruction(
-            m,
-            18,
-            -3
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   BEAMS
-========================================================= */
-
-for(
-    const y of floorY
-){
-
-    for(
-        const z of colZ
-    ){
+    for(let z=-8;z<=8;z+=8){
 
         box(
-            31,
-            .55,
-            .6,
+            5.5,
+            .8,
+            5.5,
             concreteLight,
-            1,
-            y,
+            x,
+            .4,
+            z,
+            building
+        );
+
+        box(
+            3.1,
+            1.7,
+            3.1,
+            concrete,
+            x,
+            1.25,
             z,
             building
         );
 
     }
 
-
-    for(
-        const x of colX
-    ){
-
-        box(
-            .6,
-            .55,
-            20,
-            concreteLight,
-            x,
-            y,
-            2,
-            building
-        );
-
-    }
-
 }
 
 
-/* =========================================================
-   SLABS
-========================================================= */
+/* columns */
 
-for(
-    const y of floorY
-){
+for(let floor=0;floor<=floors;floor++){
 
-    const slab =
-        box(
-            30,
-            .42,
-            20,
-            concreteLight,
-            1,
-            y,
-            2,
-            building
-        );
+    const y = 1.8 + floor*floorHeight;
 
+    for(let x=-12;x<=12;x+=8){
 
-    addConstruction(
-        slab,
-        y,
-        -2
-    );
+        for(let z=-8;z<=8;z+=8){
 
-}
-
-
-/* =========================================================
-   REINFORCEMENT CAGES
-========================================================= */
-
-for(
-    let y=2;
-    y<36;
-    y+=4.2
-){
-
-    for(
-        const x of colX
-    ){
-
-        for(
-            const z of colZ
-        ){
-
-            const cage =
-                new THREE.Group();
-
-
-            cage.position.set(
+            const c=box(
+                .65,
+                floorHeight,
+                .65,
+                concreteLight,
                 x,
-                y,
-                z
+                y+floorHeight/2,
+                z,
+                building
             );
 
-
-            for(
-                let a=-.22;
-                a<=.22;
-                a+=.22
-            ){
-
-                beamBetween(
-                    new THREE.Vector3(
-                        a,
-                        -1.8,
-                        -.22
-                    ),
-
-                    new THREE.Vector3(
-                        a,
-                        1.8,
-                        -.22
-                    ),
-
-                    .035,
-                    rebar,
-                    cage
-                );
-
-
-                beamBetween(
-                    new THREE.Vector3(
-                        a,
-                        -1.8,
-                        .22
-                    ),
-
-                    new THREE.Vector3(
-                        a,
-                        1.8,
-                        .22
-                    ),
-
-                    .035,
-                    rebar,
-                    cage
-                );
-
-            }
-
-
-            for(
-                let yy=-1.4;
-                yy<=1.4;
-                yy+=.7
-            ){
-
-                beamBetween(
-                    new THREE.Vector3(
-                        -.35,
-                        yy,
-                        -.22
-                    ),
-
-                    new THREE.Vector3(
-                        .35,
-                        yy,
-                        -.22
-                    ),
-
-                    .025,
-                    rebar,
-                    cage
-                );
-
-            }
-
-
-            building.add(cage);
-
-
-            addConstruction(
-                cage,
-                y,
-                -2
-            );
+            c.userData.floor=floor;
 
         }
 
@@ -4042,166 +2366,64 @@ for(
 }
 
 
-/* =========================================================
-   SLAB REINFORCEMENT
-========================================================= */
+/* slabs */
 
-for(
-    let y of [
-        6.2,
-        14.6,
-        23,
-        31.4
-    ]
-){
+for(let floor=1;floor<=floors;floor++){
 
-    for(
-        let x=-10;
-        x<=12;
-        x+=2
-    ){
+    const y =
+        1.8 +
+        floor*floorHeight;
 
-        box(
-            .045,
-            .08,
-            18,
-            rebar,
-            x,
-            y+.28,
-            2,
-            building
-        );
+    const slab=box(
+        width,
+        .55,
+        depth,
+        concrete,
+        0,
+        y,
+        0,
+        building
+    );
 
-    }
+    slab.userData.floor=floor;
+
+}
 
 
-    for(
-        let z=-6;
-        z<=10;
-        z+=2
-    ){
+/* beams */
+
+for(let floor=1;floor<=floors;floor++){
+
+    const y =
+        1.8 +
+        floor*floorHeight +
+        .3;
+
+    for(let z=-8;z<=8;z+=8){
 
         box(
-            30,
-            .08,
-            .045,
-            rebar,
-            1,
-            y+.32,
+            width,
+            .75,
+            .6,
+            concreteLight,
+            0,
+            y,
             z,
             building
         );
 
     }
 
-}
-
-
-/* =========================================================
-   WALLS
-========================================================= */
-
-const wallMat =
-    new THREE.MeshStandardMaterial({
-        color:0xa59b8a,
-        roughness:.9
-    });
-
-
-for(
-    let y of [
-        6.2,
-        14.6,
-        23,
-        31.4
-    ]
-){
-
-    for(
-        let x=-6;
-        x<14;
-        x+=4
-    ){
-
-        const w =
-            box(
-                3.5,
-                3.3,
-                .35,
-                wallMat,
-                x,
-                y+1.75,
-                -7.7,
-                building
-            );
-
-
-        addConstruction(
-            w,
-            y+1.75,
-            -1
-        );
-
-    }
-
-
-    for(
-        let z=-4;
-        z<10;
-        z+=4
-    ){
-
-        const w =
-            box(
-                .35,
-                3.3,
-                3.5,
-                wallMat,
-                13.2,
-                y+1.75,
-                z,
-                building
-            );
-
-
-        addConstruction(
-            w,
-            y+1.75,
-            -1
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   WINDOWS
-========================================================= */
-
-for(
-    let y of [
-        6.2,
-        14.6,
-        23,
-        31.4
-    ]
-){
-
-    for(
-        let x=-6;
-        x<14;
-        x+=4
-    ){
+    for(let x=-12;x<=12;x+=8){
 
         box(
-            2.3,
-            1.8,
-            .12,
-            glass,
+            .6,
+            .75,
+            depth,
+            concreteLight,
             x,
-            y+1.8,
-            -7.92,
+            y,
+            0,
             building
         );
 
@@ -4211,75 +2433,174 @@ for(
 
 
 /* =========================================================
-   ROOF
+   REINFORCEMENT
 ========================================================= */
 
-const roof =
+const rebarGroup = new THREE.Group();
+
+building.add(rebarGroup);
+
+for(let floor=1;floor<=floors;floor++){
+
+    const y =
+        1.8 +
+        floor*floorHeight +
+        .63;
+
+    for(let x=-13;x<=13;x+=1.4){
+
+        line(
+            x,
+            y,
+            -9.5,
+            x,
+            y,
+            9.5,
+            rebar,
+            rebarGroup
+        );
+
+    }
+
+    for(let z=-9;z<=9;z+=1.4){
+
+        line(
+            -13,
+            y+.04,
+            z,
+            13,
+            y+.04,
+            z,
+            redMat,
+            rebarGroup
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   WALLS + WINDOWS
+========================================================= */
+
+for(let floor=1;floor<=floors;floor++){
+
+    const y =
+        1.8 +
+        floor*floorHeight -
+        2.2;
+
+    for(let x=-9;x<=9;x+=6){
+
+        box(
+            4.4,
+            3.7,
+            .3,
+            concreteLight,
+            x,
+            y,
+            -8.1,
+            building
+        );
+
+        const window=box(
+            3.2,
+            2.3,
+            .08,
+            glass,
+            x,
+            y+.25,
+            -8.27,
+            building
+        );
+
+        window.castShadow=false;
+
+    }
+
+}
+
+
+/* =========================================================
+   STAIRCASE
+========================================================= */
+
+const stairs = new THREE.Group();
+
+stairs.position.set(
+    -20,
+    0,
+    -2
+);
+
+world.add(stairs);
+
+for(let i=0;i<18;i++){
+
     box(
-        31,
-        .6,
-        20,
+        5,
+        .35,
+        1.5,
         concreteLight,
-        1,
-        39.7,
-        2,
-        building
+        0,
+        i*.35,
+        i*.75,
+        stairs
     );
 
-
-addConstruction(
-    roof,
-    39.7,
-    0
-);
+}
 
 
-/* PARAPET */
+/* =========================================================
+   ROOF PARAPET
+========================================================= */
+
+const roofY =
+    1.8 +
+    floors*floorHeight;
 
 box(
-    .35,
-    1.1,
-    20,
-    concrete,
-    -14.2,
-    40.5,
-    2,
+    width,
+    1.5,
+    .45,
+    concreteLight,
+    0,
+    roofY+1,
+    -11.25,
     building
 );
 
-
 box(
-    .35,
-    1.1,
-    20,
-    concrete,
-    16.2,
-    40.5,
-    2,
+    width,
+    1.5,
+    .45,
+    concreteLight,
+    0,
+    roofY+1,
+    11.25,
     building
 );
 
-
 box(
-    31,
-    .1,
-    1.1,
-    concrete,
-    1,
-    40.5,
-    -8,
+    .45,
+    1.5,
+    depth,
+    concreteLight,
+    -14.75,
+    roofY+1,
+    0,
     building
 );
 
-
 box(
-    31,
-    .1,
-    1.1,
-    concrete,
-    1,
-    40.5,
-    12,
+    .45,
+    1.5,
+    depth,
+    concreteLight,
+    14.75,
+    roofY+1,
+    0,
     building
 );
 
@@ -4288,129 +2609,24 @@ box(
    WATER TANK
 ========================================================= */
 
-const tank =
-    cyl(
-        3,
-        3,
-        4,
-        concreteLight,
-        7,
-        44,
-        3,
-        building,
-        24
-    );
-
-
-addConstruction(
-    tank,
-    44,
-    1
-);
-
-
-cyl(
-    3.2,
-    3.2,
-    .25,
-    redMat,
-    7,
-    46,
-    3,
-    building,
-    24
-);
-
-
-/* =========================================================
-   STAIRCASE
-========================================================= */
-
-const stair =
-    new THREE.Group();
-
-
-stair.position.set(
-    18,
+const tank=cylinder(
+    3.5,
+    4.5,
+    concreteLight,
+    6,
+    roofY+3.2,
     0,
-    5
+    building
 );
 
-
-world.add(stair);
-
-
-for(
-    let i=0;
-    i<22;
-    i++
-){
-
-    const s =
-        box(
-            5,
-            .35,
-            1.1,
-            concreteLight,
-            0,
-            i*.48,
-            i*.85,
-            stair
-        );
-
-
-    addConstruction(
-        s,
-        i*.48,
-        -2
-    );
-
-}
-
-
-const railMat =
-    new THREE.MeshStandardMaterial({
-        color:0x4d5355,
-        metalness:.7,
-        roughness:.4
-    });
-
-
-beamBetween(
-    new THREE.Vector3(
-        -2.3,
-        0,
-        0
-    ),
-
-    new THREE.Vector3(
-        -2.3,
-        10,
-        18
-    ),
-
-    .08,
-    railMat,
-    stair
-);
-
-
-beamBetween(
-    new THREE.Vector3(
-        2.3,
-        0,
-        0
-    ),
-
-    new THREE.Vector3(
-        2.3,
-        10,
-        18
-    ),
-
-    .08,
-    railMat,
-    stair
+const tankTop=cylinder(
+    3.65,
+    .35,
+    blueMat,
+    6,
+    roofY+5.5,
+    0,
+    building
 );
 
 
@@ -4418,132 +2634,97 @@ beamBetween(
    TOWER CRANE
 ========================================================= */
 
-const crane =
-    new THREE.Group();
+const crane = new THREE.Group();
 
+crane.position.set(
+    28,
+    0,
+    -5
+);
 
 world.add(crane);
 
 
-cyl(
-    .75,
-    .75,
-    38,
-    yellowMat,
-    26,
-    19,
-    4,
-    crane,
-    12
-);
+/* mast */
 
+for(let y=2;y<56;y+=3){
 
-beamBetween(
-    new THREE.Vector3(
-        26,
-        37,
-        4
-    ),
-
-    new THREE.Vector3(
-        72,
-        37,
-        4
-    ),
-
-    .28,
-    yellowMat,
-    crane
-);
-
-
-beamBetween(
-    new THREE.Vector3(
-        26,
-        37,
-        4
-    ),
-
-    new THREE.Vector3(
-        4,
-        37,
-        4
-    ),
-
-    .16,
-    yellowMat,
-    crane
-);
-
-
-for(
-    let x=26;
-    x<=72;
-    x+=5
-){
-
-    beamBetween(
-        new THREE.Vector3(
-            x,
-            37,
-            4
-        ),
-
-        new THREE.Vector3(
-            x,
-            39,
-            4
-        ),
-
-        .05,
+    box(
+        1,
+        3,
+        1,
         yellowMat,
+        0,
+        y,
+        0,
         crane
     );
 
 }
 
 
+/* crane head */
+
 box(
-    1,
-    .5,
-    1,
+    3,
+    2,
+    3,
     yellowMat,
-    53,
-    36.5,
-    4,
+    0,
+    57,
+    0,
     crane
 );
 
 
-beamBetween(
-    new THREE.Vector3(
-        53,
-        36.3,
-        4
-    ),
+/* boom */
 
-    new THREE.Vector3(
-        53,
-        25,
-        4
-    ),
+box(
+    48,
+    .7,
+    .7,
+    yellowMat,
+    -20,
+    58,
+    0,
+    crane
+);
 
-    .035,
+
+/* counter boom */
+
+box(
+    15,
+    .7,
+    .7,
+    yellowMat,
+    8,
+    58,
+    0,
+    crane
+);
+
+
+/* cable */
+
+line(
+    -42,58,0,
+    -42,20,0,
     steel,
     crane
 );
 
 
-cyl(
-    .7,
-    .7,
-    .25,
-    steel,
-    53,
-    24.8,
-    4,
-    crane,
-    16
+/* hook */
+
+cylinder(
+    .35,
+    2,
+    yellowMat,
+    -42,
+    19,
+    0,
+    crane
 );
 
 
@@ -4551,826 +2732,530 @@ cyl(
    SITE OBJECTS
 ========================================================= */
 
-const siteObjects =
-    new THREE.Group();
 
+/* steel stacks */
 
-world.add(siteObjects);
+for(let i=0;i<7;i++){
 
-
-for(
-    let i=0;
-    i<10;
-    i++
-){
-
-    cyl(
-        .35,
-        .35,
-        .8,
-        redMat,
-        -30+i*2,
-        .4,
-        -20,
-        siteObjects,
-        12
-    );
-
-
-    cyl(
-        .38,
-        .38,
-        .08,
-        yellowMat,
-        -30+i*2,
-        .82,
-        -20,
-        siteObjects,
-        12
+    cylinder(
+        .25,
+        10,
+        rebar,
+        -35+i*.8,
+        1,
+        22,
+        world
     );
 
 }
 
 
-for(
-    let i=0;
-    i<6;
-    i++
-){
+/* safety barriers */
+
+for(let x=-40;x<-20;x+=4){
 
     box(
-        2,
+        .18,
+        1.4,
+        .18,
+        yellowMat,
+        x,
         .7,
-        5,
-        steel,
-        -35+i*2,
-        .45,
-        -12,
-        siteObjects
+        17,
+        world
     );
+
+    if(x<-21){
+
+        line(
+            x,
+            1.2,
+            17,
+            x+4,
+            1.2,
+            17,
+            redMat,
+            world
+        );
+
+    }
+
+}
+
+
+/* site lights */
+
+for(let x=-30;x<=30;x+=15){
+
+    cylinder(
+        .15,
+        8,
+        steel,
+        x,
+        4,
+        28,
+        world
+    );
+
+    const light = new THREE.PointLight(
+        0xffc84a,
+        2,
+        15
+    );
+
+    light.position.set(
+        x,
+        8,
+        28
+    );
+
+    world.add(light);
 
 }
 
 
 /* =========================================================
-   AI DIGITAL TWIN PLATFORM
+   BLUEPRINT PLATFORM / DIGITAL TWIN
 ========================================================= */
 
-const twinPlatform =
-    new THREE.Group();
+const twinPlatform=new THREE.Group();
 
+twinPlatform.position.set(
+    -30,
+    .3,
+    23
+);
 
 world.add(twinPlatform);
 
 
 box(
-    8,
-    .45,
-    8,
-    concreteDark,
-    0,
-    .25,
-    0,
-    twinPlatform
-);
-
-
-box(
-    7.3,
-    .08,
-    7.3,
-    greenMat,
-    0,
+    9,
     .5,
+    9,
+    darkConcrete,
+    0,
+    0,
     0,
     twinPlatform
 );
 
+const ring=new THREE.Mesh(
+    new THREE.TorusGeometry(
+        3.7,
+        .055,
+        8,
+        64
+    ),
+    new THREE.MeshBasicMaterial({
+        color:0x55dc91,
+        transparent:true,
+        opacity:.9
+    })
+);
 
-const ring =
-    new THREE.Mesh(
-        new THREE.TorusGeometry(
-            3.4,
-            .045,
-            8,
-            64
-        ),
-
-        new THREE.MeshBasicMaterial({
-            color:0x58d68d,
-            transparent:true,
-            opacity:.8
-        })
-    );
-
-
-ring.rotation.x =
-    Math.PI/2;
-
-
-ring.position.y =
-    .56;
-
+ring.rotation.x=Math.PI/2;
+ring.position.y=.3;
 
 twinPlatform.add(ring);
 
 
-twinPlatform.position.set(
-    -31,
-    .05,
-    24
+const twinLight=new THREE.PointLight(
+    0x4ca3ff,
+    6,
+    22
 );
+
+twinLight.position.set(
+    0,
+    8,
+    0
+);
+
+twinPlatform.add(twinLight);
 
 
 /* =========================================================
    DIGITAL TWIN
 ========================================================= */
 
-const digitalTwin =
-    new THREE.Group();
+const avatar=new THREE.Group();
+
+twinPlatform.add(avatar);
 
 
-world.add(digitalTwin);
+/* body */
 
-
-const avatar =
-    new THREE.Group();
-
-
-digitalTwin.add(avatar);
-
-
-const bodyMat =
-    new THREE.MeshStandardMaterial({
-        color:0x111518,
-        roughness:.55
-    });
-
-
-const shirtMat =
-    new THREE.MeshStandardMaterial({
-        color:0xf2f2ef,
-        roughness:.7
-    });
-
-
-const skinMat =
-    new THREE.MeshStandardMaterial({
-        color:0xb87852,
-        roughness:.7
-    });
-
-
-cyl(
-    .45,
-    .48,
-    .9,
-    skinMat,
-    0,
-    2.7,
-    0,
-    avatar,
-    20
-);
-
-
-box(
-    1.05,
-    1.5,
-    .65,
-    shirtMat,
-    0,
-    1.65,
-    0,
-    avatar
-);
-
-
-box(
-    .34,
-    1.35,
-    .42,
-    bodyMat,
-    -.22,
-    .2,
-    0,
-    avatar
-);
-
-
-box(
-    .34,
-    1.35,
-    .42,
-    bodyMat,
-    .22,
-    .2,
-    0,
-    avatar
-);
-
-
-box(
-    .3,
-    1.25,
-    .35,
-    shirtMat,
-    -.75,
-    1.6,
-    0,
-    avatar
-);
-
-
-box(
-    .3,
-    1.25,
-    .35,
-    shirtMat,
-    .75,
-    1.6,
-    0,
-    avatar
-);
-
-
-cyl(
-    .56,
-    .56,
-    .12,
-    yellowMat,
-    0,
-    3.18,
-    0,
-    avatar,
-    24
-);
-
-
-avatar.position.set(
-    -31,
-    .55,
-    24
-);
-
-
-const twinLight =
-    new THREE.PointLight(
-        0x4da3ff,
+const body=new THREE.Mesh(
+    new THREE.CapsuleGeometry(
+        .65,
+        1.5,
         5,
-        25
-    );
-
-
-twinLight.position.set(
-    -31,
-    7,
-    24
+        12
+    ),
+    new THREE.MeshStandardMaterial({
+        color:0x202529,
+        roughness:.45
+    })
 );
 
+body.position.y=1.55;
 
-digitalTwin.add(twinLight);
+body.castShadow=true;
 
-
-/* =========================================================
-   BLUEPRINT TOWER
-========================================================= */
-
-const blueprintTower =
-    new THREE.Group();
+avatar.add(body);
 
 
-world.add(blueprintTower);
+/* head */
 
-
-blueprintTower.position.set(
-    -42,
-    .08,
-    -23
+const head=new THREE.Mesh(
+    new THREE.SphereGeometry(
+        .55,
+        24,
+        24
+    ),
+    new THREE.MeshStandardMaterial({
+        color:0xb88769,
+        roughness:.6
+    })
 );
 
+head.position.y=3;
 
-for(
-    let i=-4;
-    i<=4;
-    i++
-){
+head.castShadow=true;
+
+avatar.add(head);
+
+
+/* helmet */
+
+const helmet=new THREE.Mesh(
+    new THREE.SphereGeometry(
+        .64,
+        24,
+        12,
+        0,
+        Math.PI*2,
+        0,
+        Math.PI/2
+    ),
+    yellowMat
+);
+
+helmet.position.y=3.22;
+
+avatar.add(helmet);
+
+
+/* legs */
+
+for(const x of [-.3,.3]){
 
     box(
-        36,
-        .03,
-        .03,
-        blueMat,
+        .28,
+        1.2,
+        .3,
+        steel,
+        x,
+        .65,
         0,
-        .03,
-        i*4,
-        blueprintTower
-    );
-
-
-    box(
-        .03,
-        .03,
-        36,
-        blueMat,
-        i*4,
-        .04,
-        0,
-        blueprintTower
+        avatar
     );
 
 }
 
 
-box(
-    36,
-    .06,
-    .06,
-    blueMat,
-    0,
-    .1,
-    -18,
-    blueprintTower
-);
+/* arms */
 
+for(const x of [-.9,.9]){
 
-box(
-    .06,
-    .06,
-    36,
-    blueMat,
-    -18,
-    .1,
-    0,
-    blueprintTower
-);
-
-
-/* =========================================================
-   SCROLL LABELS
-========================================================= */
-
-const labels = [
-
-    {
-        p:0,
-        text:"01 / FOUNDATION"
-    },
-
-    {
-        p:.09,
-        text:"02 / STRUCTURAL FRAME"
-    },
-
-    {
-        p:.18,
-        text:"03 / ABOUT"
-    },
-
-    {
-        p:.30,
-        text:"04 / SITE EXPERIENCE"
-    },
-
-    {
-        p:.41,
-        text:"05 / SURVEYING"
-    },
-
-    {
-        p:.51,
-        text:"06 / DIGITAL DESIGN"
-    },
-
-    {
-        p:.61,
-        text:"07 / PROJECTS"
-    },
-
-    {
-        p:.71,
-        text:"08 / AI DIGITAL TWIN"
-    },
-
-    {
-        p:.80,
-        text:"09 / ACADEMIC WORK"
-    },
-
-    {
-        p:.87,
-        text:"10 / EDUCATION"
-    },
-
-    {
-        p:.93,
-        text:"11 / COMPLETED STRUCTURE"
-    },
-
-    {
-        p:.98,
-        text:"12 / CONTACT"
-    }
-
-];
-
-
-const progressObj = {
-    value:0
-};
-
-
-let targetCamera =
-    new THREE.Vector3();
-
-
-let lookTarget =
-    new THREE.Vector3();
-
-
-/* =========================================================
-   CONSTRUCTION ANIMATION
-========================================================= */
-
-function updateConstruction(p){
-
-    constructionParts.forEach(
-        o=>{
-
-            const local =
-                Math.max(
-                    0,
-                    Math.min(
-                        1,
-                        (p-o.delay*.02)/.20
-                    )
-                );
-
-
-            const e =
-                1 -
-                Math.pow(
-                    1-local,
-                    3
-                );
-
-
-            o.m.position.y =
-                o.startY +
-                (o.finalY-o.startY)*e;
-
-
-            o.m.scale
-                .copy(o.scale)
-                .multiplyScalar(
-                    .15+.85*e
-                );
-
-        }
+    box(
+        .25,
+        1.4,
+        .25,
+        steel,
+        x,
+        1.8,
+        0,
+        avatar
     );
 
 }
+
+
+/* =========================================================
+   PARTICLES
+========================================================= */
+
+const particleCount=1200;
+
+const positions=new Float32Array(
+    particleCount*3
+);
+
+for(let i=0;i<particleCount;i++){
+
+    positions[i*3]=(Math.random()-.5)*130;
+    positions[i*3+1]=Math.random()*65;
+    positions[i*3+2]=(Math.random()-.5)*100;
+
+}
+
+const particleGeometry=new THREE.BufferGeometry();
+
+particleGeometry.setAttribute(
+    "position",
+    new THREE.BufferAttribute(
+        positions,
+        3
+    )
+);
+
+const particleMaterial=new THREE.PointsMaterial({
+    color:0xb7c2c4,
+    size:.06,
+    transparent:true,
+    opacity:.45
+});
+
+const particles=new THREE.Points(
+    particleGeometry,
+    particleMaterial
+);
+
+world.add(particles);
 
 
 /* =========================================================
    CAMERA PATH
 ========================================================= */
 
-function updateCamera(p){
+const cameraPath=[
+    {x:42,y:15,z:58},
+    {x:34,y:12,z:42},
+    {x:29,y:17,z:38},
+    {x:-34,y:15,z:39},
+    {x:-42,y:18,z:31},
+    {x:35,y:23,z:29},
+    {x:42,y:25,z:18},
+    {x:-35,y:18,z:24},
+    {x:-38,y:24,z:13},
+    {x:18,y:35,z:48},
+    {x:0,y:25,z:68},
+    {x:0,y:16,z:85}
+];
 
-    const key = [
 
-        {
-            p:0,
-            x:50,
-            y:22,
-            z:55,
-            tx:0,
-            ty:8,
-            tz:0
-        },
+function getCameraPosition(progress){
 
-        {
-            p:.12,
-            x:39,
-            y:18,
-            z:48,
-            tx:2,
-            ty:14,
-            tz:0
-        },
+    const scaled =
+        progress*(cameraPath.length-1);
 
-        {
-            p:.25,
-            x:-42,
-            y:17,
-            z:38,
-            tx:2,
-            ty:16,
-            tz:0
-        },
+    const index=Math.floor(scaled);
 
-        {
-            p:.40,
-            x:43,
-            y:20,
-            z:28,
-            tx:5,
-            ty:18,
-            tz:0
-        },
+    const t=scaled-index;
 
-        {
-            p:.53,
-            x:-38,
-            y:23,
-            z:20,
-            tx:-5,
-            ty:16,
-            tz:0
-        },
-
-        {
-            p:.65,
-            x:34,
-            y:31,
-            z:45,
-            tx:4,
-            ty:20,
-            tz:-4
-        },
-
-        {
-            p:.76,
-            x:-27,
-            y:11,
-            z:39,
-            tx:-31,
-            ty:3,
-            tz:24
-        },
-
-        {
-            p:.87,
-            x:42,
-            y:27,
-            z:-35,
-            tx:0,
-            ty:22,
-            tz:0
-        },
-
-        {
-            p:1,
-            x:-46,
-            y:22,
-            z:55,
-            tx:2,
-            ty:18,
-            tz:0
-        }
-
+    const a=cameraPath[
+        Math.min(index,cameraPath.length-1)
     ];
 
+    const b=cameraPath[
+        Math.min(index+1,cameraPath.length-1)
+    ];
 
-    let a =
-        key[0];
-
-
-    let b =
-        key[key.length-1];
-
-
-    for(
-        let i=0;
-        i<key.length-1;
-        i++
-    ){
-
-        if(
-            p>=key[i].p &&
-            p<=key[i+1].p
-        ){
-
-            a =
-                key[i];
-
-            b =
-                key[i+1];
-
-            break;
-
-        }
-
-    }
-
-
-    const t =
-        (p-a.p) /
-        (b.p-a.p || 1);
-
-
-    const s =
-        t*t*(3-2*t);
-
-
-    targetCamera.set(
-
-        THREE.MathUtils.lerp(
-            a.x,
-            b.x,
-            s
-        ),
-
-        THREE.MathUtils.lerp(
-            a.y,
-            b.y,
-            s
-        ),
-
-        THREE.MathUtils.lerp(
-            a.z,
-            b.z,
-            s
-        )
-
-    );
-
-
-    lookTarget.set(
-
-        THREE.MathUtils.lerp(
-            a.tx,
-            b.tx,
-            s
-        ),
-
-        THREE.MathUtils.lerp(
-            a.ty,
-            b.ty,
-            s
-        ),
-
-        THREE.MathUtils.lerp(
-            a.tz,
-            b.tz,
-            s
-        )
-
-    );
-
-
-    camera.position.lerp(
-        targetCamera,
-        .055
-    );
-
-
-    camera.lookAt(
-        lookTarget
-    );
+    return {
+        x:THREE.MathUtils.lerp(a.x,b.x,t),
+        y:THREE.MathUtils.lerp(a.y,b.y,t),
+        z:THREE.MathUtils.lerp(a.z,b.z,t)
+    };
 
 }
 
 
 /* =========================================================
-   DIGITAL TWIN MOVEMENT
+   SCROLL ANIMATION
 ========================================================= */
 
-function updateAvatar(p){
+const scenes=[
+    ...document.querySelectorAll(".scene")
+];
 
-    const pulse =
-        1 +
+const cards=[
+    ...document.querySelectorAll("[data-card]")
+];
+
+const hudItems=[
+    ...document.querySelectorAll(".hudItem")
+];
+
+const progressFill=
+    document.querySelector(".progressFill");
+
+const scrollHint=
+    document.querySelector(".scrollHint");
+
+
+function updateWorld(progress){
+
+    const cam=getCameraPosition(progress);
+
+    camera.position.x +=
+        (cam.x-camera.position.x)*.075;
+
+    camera.position.y +=
+        (cam.y-camera.position.y)*.075;
+
+    camera.position.z +=
+        (cam.z-camera.position.z)*.075;
+
+
+    /* always look at building */
+
+    const lookY =
+        15 +
+        Math.sin(progress*Math.PI)*5;
+
+    camera.lookAt(
+        0,
+        lookY,
+        -3
+    );
+
+
+    /* building construction progression */
+
+    const construction =
+        Math.min(
+            1,
+            progress*1.12
+        );
+
+    building.scale.y=
+        .35+
+        construction*.65;
+
+    rebarGroup.visible=
+        progress>.08 &&
+        progress<.72;
+
+
+    /* digital twin */
+
+    const twinPhase=
+        Math.max(
+            0,
+            Math.min(
+                1,
+                (progress-.63)/.2
+            )
+        );
+
+    avatar.position.x=
+        Math.sin(twinPhase*Math.PI)*3;
+
+    avatar.position.z=
+        Math.cos(twinPhase*Math.PI)*3;
+
+    avatar.rotation.y=
+        twinPhase*Math.PI*2;
+
+    const pulse=
+        1+
         Math.sin(
             performance.now()*.003
-        )*.035;
-
+        )*.04;
 
     avatar.scale.setScalar(
         .82*pulse
     );
 
 
-    ring.rotation.z =
+    twinPlatform.rotation.y=
         performance.now()*.00025;
 
 
-    const x =
-        -31 +
-        Math.sin(p*8)*4;
+    /* crane */
+
+    crane.rotation.y=
+        Math.sin(performance.now()*.0002)*.12;
 
 
-    const z =
-        24 +
-        Math.cos(p*6)*5;
+    particles.rotation.y=
+        progress*.12;
 
 
-    digitalTwin.position.x =
-        x+31;
+    progressFill.style.height=
+        `${progress*100}%`;
 
 
-    digitalTwin.position.z =
-        z-24;
+    /* HUD */
 
+    const activeIndex=
+        Math.min(
+            hudItems.length-1,
+            Math.floor(progress*hudItems.length)
+        );
 
-    twinLight.position.set(
-        -31,
-        7,
-        24
+    hudItems.forEach(
+        (item,index)=>{
+            item.classList.toggle(
+                "active",
+                index===activeIndex
+            );
+        }
     );
 
 
-    avatar.rotation.y =
-        Math.sin(
-            performance.now()*.001
-        )*.18;
+    /* hide scroll hint */
 
+    scrollHint.style.opacity=
+        progress>.03 ? "0" : "1";
 }
 
 
 /* =========================================================
-   RENDER LOOP
+   CARD FADE / SLIDE
 ========================================================= */
 
-function animate(){
+function setupCards(){
 
-    requestAnimationFrame(
-        animate
-    );
+    scenes.forEach(
+        (sceneEl,index)=>{
 
+            const card=
+                sceneEl.querySelector("[data-card]");
 
-    const p =
-        progressObj.value;
+            if(!card) return;
 
-
-    updateConstruction(p);
-
-    updateCamera(p);
-
-    updateAvatar(p);
-
-
-    redLight.intensity =
-        15 +
-        Math.sin(
-            performance.now()*.002
-        )*3;
-
-
-    renderer.render(
-        scene,
-        camera
-    );
-
-}
-
-
-animate();
-
-
-/* =========================================================
-   SCROLLTRIGGER
-========================================================= */
-
-function setProgress(p){
-
-    progressObj.value =
-        p;
-
-
-    document
-        .getElementById("progressBar")
-        .style.width =
-        (p*100)+"%";
-
-
-    let current =
-        labels[0];
-
-
-    for(
-        const l of labels
-    ){
-
-        if(
-            p>=l.p
-        ){
-
-            current =
-                l;
+            gsap.to(
+                card,
+                {
+                    opacity:1,
+                    y:0,
+                    scale:1,
+                    duration:.85,
+                    ease:"power3.out",
+                    scrollTrigger:{
+                        trigger:sceneEl,
+                        start:"top 68%",
+                        end:"center 32%",
+                        toggleActions:
+                            "play reverse play reverse"
+                    }
+                }
+            );
 
         }
-
-    }
-
-
-    document
-        .getElementById("sceneLabel")
-        .textContent =
-        current.text;
+    );
 
 }
 
+setupCards();
+
+
+/* =========================================================
+   SCROLL TRIGGER WORLD
+========================================================= */
 
 ScrollTrigger.create({
 
@@ -5380,15 +3265,47 @@ ScrollTrigger.create({
 
     end:"bottom bottom",
 
-    scrub:true,
+    scrub:1,
 
     onUpdate:self=>{
-
-        setProgress(
+        updateWorld(
             self.progress
         );
-
     }
+
+});
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+document
+.querySelectorAll("[data-go]")
+.forEach(btn=>{
+
+    btn.addEventListener(
+        "click",
+        ()=>{
+
+            const index=
+                Number(
+                    btn.dataset.go
+                );
+
+            const target=
+                scenes[index];
+
+            if(!target) return;
+
+            window.scrollTo({
+                top:
+                    target.offsetTop,
+                behavior:"smooth"
+            });
+
+        }
+    );
 
 });
 
@@ -5401,24 +3318,21 @@ window.addEventListener(
     "resize",
     ()=>{
 
-        camera.aspect =
-            innerWidth /
-            innerHeight;
-
+        camera.aspect=
+            window.innerWidth/
+            window.innerHeight;
 
         camera.updateProjectionMatrix();
 
-
         renderer.setSize(
-            innerWidth,
-            innerHeight
+            window.innerWidth,
+            window.innerHeight
         );
-
 
         renderer.setPixelRatio(
             Math.min(
-                devicePixelRatio,
-                1.8
+                window.devicePixelRatio,
+                1.7
             )
         );
 
@@ -5427,207 +3341,102 @@ window.addEventListener(
 
 
 /* =========================================================
-   CONTACT DATA
+   CONTACT
 ========================================================= */
 
-const contactData = {
+const contactData={
 
     email:{
-
-        icon:"✉",
-
         label:"EMAIL",
-
-        title:"Email Me",
-
-        text:
-            "swarajgade58@gmail.com",
-
+        title:"Send an email",
+        text:"swarajgade58@gmail.com",
         action:
             "mailto:swarajgade58@gmail.com",
-
-        actionText:
-            "Send Email"
-
+        actionText:"SEND EMAIL"
     },
-
 
     phone:{
-
-        icon:"☎",
-
         label:"PHONE",
-
-        title:"Call Me",
-
-        text:
-            "+91 81779 18199",
-
+        title:"Call Swaraj",
+        text:"+91 81779 18199",
         action:
             "tel:+918177918199",
-
-        actionText:
-            "Call Now"
-
+        actionText:"CALL NOW"
     },
-
 
     whatsapp:{
-
-        icon:"◉",
-
         label:"WHATSAPP",
-
-        title:"WhatsApp",
-
+        title:"Connect on WhatsApp",
         text:
-            "Connect with me directly on WhatsApp.",
-
+            "Start a direct conversation with me.",
         action:
             "https://wa.me/918177918199",
-
-        actionText:
-            "Open WhatsApp"
-
+        actionText:"OPEN WHATSAPP"
     },
 
-
     linkedin:{
-
-        icon:"in",
-
         label:"LINKEDIN",
-
-        title:"LinkedIn",
-
+        title:"Professional profile",
         text:
             "Connect with me professionally on LinkedIn.",
-
         action:
-            "https://www.linkedin.com/in/swaraj-gade-4481b83a5",
-
-        actionText:
-            "Open LinkedIn"
-
+            "https://www.linkedin.com/in/swaraj-gade-4481b83a5/",
+        actionText:"OPEN LINKEDIN"
     }
 
 };
 
 
-/* =========================================================
-   CONTACT POPUP
-========================================================= */
-
 function openContact(type){
 
-    const d =
+    const data=
         contactData[type];
 
+    document
+    .getElementById("contactLabel")
+    .textContent=
+        data.label;
 
     document
-        .getElementById(
-            "contactIconLarge"
-        )
-        .textContent =
-        d.icon;
-
+    .getElementById("contactTitle")
+    .textContent=
+        data.title;
 
     document
-        .getElementById(
-            "contactModalLabel"
-        )
-        .textContent =
-        d.label;
+    .getElementById("contactText")
+    .textContent=
+        data.text;
 
-
-    document
-        .getElementById(
-            "contactModalTitle"
-        )
-        .textContent =
-        d.title;
-
-
-    document
-        .getElementById(
-            "contactModalText"
-        )
-        .textContent =
-        d.text;
-
-
-    document
-        .getElementById(
-            "contactModalActions"
-        )
-        .innerHTML =
-
-        '<a class="modalAction" href="' +
-        d.action +
-        '"' +
-
-        (
-            type==="whatsapp" ||
-            type==="linkedin"
-
-            ?
-
-            ' target="_blank" rel="noopener"'
-
-            :
-
-            ''
-        )
-
-        +
-
-        '>' +
-
-        d.actionText +
-
-        '</a>';
-
-
-    document
-        .getElementById(
-            "contactModal"
-        )
-        .classList.add(
-            "active"
+    const action=
+        document.getElementById(
+            "contactAction"
         );
 
+    action.innerHTML=
+        `<a class="btn primary"
+            href="${data.action}"
+            ${type==="whatsapp" ||
+              type==="linkedin"
+              ? 'target="_blank" rel="noopener"'
+              : ""}>
+            ${data.actionText}
+        </a>`;
 
-    document.body.style.overflow =
-        "hidden";
+    document
+    .getElementById("contactModal")
+    .classList.add("active");
 
+    document.body.style.overflow="hidden";
 }
 
 
 function closeContact(){
 
     document
-        .getElementById(
-            "contactModal"
-        )
-        .classList.remove(
-            "active"
-        );
+    .getElementById("contactModal")
+    .classList.remove("active");
 
-
-    if(
-        !document
-            .getElementById(
-                "resumeModal"
-            )
-            .classList.contains(
-                "active"
-            )
-    ){
-
-        document.body.style.overflow =
-            "";
-
-    }
+    document.body.style.overflow="";
 
 }
 
@@ -5639,16 +3448,10 @@ function closeContact(){
 function openResume(){
 
     document
-        .getElementById(
-            "resumeModal"
-        )
-        .classList.add(
-            "active"
-        );
+    .getElementById("resumeModal")
+    .classList.add("active");
 
-
-    document.body.style.overflow =
-        "hidden";
+    document.body.style.overflow="hidden";
 
 }
 
@@ -5656,28 +3459,10 @@ function openResume(){
 function closeResume(){
 
     document
-        .getElementById(
-            "resumeModal"
-        )
-        .classList.remove(
-            "active"
-        );
+    .getElementById("resumeModal")
+    .classList.remove("active");
 
-
-    if(
-        !document
-            .getElementById(
-                "contactModal"
-            )
-            .classList.contains(
-                "active"
-            )
-    ){
-
-        document.body.style.overflow =
-            "";
-
-    }
+    document.body.style.overflow="";
 
 }
 
@@ -5690,68 +3475,48 @@ document.addEventListener(
     "keydown",
     e=>{
 
-        if(
-            e.key==="Escape"
-        ){
+        if(e.key!=="Escape") return;
 
-            closeContact();
-
-            closeResume();
-
-        }
+        closeContact();
+        closeResume();
 
     }
 );
 
 
 /* =========================================================
-   LOADING
+   RENDER LOOP
 ========================================================= */
 
-window.addEventListener(
-    "load",
-    ()=>{
+const clock=new THREE.Clock();
 
-        gsap.to(
-            "#loading .loaderBar i",
-            {
+function animate(){
 
-                width:"100%",
+    requestAnimationFrame(
+        animate
+    );
 
-                duration:1.1,
+    const t=
+        clock.getElapsedTime();
 
-                ease:"power2.inOut",
+    /* subtle world movement */
 
-                onComplete:()=>{
+    building.rotation.y=
+        Math.sin(t*.08)*.004;
 
-                    gsap.to(
-                        "#loading",
-                        {
+    renderer.render(
+        scene,
+        camera
+    );
 
-                            opacity:0,
+}
 
-                            duration:.7,
+animate();
 
-                            onComplete:()=>{
 
-                                document
-                                    .getElementById(
-                                        "loading"
-                                    )
-                                    .remove();
+/* initial */
 
-                            }
-
-                        }
-                    );
-
-                }
-
-            }
-        );
-
-    }
-);
+updateWorld(0);
 
 </script>
 
