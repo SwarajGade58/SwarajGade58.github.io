@@ -3,11 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Swaraj Gade | Civil Engineering Portfolio</title>
+<title>Swaraj Vikas Gade | Civil Engineering Portfolio</title>
 
 <meta name="description"
-content="Swaraj Gade — Civil Engineering portfolio with an immersive 3D construction experience.">
+content="Swaraj Vikas Gade — Civil Engineering portfolio, site experience, surveying, AutoCAD, projects and technical skills.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,63 +14,40 @@ content="Swaraj Gade — Civil Engineering portfolio with an immersive 3D constr
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
 <style>
 
-/* =========================================================
-   GLOBAL
-========================================================= */
-
 :root{
-    --bg:#050606;
-    --panel:#090b0b;
-    --text:#f2f3ed;
-    --muted:#8c918c;
-    --accent:#d9ff32;
-    --accent2:#8fa8ff;
-    --line:rgba(255,255,255,.11);
-    --greenLine:rgba(217,255,50,.25);
+    --bg:#090b0c;
+    --panel:rgba(10,13,14,.84);
+    --panel2:rgba(18,22,23,.92);
+    --white:#f5f7f6;
+    --muted:#aab2b0;
+    --line:rgba(255,255,255,.12);
+    --green:#69d391;
+    --green2:#b4f5ca;
+    --orange:#e9a45c;
+    --cyan:#71d8e8;
 }
 
 *{
     box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
 html{
     scroll-behavior:auto;
+    background:#090b0c;
 }
 
 body{
-    margin:0;
-    background:var(--bg);
-    color:var(--text);
+    background:#090b0c;
+    color:var(--white);
     font-family:Inter,Arial,sans-serif;
     overflow-x:hidden;
-}
-
-body:before{
-    content:"";
-    position:fixed;
-    inset:0;
-    pointer-events:none;
-    z-index:50;
-    opacity:.045;
-
-    background-image:
-        linear-gradient(rgba(255,255,255,.6) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(255,255,255,.6) 1px,transparent 1px);
-
-    background-size:50px 50px;
-
-    mask-image:linear-gradient(
-        to bottom,
-        black,
-        transparent 95%
-    );
 }
 
 a{
@@ -79,1864 +55,1164 @@ a{
     text-decoration:none;
 }
 
-
-/* =========================================================
-   LOADER
-========================================================= */
-
-#loader{
-    position:fixed;
-    inset:0;
-    z-index:999;
-    background:#050606;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
+button{
+    font-family:inherit;
 }
-
-.loader-box{
-    width:min(500px,82vw);
-}
-
-.loader-top{
-    display:flex;
-    justify-content:space-between;
-
-    font-family:"Space Grotesk";
-    font-size:11px;
-    letter-spacing:.2em;
-    color:#999;
-}
-
-.loader-line{
-    margin-top:14px;
-    height:2px;
-    background:#222;
-    overflow:hidden;
-}
-
-.loader-line span{
-    display:block;
-    width:0;
-    height:100%;
-    background:var(--accent);
-    box-shadow:0 0 15px var(--accent);
-}
-
-
-/* =========================================================
-   WEBGL
-========================================================= */
 
 #webgl{
     position:fixed;
     inset:0;
     width:100%;
     height:100%;
-    z-index:1;
-    display:block;
+    z-index:0;
+    pointer-events:none;
 }
 
-.vignette{
+#vignette{
+    position:fixed;
+    inset:0;
+    z-index:1;
+    pointer-events:none;
+    background:
+        radial-gradient(circle at center,
+            transparent 30%,
+            rgba(0,0,0,.18) 65%,
+            rgba(0,0,0,.72) 100%);
+}
+
+#grain{
     position:fixed;
     inset:0;
     z-index:2;
     pointer-events:none;
-
-    background:
-        radial-gradient(
-            circle at 50% 45%,
-            transparent 18%,
-            rgba(0,0,0,.18) 55%,
-            rgba(0,0,0,.75) 100%
-        );
+    opacity:.045;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
 }
 
+#loader{
+    position:fixed;
+    inset:0;
+    z-index:100;
+    background:#080a0b;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    gap:16px;
+}
 
-/* =========================================================
-   TOP NAVIGATION
-========================================================= */
+.loaderMark{
+    font-family:"Space Grotesk";
+    font-size:12px;
+    letter-spacing:.28em;
+    color:var(--green2);
+}
+
+.loaderLine{
+    width:180px;
+    height:2px;
+    background:rgba(255,255,255,.1);
+    overflow:hidden;
+}
+
+.loaderLine span{
+    display:block;
+    width:0%;
+    height:100%;
+    background:var(--green);
+}
 
 nav{
     position:fixed;
-    top:0;
     left:0;
     right:0;
-
+    top:0;
     height:82px;
-
-    padding:0 5vw;
-
+    z-index:20;
     display:flex;
     align-items:center;
     justify-content:space-between;
-
-    z-index:100;
-
-    pointer-events:auto;
-
+    padding:0 5vw;
+    border-bottom:1px solid rgba(255,255,255,.08);
     background:linear-gradient(
         to bottom,
-        rgba(5,6,6,.8),
-        transparent
+        rgba(5,7,8,.88),
+        rgba(5,7,8,.2)
     );
+    backdrop-filter:blur(14px);
 }
 
-.logo{
-    font-family:"Space Grotesk";
-    font-weight:700;
-    font-size:20px;
-    letter-spacing:-.06em;
-}
-
-.logo span{
-    color:var(--accent);
-}
-
-.nav-links{
-    display:flex;
-    gap:30px;
-
-    font-family:"Space Grotesk";
-    font-size:10px;
-    letter-spacing:.16em;
-    text-transform:uppercase;
-
-    color:#aaa;
-}
-
-.nav-links a{
-    transition:.3s;
-}
-
-.nav-links a:hover{
-    color:var(--accent);
-}
-
-.nav-status{
+.brand{
     display:flex;
     align-items:center;
-    gap:9px;
+    gap:12px;
+}
 
+.brandBox{
+    width:38px;
+    height:38px;
+    border:1px solid rgba(105,211,145,.7);
+    display:grid;
+    place-items:center;
     font-family:"Space Grotesk";
-    font-size:9px;
-    letter-spacing:.15em;
+    font-weight:700;
+    color:var(--green2);
+    transform:skew(-8deg);
+}
+
+.brandText{
+    font-family:"Space Grotesk";
+    font-size:14px;
+    letter-spacing:.08em;
+}
+
+.navLinks{
+    display:flex;
+    gap:28px;
+    align-items:center;
+}
+
+.navLinks a{
+    color:#dce2df;
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:.08em;
     text-transform:uppercase;
-    color:#888;
+    transition:.25s;
 }
 
-.status-dot{
-    width:7px;
-    height:7px;
-    border-radius:50%;
-    background:var(--accent);
-    box-shadow:0 0 15px var(--accent);
+.navLinks a:hover{
+    color:var(--green2);
 }
 
-
-/* =========================================================
-   PROGRESS
-========================================================= */
-
-#progress{
-    position:fixed;
+.progress{
+    position:absolute;
     left:0;
-    top:0;
-
-    width:0;
+    bottom:-1px;
+    width:0%;
     height:2px;
-
-    background:var(--accent);
-
-    z-index:300;
-
-    box-shadow:
-        0 0 15px var(--accent);
+    background:var(--green);
 }
-
-
-/* =========================================================
-   3D HUD
-========================================================= */
-
-.hud{
-    position:fixed;
-    right:4vw;
-    top:50%;
-    transform:translateY(-50%);
-
-    z-index:20;
-
-    pointer-events:none;
-
-    font-family:"Space Grotesk";
-    font-size:9px;
-    letter-spacing:.16em;
-
-    color:#777;
-
-    text-align:right;
-}
-
-.hud-line{
-    width:45px;
-    height:1px;
-
-    background:#555;
-
-    margin-left:auto;
-    margin-bottom:9px;
-}
-
-.hud strong{
-    display:block;
-    color:var(--accent);
-    font-size:11px;
-    margin-bottom:4px;
-}
-
-
-/* =========================================================
-   SCROLL SECTIONS
-========================================================= */
 
 main{
     position:relative;
     z-index:5;
 }
 
-.scene-section{
-    position:relative;
-
+.scene{
     min-height:100vh;
-
-    padding:
-        0
-        7vw;
-
+    position:relative;
     display:flex;
     align-items:center;
-
-    pointer-events:none;
+    padding:120px 7vw;
 }
 
-.scene-section > *{
-    pointer-events:auto;
-}
-
-.hero{
-    min-height:140vh;
-}
-
-.section-left{
-    max-width:600px;
+.sceneContent{
+    width:min(650px,90vw);
 }
 
 .eyebrow{
-    font-family:"Space Grotesk";
-    font-weight:600;
+    display:inline-flex;
+    align-items:center;
+    gap:9px;
+    padding:8px 12px;
+    border:1px solid rgba(105,211,145,.28);
+    background:rgba(5,10,8,.76);
+    color:var(--green2);
     font-size:10px;
-
-    letter-spacing:.22em;
-    text-transform:uppercase;
-
-    color:var(--accent);
-
-    margin-bottom:20px;
-}
-
-.hero h1{
-    margin:0;
-
-    font-family:"Space Grotesk";
-    font-size:clamp(60px,10vw,150px);
-
-    line-height:.78;
-
-    letter-spacing:-.085em;
-
     font-weight:700;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    border-radius:100px;
+    backdrop-filter:blur(12px);
 }
 
-.hero h1 .outline{
-    color:transparent;
-
-    -webkit-text-stroke:
-        1px
-        rgba(255,255,255,.45);
+.eyebrow i{
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    background:var(--green);
+    box-shadow:0 0 14px var(--green);
 }
 
-.hero-description{
-    max-width:490px;
-
-    margin-top:35px;
-
-    color:#9b9f9a;
-
-    font-size:14px;
-
-    line-height:1.85;
+h1,h2,h3{
+    font-family:"Space Grotesk",sans-serif;
 }
 
-.scroll-indicator{
-    margin-top:60px;
+h1{
+    margin-top:24px;
+    font-size:clamp(52px,8vw,122px);
+    line-height:.88;
+    letter-spacing:-.065em;
+    max-width:900px;
+}
 
+h1 span{
+    color:var(--green2);
+}
+
+h2{
+    margin-top:18px;
+    font-size:clamp(38px,5vw,72px);
+    line-height:.96;
+    letter-spacing:-.045em;
+}
+
+h3{
+    font-size:22px;
+}
+
+.lead{
+    margin-top:28px;
+    color:#e4e9e7;
+    max-width:610px;
+    font-size:17px;
+    line-height:1.8;
+}
+
+.small{
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.75;
+}
+
+.ctaRow{
+    margin-top:34px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+}
+
+.btn{
+    padding:14px 20px;
+    border-radius:6px;
+    border:1px solid rgba(255,255,255,.16);
+    background:rgba(8,11,12,.82);
+    color:white;
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    transition:.25s;
+    backdrop-filter:blur(12px);
+}
+
+.btn:hover{
+    transform:translateY(-2px);
+    border-color:rgba(105,211,145,.65);
+}
+
+.btn.primary{
+    background:var(--green);
+    color:#07110b;
+    border-color:var(--green);
+}
+
+.scrollHint{
+    position:absolute;
+    bottom:35px;
+    left:7vw;
     display:flex;
     align-items:center;
     gap:12px;
-
-    font-family:"Space Grotesk";
+    color:#aab2b0;
     font-size:10px;
-
     letter-spacing:.18em;
-
-    color:#666;
-}
-
-.scroll-indicator span{
-    width:70px;
-    height:1px;
-
-    background:linear-gradient(
-        90deg,
-        var(--accent),
-        transparent
-    );
-}
-
-
-/* =========================================================
-   CINEMATIC TEXT
-========================================================= */
-
-.story{
-    min-height:120vh;
-}
-
-.story-box{
-    width:min(550px,90vw);
-
-    padding:35px;
-
-    background:
-        linear-gradient(
-            120deg,
-            rgba(7,8,8,.88),
-            rgba(7,8,8,.48)
-        );
-
-    border-left:
-        1px solid
-        var(--accent);
-
-    backdrop-filter:blur(10px);
-}
-
-.story-number{
-    font-family:"Space Grotesk";
-    color:#555;
-    font-size:10px;
-    letter-spacing:.2em;
-}
-
-.story h2{
-    margin:18px 0 0;
-
-    font-family:"Space Grotesk";
-
-    font-size:clamp(48px,7vw,100px);
-
-    line-height:.86;
-
-    letter-spacing:-.075em;
-}
-
-.story h2 em{
-    color:var(--accent);
-    font-style:normal;
-}
-
-.story p{
-    margin-top:28px;
-
-    color:#979b96;
-
-    font-size:13px;
-
-    line-height:1.85;
-}
-
-.specs{
-    display:flex;
-    flex-wrap:wrap;
-
-    gap:8px;
-
-    margin-top:25px;
-}
-
-.spec{
-    border:1px solid var(--line);
-
-    padding:9px 12px;
-
-    background:rgba(0,0,0,.3);
-
-    color:#bfc3bd;
-
-    font-family:"Space Grotesk";
-
-    font-size:9px;
-
-    letter-spacing:.1em;
-}
-
-
-/* =========================================================
-   SIDE DATA
-========================================================= */
-
-.data-panel{
-    position:absolute;
-
-    right:7vw;
-
-    bottom:15vh;
-
-    width:220px;
-
-    border-top:1px solid var(--line);
-
-    padding-top:14px;
-
-    font-family:"Space Grotesk";
-
-    font-size:9px;
-
-    color:#666;
-
-    letter-spacing:.1em;
-}
-
-.data-panel div{
-    display:flex;
-    justify-content:space-between;
-
-    padding:7px 0;
-
-    border-bottom:1px solid rgba(255,255,255,.05);
-}
-
-.data-panel b{
-    color:#aaa;
-    font-weight:500;
-}
-
-
-/* =========================================================
-   PROFILE
-========================================================= */
-
-.profile-section{
-    min-height:125vh;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:flex-end;
-}
-
-.profile-card{
-    width:min(450px,90vw);
-
-    padding:35px;
-
-    background:rgba(7,8,8,.78);
-
-    border:1px solid var(--line);
-
-    backdrop-filter:blur(15px);
-}
-
-.profile-image{
-    width:100%;
-    height:330px;
-
-    object-fit:cover;
-
-    display:block;
-
-    filter:
-        grayscale(.15)
-        contrast(1.05);
-
-    margin-bottom:25px;
-}
-
-.profile-card h2{
-    margin:0;
-
-    font-family:"Space Grotesk";
-
-    font-size:42px;
-
-    letter-spacing:-.06em;
-}
-
-.profile-card p{
-    color:#8e938e;
-
-    font-size:13px;
-
-    line-height:1.8;
-}
-
-.profile-meta{
-    display:flex;
-    flex-wrap:wrap;
-    gap:7px;
-
-    margin-top:20px;
-}
-
-
-/* =========================================================
-   EXPERIENCE
-========================================================= */
-
-.experience{
-    min-height:135vh;
-}
-
-.experience-list{
-    margin-top:40px;
-
-    display:grid;
-
-    gap:8px;
-
-    max-width:570px;
-}
-
-.experience-item{
-    padding:18px 20px;
-
-    border:1px solid var(--line);
-
-    background:rgba(0,0,0,.35);
-
-    transition:.3s;
-}
-
-.experience-item:hover{
-    border-color:var(--accent);
-    transform:translateX(8px);
-}
-
-.experience-item small{
-    font-family:"Space Grotesk";
-    font-size:9px;
-    letter-spacing:.15em;
-    color:var(--accent);
-}
-
-.experience-item h3{
-    margin:8px 0 6px;
-
-    font-family:"Space Grotesk";
-
-    font-size:18px;
-}
-
-.experience-item p{
-    margin:0;
-
-    color:#777c77;
-
-    font-size:11px;
-
-    line-height:1.65;
-}
-
-
-/* =========================================================
-   PROJECTS
-========================================================= */
-
-.projects{
-    min-height:150vh;
-
-    padding-top:15vh;
-    padding-bottom:20vh;
-}
-
-.projects-header{
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:end;
-
-    gap:30px;
-}
-
-.projects-header h2{
-    margin:0;
-
-    font-family:"Space Grotesk";
-
-    font-size:clamp(55px,9vw,125px);
-
-    line-height:.78;
-
-    letter-spacing:-.08em;
-}
-
-.projects-header p{
-    width:300px;
-
-    color:#777;
-
-    font-size:11px;
-
-    line-height:1.7;
-}
-
-.project-grid{
-    margin-top:100px;
-
-    display:grid;
-
-    grid-template-columns:
-        repeat(2,1fr);
-
-    gap:16px;
-}
-
-.project{
-    min-height:400px;
-
-    position:relative;
-
-    overflow:hidden;
-
-    border:1px solid var(--line);
-
-    background:#0a0b0b;
-
-    transition:
-        transform .5s,
-        border-color .5s;
-}
-
-.project:hover{
-    transform:
-        translateY(-10px)
-        rotateX(2deg);
-
-    border-color:var(--accent);
-}
-
-.project-image{
-    position:absolute;
-
-    inset:0;
-
-    width:100%;
-    height:100%;
-
-    object-fit:cover;
-
-    opacity:.52;
-
-    transition:
-        transform .8s,
-        opacity .5s;
-}
-
-.project:hover .project-image{
-    transform:scale(1.08);
-
-    opacity:.7;
-}
-
-.project-overlay{
-    position:absolute;
-
-    inset:0;
-
-    background:
-        linear-gradient(
-            to top,
-            rgba(4,5,5,1),
-            rgba(4,5,5,.1)
-        );
-}
-
-.project-content{
-    position:absolute;
-
-    left:25px;
-    right:25px;
-    bottom:25px;
-}
-
-.project-number{
-    font-family:"Space Grotesk";
-
-    font-size:9px;
-
-    letter-spacing:.16em;
-
-    color:var(--accent);
-}
-
-.project h3{
-    margin:10px 0 7px;
-
-    font-family:"Space Grotesk";
-
-    font-size:28px;
-
-    letter-spacing:-.04em;
-}
-
-.project p{
-    max-width:380px;
-
-    margin:0;
-
-    color:#8b908b;
-
-    font-size:11px;
-
-    line-height:1.7;
-}
-
-
-/* =========================================================
-   CERTIFICATION
-========================================================= */
-
-.certification{
-    min-height:100vh;
-}
-
-.certificate{
-    width:min(720px,90vw);
-
-    padding:45px;
-
-    border:
-        1px solid
-        rgba(217,255,50,.28);
-
-    background:
-        linear-gradient(
-            120deg,
-            rgba(10,12,11,.9),
-            rgba(10,12,11,.5)
-        );
-
-    position:relative;
-
-    overflow:hidden;
-}
-
-.certificate:after{
-    content:"CERTIFIED";
-
-    position:absolute;
-
-    right:-35px;
-    bottom:15px;
-
-    font-family:"Space Grotesk";
-
-    font-weight:700;
-
-    font-size:80px;
-
-    color:rgba(255,255,255,.025);
-
-    transform:rotate(-12deg);
-}
-
-.certificate h2{
-    margin:0;
-
-    font-family:"Space Grotesk";
-
-    font-size:clamp(45px,7vw,90px);
-
-    line-height:.85;
-
-    letter-spacing:-.07em;
-}
-
-.certificate h2 span{
-    color:var(--accent);
-}
-
-.certificate p{
-    max-width:520px;
-
-    color:#858a85;
-
-    line-height:1.8;
-
-    font-size:13px;
-
-    margin-top:25px;
-}
-
-.certificate-button{
-    display:inline-block;
-
-    margin-top:25px;
-
-    padding:13px 17px;
-
-    border:1px solid var(--accent);
-
-    color:var(--accent);
-
-    font-family:"Space Grotesk";
-
-    font-size:10px;
-
-    letter-spacing:.12em;
-
-    transition:.3s;
-}
-
-.certificate-button:hover{
-    background:var(--accent);
-    color:#050606;
-}
-
-
-/* =========================================================
-   CONTACT
-========================================================= */
-
-.contact{
-    min-height:110vh;
-
-    align-items:flex-end;
-
-    padding-bottom:12vh;
-}
-
-.contact h2{
-    margin:0;
-
-    font-family:"Space Grotesk";
-
-    font-size:clamp(65px,12vw,170px);
-
-    line-height:.76;
-
-    letter-spacing:-.09em;
-}
-
-.contact h2 .outline{
-    color:transparent;
-
-    -webkit-text-stroke:
-        1px
-        rgba(255,255,255,.4);
-}
-
-.contact p{
-    max-width:450px;
-
-    color:#858985;
-
-    font-size:13px;
-
-    line-height:1.8;
-
-    margin:30px 0;
-}
-
-.email{
-    display:inline-block;
-
-    font-family:"Space Grotesk";
-
-    font-size:clamp(18px,3vw,30px);
-
-    border-bottom:1px solid #555;
-
-    padding-bottom:8px;
-
-    transition:.3s;
-}
-
-.email:hover{
-    color:var(--accent);
-
-    border-color:var(--accent);
-}
-
-
-/* =========================================================
-   PROFILE FLOATING IMAGE
-========================================================= */
-
-.profile-float{
-    position:fixed;
-
-    right:4vw;
-    bottom:4vh;
-
-    z-index:100;
-
-    width:58px;
-    height:58px;
-
-    border-radius:50%;
-
-    overflow:hidden;
-
-    border:1px solid rgba(255,255,255,.35);
-
-    box-shadow:
-        0 0 30px rgba(0,0,0,.5);
-}
-
-.profile-float img{
-    width:100%;
-    height:100%;
-
-    object-fit:cover;
-}
-
-
-/* =========================================================
-   FOOTER
-========================================================= */
-
-footer{
-    position:relative;
-
-    z-index:10;
-
-    padding:25px 7vw;
-
-    border-top:1px solid var(--line);
-
-    display:flex;
-
-    justify-content:space-between;
-
-    color:#555;
-
-    font-family:"Space Grotesk";
-
-    font-size:9px;
-
-    letter-spacing:.12em;
-
     text-transform:uppercase;
 }
 
+.scrollLine{
+    width:42px;
+    height:1px;
+    background:var(--green);
+}
 
-/* =========================================================
-   MOBILE
-========================================================= */
+.glass{
+    background:linear-gradient(
+        135deg,
+        rgba(13,17,18,.9),
+        rgba(7,10,11,.72)
+    );
+    border:1px solid rgba(255,255,255,.12);
+    box-shadow:
+        0 25px 80px rgba(0,0,0,.35),
+        inset 0 1px 0 rgba(255,255,255,.04);
+    backdrop-filter:blur(20px);
+}
+
+.right{
+    margin-left:auto;
+}
+
+.center{
+    margin:auto;
+}
+
+.darkSection{
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(5,7,8,0),
+            rgba(5,7,8,.72) 25%,
+            rgba(5,7,8,.9)
+        );
+}
+
+.infoCard{
+    width:min(560px,90vw);
+    padding:30px;
+    border-radius:10px;
+}
+
+.infoCard h3{
+    margin-bottom:14px;
+}
+
+.meta{
+    margin-top:24px;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+}
+
+.metaItem{
+    padding:15px;
+    border:1px solid var(--line);
+    background:rgba(255,255,255,.035);
+}
+
+.metaLabel{
+    font-size:9px;
+    text-transform:uppercase;
+    letter-spacing:.16em;
+    color:#78827e;
+    margin-bottom:6px;
+}
+
+.metaValue{
+    font-size:13px;
+    font-weight:600;
+}
+
+.sectionTag{
+    color:var(--green);
+    font-family:"Space Grotesk";
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+}
+
+.storyList{
+    margin-top:26px;
+    display:grid;
+    gap:10px;
+}
+
+.storyItem{
+    display:flex;
+    gap:16px;
+    padding:17px;
+    border:1px solid var(--line);
+    background:rgba(5,8,9,.76);
+    backdrop-filter:blur(15px);
+}
+
+.storyNo{
+    color:var(--green);
+    font-family:"Space Grotesk";
+    font-weight:700;
+}
+
+.storyItem strong{
+    display:block;
+    font-size:14px;
+    margin-bottom:5px;
+}
+
+.storyItem span{
+    color:#9ca5a1;
+    font-size:12px;
+    line-height:1.55;
+}
+
+.experienceWrap{
+    width:min(1150px,92vw);
+    margin:auto;
+}
+
+.experienceGrid{
+    margin-top:45px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+}
+
+.experienceCard{
+    padding:30px;
+    min-height:350px;
+    position:relative;
+    overflow:hidden;
+}
+
+.experienceCard::before{
+    content:"";
+    position:absolute;
+    width:160px;
+    height:160px;
+    right:-70px;
+    bottom:-70px;
+    border:1px solid rgba(105,211,145,.22);
+    transform:rotate(45deg);
+}
+
+.cardTop{
+    display:flex;
+    justify-content:space-between;
+    gap:20px;
+    margin-bottom:28px;
+}
+
+.cardNumber{
+    font-family:"Space Grotesk";
+    color:var(--green);
+    font-size:12px;
+}
+
+.date{
+    font-size:11px;
+    color:#929b97;
+    white-space:nowrap;
+}
+
+.company{
+    font-size:24px;
+    font-family:"Space Grotesk";
+    margin-bottom:7px;
+}
+
+.role{
+    color:var(--green2);
+    font-size:13px;
+    font-weight:600;
+}
+
+.experienceCard ul{
+    margin-top:22px;
+    padding-left:18px;
+    color:#b9c1be;
+}
+
+.experienceCard li{
+    margin:9px 0;
+    font-size:13px;
+    line-height:1.6;
+}
+
+.certCard{
+    margin-top:18px;
+    padding:26px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+}
+
+.certBadge{
+    width:48px;
+    height:48px;
+    display:grid;
+    place-items:center;
+    border:1px solid rgba(105,211,145,.35);
+    color:var(--green);
+    font-family:"Space Grotesk";
+    font-weight:700;
+}
+
+.skills{
+    margin-top:35px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:9px;
+}
+
+.skill{
+    padding:11px 14px;
+    border:1px solid rgba(255,255,255,.13);
+    background:rgba(8,11,12,.8);
+    color:#dfe6e3;
+    font-size:12px;
+    border-radius:4px;
+}
+
+.projectWrap{
+    width:min(1180px,92vw);
+    margin:auto;
+}
+
+.projectGrid{
+    margin-top:42px;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:18px;
+}
+
+.projectCard{
+    min-height:330px;
+    overflow:hidden;
+    position:relative;
+    border:1px solid rgba(255,255,255,.12);
+    background:#101415;
+}
+
+.projectImage{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    opacity:.48;
+    filter:saturate(.72) contrast(1.1);
+    transition:.5s;
+}
+
+.projectCard:hover .projectImage{
+    transform:scale(1.04);
+    opacity:.62;
+}
+
+.projectOverlay{
+    position:absolute;
+    inset:0;
+    background:
+        linear-gradient(
+            to top,
+            rgba(4,7,8,.96),
+            rgba(4,7,8,.1) 70%
+        );
+}
+
+.projectInfo{
+    position:absolute;
+    left:25px;
+    right:25px;
+    bottom:23px;
+}
+
+.projectType{
+    color:var(--green2);
+    font-size:9px;
+    text-transform:uppercase;
+    letter-spacing:.18em;
+}
+
+.projectInfo h3{
+    margin-top:7px;
+    font-size:23px;
+}
+
+.projectInfo p{
+    margin-top:7px;
+    color:#adb5b2;
+    font-size:12px;
+    line-height:1.5;
+}
+
+.projectNote{
+    margin-top:25px;
+    color:#7e8985;
+    font-size:11px;
+    line-height:1.6;
+}
+
+.profileScene{
+    min-height:110vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.profilePanel{
+    width:min(1000px,92vw);
+    display:grid;
+    grid-template-columns:330px 1fr;
+    gap:40px;
+    padding:36px;
+    align-items:center;
+}
+
+.profileImage{
+    width:100%;
+    aspect-ratio:1;
+    object-fit:cover;
+    border-radius:8px;
+    border:1px solid rgba(105,211,145,.3);
+    filter:saturate(.9);
+}
+
+.profilePanel h2{
+    margin-top:10px;
+}
+
+.bio{
+    margin-top:22px;
+    color:#c4cbc8;
+    line-height:1.85;
+    font-size:14px;
+}
+
+.contactGrid{
+    margin-top:28px;
+    display:grid;
+    gap:9px;
+}
+
+.contactItem{
+    padding:14px 16px;
+    border:1px solid var(--line);
+    background:rgba(255,255,255,.03);
+    display:flex;
+    justify-content:space-between;
+    gap:15px;
+    font-size:12px;
+}
+
+.contactItem span:first-child{
+    color:#77817d;
+    text-transform:uppercase;
+    letter-spacing:.1em;
+    font-size:9px;
+}
+
+footer{
+    position:relative;
+    z-index:8;
+    padding:30px 7vw;
+    border-top:1px solid var(--line);
+    background:#070909;
+    display:flex;
+    justify-content:space-between;
+    gap:20px;
+    color:#707a76;
+    font-size:11px;
+}
+
+#sceneLabel{
+    position:fixed;
+    right:5vw;
+    bottom:35px;
+    z-index:15;
+    padding:10px 14px;
+    border:1px solid rgba(255,255,255,.1);
+    background:rgba(5,8,9,.75);
+    backdrop-filter:blur(12px);
+    color:#a9b1ae;
+    font-size:9px;
+    text-transform:uppercase;
+    letter-spacing:.16em;
+}
 
 @media(max-width:800px){
 
     nav{
-        height:65px;
-        padding:0 6vw;
+        height:68px;
+        padding:0 20px;
     }
 
-    .nav-links{
+    .navLinks{
         display:none;
     }
 
-    .nav-status{
-        display:none;
+    .scene{
+        padding:105px 20px 80px;
+        min-height:100vh;
     }
 
-    .scene-section{
-        padding:0 6vw;
+    .sceneContent{
+        width:100%;
     }
 
-    .hero{
-        min-height:115vh;
+    h1{
+        font-size:clamp(48px,16vw,82px);
     }
 
-    .hero h1{
-        font-size:
-            clamp(
-                58px,
-                16vw,
-                100px
-            );
+    .lead{
+        font-size:15px;
     }
 
-    .story{
-        min-height:105vh;
+    .experienceGrid,
+    .projectGrid{
+        grid-template-columns:1fr;
     }
 
-    .story-box{
-        padding:25px;
-    }
-
-    .data-panel{
-        display:none;
-    }
-
-    .profile-section{
-        justify-content:flex-start;
-    }
-
-    .profile-card{
+    .profilePanel{
+        grid-template-columns:1fr;
         padding:22px;
     }
 
-    .profile-image{
-        height:280px;
+    .profileImage{
+        width:min(280px,100%);
+        margin:auto;
     }
 
-    .project-grid{
+    .meta{
         grid-template-columns:1fr;
-        margin-top:60px;
-    }
-
-    .project{
-        min-height:360px;
-    }
-
-    .projects-header{
-        display:block;
-    }
-
-    .projects-header p{
-        width:auto;
-        margin-top:25px;
-    }
-
-    .certificate{
-        padding:28px;
-    }
-
-    .hud{
-        right:15px;
-        font-size:8px;
-    }
-
-    .profile-float{
-        display:none;
     }
 
     footer{
-        display:block;
-        line-height:2;
+        flex-direction:column;
     }
+
+    #sceneLabel{
+        display:none;
+    }
+
+}
+
+@media(prefers-reduced-motion:reduce){
+
+    html{
+        scroll-behavior:auto;
+    }
+
 }
 
 </style>
 </head>
 
-
 <body>
 
-
-<!-- ======================================================
-     LOADER
-======================================================= -->
-
 <div id="loader">
-
-    <div class="loader-box">
-
-        <div class="loader-top">
-
-            <span>SWARAJ / CIVIL</span>
-
-            <span id="loaderPercent">
-                0%
-            </span>
-
-        </div>
-
-        <div class="loader-line">
-
-            <span id="loaderBar"></span>
-
-        </div>
-
-    </div>
-
+    <div class="loaderMark">SWARAJ VIKAS GADE</div>
+    <div class="loaderLine"><span></span></div>
+    <div class="small">INITIALISING ARCHITECTURAL WORLD</div>
 </div>
-
-
-<div id="progress"></div>
-
-
-<!-- ======================================================
-     WEBGL CANVAS
-======================================================= -->
 
 <canvas id="webgl"></canvas>
-
-<div class="vignette"></div>
-
-
-<!-- ======================================================
-     NAV
-======================================================= -->
+<div id="vignette"></div>
+<div id="grain"></div>
 
 <nav>
-
-    <a href="#top" class="logo">
-        SG<span>.</span>
+    <a class="brand" href="#hero">
+        <div class="brandBox">SG</div>
+        <div class="brandText">SWARAJ / CIVIL</div>
     </a>
 
-    <div class="nav-links">
-
-        <a href="#about">
-            About
-        </a>
-
-        <a href="#experience">
-            Experience
-        </a>
-
-        <a href="#projects">
-            Projects
-        </a>
-
-        <a href="#contact">
-            Contact
-        </a>
-
+    <div class="navLinks">
+        <a href="#experience">Experience</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#profile">Profile</a>
     </div>
 
-    <div class="nav-status">
-
-        <span class="status-dot"></span>
-
-        3D CIVIL SYSTEM
-
-    </div>
-
+    <div class="progress"></div>
 </nav>
 
+<div id="sceneLabel">01 / FOUNDATION</div>
 
-<!-- ======================================================
-     HUD
-======================================================= -->
+<main>
 
-<div class="hud">
-
-    <div class="hud-line"></div>
-
-    <strong id="hudStage">
-        FOUNDATION
-    </strong>
-
-    <span id="hudPercent">
-        00%
-    </span>
-
-</div>
-
-
-<!-- ======================================================
-     MAIN
-======================================================= -->
-
-<main id="top">
-
-
-<!-- ======================================================
+<!-- =========================================================
      HERO
-======================================================= -->
+========================================================= -->
 
-<section class="scene-section hero">
+<section class="scene" id="hero" data-scene="01 / FOUNDATION">
 
-    <div class="section-left">
+    <div class="sceneContent">
 
         <div class="eyebrow">
-            Civil Engineering / 3D Portfolio
+            <i></i>
+            Civil Engineering Portfolio
         </div>
 
         <h1>
-
-            BUILD
-
-            <span class="outline">
-                WITH
-            </span>
-
-            PURPOSE.
-
+            SWARAJ<br>
+            <span>VIKAS GADE</span>
         </h1>
 
-        <p class="hero-description">
-
-            Welcome to my civil engineering portfolio —
-            presented as a construction sequence.
-
-            Scroll down to move through the structure,
-            from foundation and reinforcement to
-            architectural form and finished work.
-
+        <p class="lead">
+            Civil Engineering student with practical site exposure,
+            technical drawing skills and a strong interest in turning
+            engineering concepts into real structures.
         </p>
 
-        <div class="scroll-indicator">
+        <div class="ctaRow">
+            <a class="btn primary" href="#experience">
+                Enter Construction
+            </a>
 
-            <span></span>
-
-            SCROLL TO CONSTRUCT
-
+            <a class="btn" href="resume.jpg" target="_blank">
+                View Resume
+            </a>
         </div>
 
+    </div>
+
+    <div class="scrollHint">
+        <span class="scrollLine"></span>
+        Scroll to construct
     </div>
 
 </section>
 
 
-<!-- ======================================================
-     FOUNDATION
-======================================================= -->
+<!-- =========================================================
+     CONSTRUCTION STORY
+========================================================= -->
 
-<section class="scene-section story">
+<section class="scene" data-scene="02 / STRUCTURAL FRAME">
 
-    <div class="story-box">
+    <div class="sceneContent right">
 
-        <div class="story-number">
-            01 / FOUNDATION
-        </div>
+        <div class="glass infoCard">
 
-        <h2>
-
-            START
-
-            <br>
-
-            FROM
-
-            <em>
-                GROUND.
-            </em>
-
-        </h2>
-
-        <p>
-
-            Every structure begins with understanding
-            the ground, dimensions, levels and the
-            fundamentals of construction.
-
-            My civil engineering journey started with
-            practical site exposure and a Diploma in
-            Civil Engineering.
-
-        </p>
-
-        <div class="specs">
-
-            <span class="spec">
-                CIVIL ENGINEERING
-            </span>
-
-            <span class="spec">
-                SPPU
-            </span>
-
-            <span class="spec">
-                DIPLOMA
-            </span>
-
-        </div>
-
-    </div>
-
-    <div class="data-panel">
-
-        <div>
-            <span>ELEMENT</span>
-            <b>FOOTING</b>
-        </div>
-
-        <div>
-            <span>TYPE</span>
-            <b>RCC</b>
-        </div>
-
-        <div>
-            <span>LEVEL</span>
-            <b>+0.00</b>
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- ======================================================
-     ABOUT
-======================================================= -->
-
-<section
-    id="about"
-    class="scene-section profile-section"
->
-
-    <div class="profile-card">
-
-        <img
-            class="profile-image"
-            src="https://i.ibb.co/fzDzYpDF/798095-DE-7-E1F-4385-9-E59-3382-BF37015-D.png"
-            alt="Swaraj Gade"
-        >
-
-        <div class="eyebrow">
-            02 / About Me
-        </div>
-
-        <h2>
-            SWARAJ
-            <br>
-            GADE
-        </h2>
-
-        <p>
-
-            Civil Engineering student at SPPU with
-            a Diploma in Civil Engineering background.
-
-            Interested in construction, drafting,
-            surveying, estimation and practical
-            engineering work.
-
-        </p>
-
-        <div class="profile-meta">
-
-            <span class="spec">
-                B.E. CIVIL
-            </span>
-
-            <span class="spec">
-                SPPU
-            </span>
-
-            <span class="spec">
-                AUTOCAD
-            </span>
-
-            <span class="spec">
-                SITE EXPERIENCE
-            </span>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- ======================================================
-     COLUMNS
-======================================================= -->
-
-<section class="scene-section story">
-
-    <div class="story-box">
-
-        <div class="story-number">
-            03 / FRAME
-        </div>
-
-        <h2>
-
-            RAISE
-
-            <br>
-
-            THE
-
-            <em>
-                FRAME.
-            </em>
-
-        </h2>
-
-        <p>
-
-            Columns transfer structural loads toward
-            the foundation.
-
-            As you continue scrolling, the building
-            frame rises around the portfolio — turning
-            the website itself into a structural model.
-
-        </p>
-
-        <div class="specs">
-
-            <span class="spec">
-                COLUMNS
-            </span>
-
-            <span class="spec">
-                BEAMS
-            </span>
-
-            <span class="spec">
-                SLABS
-            </span>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- ======================================================
-     BHOOMI EXPERIENCE
-======================================================= -->
-
-<section
-    id="experience"
-    class="scene-section experience"
->
-
-    <div class="section-left">
-
-        <div class="eyebrow">
-            04 / Site Experience
-        </div>
-
-        <h2 class="story-box" style="
-            background:rgba(7,8,8,.72);
-            border-left:1px solid var(--accent);
-            font-family:'Space Grotesk';
-            font-size:clamp(45px,7vw,90px);
-            line-height:.85;
-            letter-spacing:-.07em;
-            margin:0;
-        ">
-
-            LEARNED
-
-            <br>
-
-            WHERE
-
-            <br>
-
-            THINGS
-
-            <br>
-
-            <span style="color:var(--accent)">
-                BUILD.
-            </span>
-
-        </h2>
-
-        <div class="experience-list">
-
-            <div class="experience-item">
-
-                <small>
-                    JUNE — JULY 2023
-                </small>
-
-                <h3>
-                    Bhoomi Consultants
-                </h3>
-
-                <p>
-                    Site Civil Engineering Intern —
-                    Ahilyanagar.
-                </p>
-
+            <div class="sectionTag">
+                02 / Structural thinking
             </div>
-
-
-            <div class="experience-item">
-
-                <small>
-                    SITE ACTIVITY
-                </small>
-
-                <h3>
-                    Measurements & Levels
-                </h3>
-
-                <p>
-                    Took site measurements and observed
-                    level checking and executed work.
-                </p>
-
-            </div>
-
-
-            <div class="experience-item">
-
-                <small>
-                    CONSTRUCTION
-                </small>
-
-                <h3>
-                    Brickwork, Plaster & Concrete
-                </h3>
-
-                <p>
-                    Checked brickwork, plaster and
-                    concrete-related activities on site.
-                </p>
-
-            </div>
-
-
-            <div class="experience-item">
-
-                <small>
-                    RCC
-                </small>
-
-                <h3>
-                    Reinforcement Exposure
-                </h3>
-
-                <p>
-                    Gained practical exposure to
-                    reinforcement and RCC work.
-                </p>
-
-            </div>
-
-
-            <div class="experience-item">
-
-                <small>
-                    SITE MANAGEMENT
-                </small>
-
-                <h3>
-                    Diary & Labour Monitoring
-                </h3>
-
-                <p>
-                    Maintained site diary and observed
-                    labour and workmanship activities.
-                </p>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- ======================================================
-     REINFORCEMENT
-======================================================= -->
-
-<section class="scene-section story">
-
-    <div class="story-box">
-
-        <div class="story-number">
-            05 / REINFORCEMENT
-        </div>
-
-        <h2>
-
-            STEEL
-
-            <br>
-
-            INSIDE
-
-            <br>
-
-            <em>
-                CONCRETE.
-            </em>
-
-        </h2>
-
-        <p>
-
-            The structural frame now opens up and
-            reinforcement becomes visible.
-
-            This section represents the connection between
-            drawings, reinforcement detailing and actual
-            RCC construction.
-
-        </p>
-
-        <div class="specs">
-
-            <span class="spec">
-                REBAR
-            </span>
-
-            <span class="spec">
-                RCC
-            </span>
-
-            <span class="spec">
-                DETAILING
-            </span>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- ======================================================
-     SURVEYING
-======================================================= -->
-
-<section class="scene-section story">
-
-    <div class="story-box">
-
-        <div class="story-number">
-            06 / SURVEYING
-        </div>
-
-        <h2>
-
-            MEASURE
-
-            <br>
-
-            THE
-
-            <em>
-                LAND.
-            </em>
-
-        </h2>
-
-        <p>
-
-            I also attended a short advanced surveying /
-            land-surveying workshop.
-
-            The exposure included Total Station and GPS
-            concepts, connecting field measurements with
-            engineering drawings.
-
-        </p>
-
-        <div class="specs">
-
-            <span class="spec">
-                TOTAL STATION
-            </span>
-
-            <span class="spec">
-                GPS
-            </span>
-
-            <span class="spec">
-                LAND SURVEYING
-            </span>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- ======================================================
-     STAIRCASE / WALLS
-======================================================= -->
-
-<section class="scene-section story">
-
-    <div class="story-box">
-
-        <div class="story-number">
-            07 / ARCHITECTURAL FORM
-        </div>
-
-        <h2>
-
-            FROM
-
-            <br>
-
-            FRAME
-
-            <br>
-
-            TO
-
-            <em>
-                SPACE.
-            </em>
-
-        </h2>
-
-        <p>
-
-            Once the structural system is established,
-            walls, openings, circulation and architectural
-            elements start defining the building.
-
-        </p>
-
-        <div class="specs">
-
-            <span class="spec">
-                PLANNING
-            </span>
-
-            <span class="spec">
-                FLOOR PLAN
-            </span>
-
-            <span class="spec">
-                3D MODEL
-            </span>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- ======================================================
-     AUTOCAD
-======================================================= -->
-
-<section class="scene-section story">
-
-    <div class="story-box">
-
-        <div class="story-number">
-            08 / DIGITAL DRAFTING
-        </div>
-
-        <h2>
-
-            DRAW.
-
-            <br>
-
-            MODEL.
-
-            <br>
-
-            <em>
-                DETAIL.
-            </em>
-
-        </h2>
-
-        <p>
-
-            I completed the SourceCAD AutoCAD Essentials
-            course and received a Certificate of Completion.
-
-            My AutoCAD learning includes practical 2D
-            drafting of plans, elevations, sections,
-            dimensions and layouts.
-
-        </p>
-
-        <div class="specs">
-
-            <span class="spec">
-                AUTOCAD ESSENTIALS
-            </span>
-
-            <span class="spec">
-                SOURCECAD
-            </span>
-
-            <span class="spec">
-                01 APR 2026
-            </span>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- ======================================================
-     PROJECTS
-======================================================= -->
-
-<section
-    id="projects"
-    class="scene-section projects"
->
-
-    <div style="width:100%">
-
-        <div class="projects-header">
 
             <h2>
-
-                SELECTED
-
-                <br>
-
-                WORK.
-
+                From ground<br>
+                to structure.
             </h2>
 
-            <p>
-
-                Project visuals are representative
-                online imagery used for presentation.
-                Replace these with your own drawings,
-                renders and site photographs whenever
-                available.
-
+            <p class="lead">
+                My approach to Civil Engineering combines practical
+                site understanding with technical drawing, estimation,
+                surveying and structural concepts.
             </p>
+
+            <div class="storyList">
+
+                <div class="storyItem">
+                    <div class="storyNo">01</div>
+                    <div>
+                        <strong>Foundation</strong>
+                        <span>
+                            Understanding the base of every successful structure.
+                        </span>
+                    </div>
+                </div>
+
+                <div class="storyItem">
+                    <div class="storyNo">02</div>
+                    <div>
+                        <strong>RCC Frame</strong>
+                        <span>
+                            Columns, beams, slabs and reinforcement forming the structural system.
+                        </span>
+                    </div>
+                </div>
+
+                <div class="storyItem">
+                    <div class="storyNo">03</div>
+                    <div>
+                        <strong>Execution</strong>
+                        <span>
+                            Connecting drawings and engineering concepts with actual site work.
+                        </span>
+                    </div>
+                </div>
+
+            </div>
 
         </div>
 
+    </div>
 
-        <div class="project-grid">
+</section>
 
 
-            <!-- PROJECT 1 -->
+<!-- =========================================================
+     ABOUT
+========================================================= -->
 
-            <article class="project">
+<section class="scene darkSection" data-scene="03 / ABOUT">
+
+    <div class="sceneContent">
+
+        <div class="sectionTag">
+            03 / About me
+        </div>
+
+        <h2>
+            Learn fast.<br>
+            Build better.
+        </h2>
+
+        <p class="lead">
+            I am a Civil Engineering student pursuing my B.E. at
+            Savitribai Phule Pune University, with a Diploma in Civil
+            Engineering from Government Polytechnic, Ahmednagar.
+        </p>
+
+        <p class="lead">
+            I am a quick learner who enjoys understanding new technical
+            concepts and applying them practically. I communicate
+            confidently and fluently in English and am comfortable
+            working with people, discussing technical work and learning
+            from experienced professionals.
+        </p>
+
+        <p class="lead">
+            I consider myself responsible, adaptable, respectful and
+            team-oriented. I aim to continuously improve my technical
+            knowledge while developing the practical judgement required
+            of a good Civil Engineer.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     EXPERIENCE
+========================================================= -->
+
+<section class="scene darkSection" id="experience" data-scene="04 / EXPERIENCE">
+
+    <div class="experienceWrap">
+
+        <div class="sectionTag">
+            04 / Field experience
+        </div>
+
+        <h2>
+            Engineering<br>
+            beyond the screen.
+        </h2>
+
+        <div class="experienceGrid">
+
+            <!-- BHOOMI -->
+
+            <article class="experienceCard glass">
+
+                <div class="cardTop">
+                    <div class="cardNumber">EXPERIENCE 01</div>
+                    <div class="date">JUNE – JULY 2023</div>
+                </div>
+
+                <div class="company">
+                    Bhoomi Consultants
+                </div>
+
+                <div class="role">
+                    Site Civil Engineering Intern
+                </div>
+
+                <ul>
+                    <li>Took measurements at construction sites.</li>
+                    <li>Checked brickwork and plaster work.</li>
+                    <li>Observed concrete and reinforcement work.</li>
+                    <li>Checked site levels.</li>
+                    <li>Maintained a site diary.</li>
+                    <li>Monitored labour and routine site activities.</li>
+                </ul>
+
+            </article>
+
+
+            <!-- KUNAL -->
+
+            <article class="experienceCard glass">
+
+                <div class="cardTop">
+                    <div class="cardNumber">EXPERIENCE 02</div>
+                    <div class="date">01 – 31 JAN 2026</div>
+                </div>
+
+                <div class="company">
+                    Kunal Khopade Associates
+                </div>
+
+                <div class="role">
+                    Civil Engineering Intern
+                </div>
+
+                <ul>
+                    <li>Practical exposure to planning and civil engineering workflows.</li>
+                    <li>Exposure to site supervision and project-related activities.</li>
+                    <li>Basic quantity estimation exposure.</li>
+                    <li>Observed and supported routine civil engineering activities.</li>
+                    <li>Developed practical understanding through professional exposure.</li>
+                </ul>
+
+            </article>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     SURVEYING
+========================================================= -->
+
+<section class="scene" id="surveying" data-scene="05 / SURVEYING">
+
+    <div class="sceneContent right">
+
+        <div class="glass infoCard">
+
+            <div class="sectionTag">
+                05 / Surveying
+            </div>
+
+            <h2>
+                Measure<br>
+                before you build.
+            </h2>
+
+            <p class="lead">
+                I also attended a surveying workshop focused on advanced
+                surveying techniques, with exposure to Total Station
+                and GPS-based surveying.
+            </p>
+
+            <div class="meta">
+
+                <div class="metaItem">
+                    <div class="metaLabel">Equipment</div>
+                    <div class="metaValue">Total Station</div>
+                </div>
+
+                <div class="metaItem">
+                    <div class="metaLabel">Technology</div>
+                    <div class="metaValue">GPS</div>
+                </div>
+
+                <div class="metaItem">
+                    <div class="metaLabel">Focus</div>
+                    <div class="metaValue">Advanced Surveying</div>
+                </div>
+
+                <div class="metaItem">
+                    <div class="metaLabel">Application</div>
+                    <div class="metaValue">Land / Site Surveying</div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     SKILLS
+========================================================= -->
+
+<section class="scene darkSection" id="skills" data-scene="06 / DIGITAL DESIGN">
+
+    <div class="sceneContent">
+
+        <div class="sectionTag">
+            06 / Technical skills
+        </div>
+
+        <h2>
+            From survey<br>
+            to drawing.
+        </h2>
+
+        <p class="lead">
+            My current technical toolkit combines design software,
+            documentation, estimation and practical Civil Engineering
+            knowledge.
+        </p>
+
+        <div class="skills">
+
+            <div class="skill">AutoCAD</div>
+            <div class="skill">Revit</div>
+            <div class="skill">Structural Design</div>
+            <div class="skill">Site Management</div>
+            <div class="skill">MS Excel</div>
+            <div class="skill">Quantity Estimation</div>
+            <div class="skill">MS Word</div>
+            <div class="skill">MS PowerPoint</div>
+
+        </div>
+
+        <!-- CERTIFICATE IS SEPARATE FROM RESUME -->
+
+        <div class="certCard glass">
+
+            <div style="display:flex;align-items:center;gap:18px;">
+
+                <div class="certBadge">
+                    CAD
+                </div>
+
+                <div>
+                    <div class="sectionTag" style="margin-bottom:5px;">
+                        Certification
+                    </div>
+
+                    <strong>
+                        SourceCAD — AutoCAD Essentials
+                    </strong>
+
+                    <p class="small">
+                        Certificate of Completion · 01 April 2026
+                    </p>
+                </div>
+
+            </div>
+
+            <a
+                class="btn"
+                href="https://sourcecad.com/courses/autocad-essentials-course"
+                target="_blank"
+            >
+                SourceCAD
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     PROJECTS
+========================================================= -->
+
+<section class="scene darkSection" id="projects" data-scene="07 / PROJECTS">
+
+    <div class="projectWrap">
+
+        <div class="sectionTag">
+            07 / Engineering works
+        </div>
+
+        <h2>
+            Ideas into<br>
+            engineered spaces.
+        </h2>
+
+        <div class="projectGrid">
+
+            <article class="projectCard">
 
                 <img
-                    class="project-image"
-                    src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=85"
-                    alt="Residential house"
+                    class="projectImage"
+                    src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1400&q=80"
+                    alt="Architectural floor plan reference"
                 >
 
-                <div class="project-overlay"></div>
+                <div class="projectOverlay"></div>
 
-                <div class="project-content">
+                <div class="projectInfo">
 
-                    <div class="project-number">
-                        01 / AUTOCAD
+                    <div class="projectType">
+                        Drafting
                     </div>
 
                     <h3>
@@ -1944,9 +1220,7 @@ footer{
                     </h3>
 
                     <p>
-                        Residential planning, drawing
-                        composition, dimensions and space
-                        organisation.
+                        Residential planning and technical 2D drafting work.
                     </p>
 
                 </div>
@@ -1954,32 +1228,28 @@ footer{
             </article>
 
 
-            <!-- PROJECT 2 -->
-
-            <article class="project">
+            <article class="projectCard">
 
                 <img
-                    class="project-image"
-                    src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=85"
-                    alt="Modern house"
+                    class="projectImage"
+                    src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1400&q=80"
+                    alt="Residential architecture reference"
                 >
 
-                <div class="project-overlay"></div>
+                <div class="projectOverlay"></div>
 
-                <div class="project-content">
+                <div class="projectInfo">
 
-                    <div class="project-number">
-                        02 / 3D MODEL
+                    <div class="projectType">
+                        3D Visualization
                     </div>
 
                     <h3>
-                        3D Indian House
+                        3D Indian House Render
                     </h3>
 
                     <p>
-                        Residential form development and
-                        visualisation of an Indian house
-                        concept.
+                        Residential 3D visualization and architectural modelling.
                     </p>
 
                 </div>
@@ -1987,22 +1257,20 @@ footer{
             </article>
 
 
-            <!-- PROJECT 3 -->
-
-            <article class="project">
+            <article class="projectCard">
 
                 <img
-                    class="project-image"
-                    src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=1200&q=85"
-                    alt="Construction project"
+                    class="projectImage"
+                    src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1400&q=80"
+                    alt="Bridge construction reference"
                 >
 
-                <div class="project-overlay"></div>
+                <div class="projectOverlay"></div>
 
-                <div class="project-content">
+                <div class="projectInfo">
 
-                    <div class="project-number">
-                        03 / STRUCTURE
+                    <div class="projectType">
+                        Structural Concept
                     </div>
 
                     <h3>
@@ -2010,9 +1278,7 @@ footer{
                     </h3>
 
                     <p>
-                        Structural concept study focused
-                        on form, load path and engineering
-                        presentation.
+                        Structural form study and engineering visualization.
                     </p>
 
                 </div>
@@ -2020,32 +1286,28 @@ footer{
             </article>
 
 
-            <!-- PROJECT 4 -->
-
-            <article class="project">
+            <article class="projectCard">
 
                 <img
-                    class="project-image"
-                    src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1200&q=85"
-                    alt="Construction site"
+                    class="projectImage"
+                    src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1400&q=80"
+                    alt="Modern residential architecture reference"
                 >
 
-                <div class="project-overlay"></div>
+                <div class="projectOverlay"></div>
 
-                <div class="project-content">
+                <div class="projectInfo">
 
-                    <div class="project-number">
-                        04 / SUSTAINABILITY
+                    <div class="projectType">
+                        Architecture
                     </div>
 
                     <h3>
-                        Green Roof + Biofiltration
+                        Modern Residential House
                     </h3>
 
                     <p>
-                        Academic work connecting building
-                        systems, water management and
-                        sustainable design.
+                        Residential architectural concept and visualization.
                     </p>
 
                 </div>
@@ -2054,155 +1316,287 @@ footer{
 
         </div>
 
+        <div class="projectNote">
+            Images shown in the project cards are visual references used
+            to represent the project category; they are not presented as
+            photographs of the user's completed work.
+        </div>
+
     </div>
 
 </section>
 
 
-<!-- ======================================================
-     CERTIFICATE
-======================================================= -->
+<!-- =========================================================
+     ACADEMIC WORK
+========================================================= -->
 
-<section class="scene-section certification">
+<section class="scene" data-scene="08 / ACADEMIC WORK">
 
-    <div class="certificate">
+    <div class="sceneContent right">
 
-        <div class="eyebrow">
-            09 / Certification
+        <div class="glass infoCard">
+
+            <div class="sectionTag">
+                08 / Academic work
+            </div>
+
+            <h2>
+                Engineering<br>
+                with purpose.
+            </h2>
+
+            <div class="storyList">
+
+                <div class="storyItem">
+
+                    <div class="storyNo">
+                        01
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Green Roof Report
+                        </strong>
+
+                        <span>
+                            Diploma academic work focused on green roof concepts.
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="storyItem">
+
+                    <div class="storyNo">
+                        02
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Biofiltration / Water Filtration PBL
+                        </strong>
+
+                        <span>
+                            B.E. academic project work involving a
+                            bio-filtration bed concept for water filtration.
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     EDUCATION
+========================================================= -->
+
+<section class="scene darkSection" data-scene="09 / EDUCATION">
+
+    <div class="sceneContent">
+
+        <div class="sectionTag">
+            09 / Education
         </div>
 
         <h2>
-
-            AUTOCAD
-
-            <br>
-
-            <span>
-                ESSENTIALS.
-            </span>
-
+            Building the<br>
+            foundation.
         </h2>
 
-        <p>
+        <div class="storyList">
 
-            Certificate of Completion from SourceCAD
-            for the AutoCAD Essentials course for
-            complete beginners.
+            <div class="storyItem">
 
-            The course strengthened my foundation in
-            AutoCAD 2D drafting, drawing setup,
-            dimensions, layouts and practical drafting.
+                <div class="storyNo">
+                    B.E.
+                </div>
 
-        </p>
+                <div>
+                    <strong>
+                        Bachelor of Engineering — Civil Engineering
+                    </strong>
 
-        <div class="specs">
+                    <span>
+                        Savitribai Phule Pune University
+                    </span>
+                </div>
 
-            <span class="spec">
-                SOURCECAD
-            </span>
+            </div>
 
-            <span class="spec">
-                CERTIFICATE OF COMPLETION
-            </span>
 
-            <span class="spec">
-                01 APR 2026
-            </span>
+            <div class="storyItem">
+
+                <div class="storyNo">
+                    DIP
+                </div>
+
+                <div>
+                    <strong>
+                        Diploma in Civil Engineering
+                    </strong>
+
+                    <span>
+                        Government Polytechnic, Ahmednagar
+                    </span>
+                </div>
+
+            </div>
+
+
+            <div class="storyItem">
+
+                <div class="storyNo">
+                    SSC
+                </div>
+
+                <div>
+                    <strong>
+                        SSC
+                    </strong>
+
+                    <span>
+                        S.M.P. English Medium School, Akluj
+                    </span>
+                </div>
+
+            </div>
 
         </div>
-
-        <a
-            class="certificate-button"
-            href="resume.jpg"
-            target="_blank"
-        >
-            VIEW RESUME ↗
-        </a>
 
     </div>
 
 </section>
 
 
-<!-- ======================================================
-     CONTACT
-======================================================= -->
+<!-- =========================================================
+     FINAL PROFILE
+========================================================= -->
 
-<section
-    id="contact"
-    class="scene-section contact"
->
+<section class="profileScene" id="profile" data-scene="10 / COMPLETED STRUCTURE">
 
-    <div>
+    <div class="profilePanel glass">
 
-        <div class="eyebrow">
-            10 / Contact
+        <div>
+
+            <img
+                class="profileImage"
+                src="https://i.ibb.co/fzDzYpDF/798095-DE-7-E1F-4385-9-E59-3382-BF37015-D.png"
+                alt="Swaraj Vikas Gade"
+            >
+
         </div>
 
-        <h2>
+        <div>
 
-            LET'S
+            <div class="sectionTag">
+                10 / Completed structure
+            </div>
 
-            <br>
+            <h2>
+                Swaraj<br>
+                Vikas Gade
+            </h2>
 
-            <span class="outline">
-                BUILD.
-            </span>
+            <p class="bio">
 
-        </h2>
+                Civil Engineering student with a Diploma background,
+                practical site exposure and an interest in design,
+                construction and technical problem solving.
 
-        <p>
+                <br><br>
 
-            Interested in civil engineering,
-            drafting, site work, estimation,
-            surveying or project collaboration?
+                I am a quick learner, fluent and confident in English
+                communication, and comfortable adapting to new
+                engineering environments. I value discipline,
+                responsibility, teamwork and continuous learning.
 
-        </p>
+                <br><br>
 
-        <a
-            class="email"
-            href="mailto:swarajgade58@gmail.com"
-        >
-            swarajgade58@gmail.com
-        </a>
+                My goal is to grow into a capable Civil Engineer who can
+                understand both the technical side of a project and the
+                practical realities of construction.
 
-        <p style="margin-top:18px">
+            </p>
 
-            +91 81779 18199
+            <div class="contactGrid">
 
-        </p>
+                <a
+                    class="contactItem"
+                    href="mailto:swarajgade58@gmail.com"
+                >
+                    <span>Email</span>
+                    <strong>swarajgade58@gmail.com</strong>
+                </a>
+
+                <a
+                    class="contactItem"
+                    href="tel:+918177918199"
+                >
+                    <span>Phone</span>
+                    <strong>+91 81779 18199</strong>
+                </a>
+
+                <a
+                    class="contactItem"
+                    href="https://wa.me/918177918199"
+                    target="_blank"
+                >
+                    <span>WhatsApp</span>
+                    <strong>Contact on WhatsApp</strong>
+                </a>
+
+            </div>
+
+            <div class="ctaRow">
+
+                <a
+                    class="btn primary"
+                    href="resume.jpg"
+                    target="_blank"
+                >
+                    Open Resume
+                </a>
+
+                <a
+                    class="btn"
+                    href="mailto:swarajgade58@gmail.com"
+                >
+                    Contact Me
+                </a>
+
+            </div>
+
+        </div>
 
     </div>
 
 </section>
-
 
 </main>
 
 
-<!-- ======================================================
-     FLOATING PROFILE
-======================================================= -->
-
-<div class="profile-float">
-
-    <img
-        src="https://i.ibb.co/fzDzYpDF/798095-DE-7-E1F-4385-9-E59-3382-BF37015-D.png"
-        alt="Swaraj Gade"
-    >
-
-</div>
-
-
 <footer>
 
-    <span>
-        © 2026 Swaraj Gade
-    </span>
+    <div>
+        © 2026 Swaraj Vikas Gade
+    </div>
 
-    <span>
-        Civil Engineering / 3D Portfolio
-    </span>
+    <div>
+        Civil Engineering · Design · Construction · Learning
+    </div>
 
 </footer>
 
@@ -2210,343 +1604,245 @@ footer{
 <script>
 
 /* =========================================================
-   GSAP
+   BASIC SETUP
 ========================================================= */
 
 gsap.registerPlugin(ScrollTrigger);
 
+const canvas = document.getElementById("webgl");
 
-/* =========================================================
-   THREE.JS SETUP
-========================================================= */
-
-const canvas =
-    document.getElementById("webgl");
-
-const scene =
-    new THREE.Scene();
-
-scene.fog =
-    new THREE.FogExp2(
-        0x050606,
-        0.022
-    );
-
-
-/* CAMERA */
-
-const camera =
-    new THREE.PerspectiveCamera(
-        42,
-        innerWidth / innerHeight,
-        0.1,
-        300
-    );
-
-camera.position.set(
-    13,
-    8,
-    25
-);
-
-
-/* RENDERER */
-
-const renderer =
-    new THREE.WebGLRenderer({
-
-        canvas:canvas,
-
-        antialias:true,
-
-        alpha:true
-
-    });
+const renderer = new THREE.WebGLRenderer({
+    canvas:canvas,
+    antialias:true,
+    alpha:true,
+    powerPreference:"high-performance"
+});
 
 renderer.setPixelRatio(
-    Math.min(
-        devicePixelRatio,
-        1.7
-    )
+    Math.min(window.devicePixelRatio, 1.5)
 );
 
 renderer.setSize(
-    innerWidth,
-    innerHeight
+    window.innerWidth,
+    window.innerHeight
 );
 
-renderer.outputEncoding =
-    THREE.sRGBEncoding;
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+renderer.outputEncoding = THREE.sRGBEncoding;
+
+const scene = new THREE.Scene();
+
+scene.background = new THREE.Color(0x090b0c);
+
+const camera = new THREE.PerspectiveCamera(
+    45,
+    window.innerWidth / window.innerHeight,
+    0.1,
+    1200
+);
+
+camera.position.set(
+    48,
+    34,
+    72
+);
 
 
 /* =========================================================
    LIGHTING
 ========================================================= */
 
-scene.add(
-    new THREE.AmbientLight(
-        0xffffff,
-        .65
-    )
+const ambient = new THREE.HemisphereLight(
+    0xb9d8cf,
+    0x111111,
+    1.8
 );
 
+scene.add(ambient);
 
-const keyLight =
-    new THREE.DirectionalLight(
-        0xffffff,
-        2.4
-    );
 
-keyLight.position.set(
-    10,
-    18,
-    15
+const sun = new THREE.DirectionalLight(
+    0xffe9c7,
+    4
 );
 
-scene.add(keyLight);
+sun.position.set(
+    55,
+    90,
+    35
+);
+
+sun.castShadow = true;
+
+sun.shadow.mapSize.width = 2048;
+sun.shadow.mapSize.height = 2048;
+
+sun.shadow.camera.left = -100;
+sun.shadow.camera.right = 100;
+sun.shadow.camera.top = 100;
+sun.shadow.camera.bottom = -100;
+
+scene.add(sun);
 
 
-const greenLight =
-    new THREE.PointLight(
-        0xd9ff32,
-        18,
-        45
-    );
+const greenLight = new THREE.PointLight(
+    0x69d391,
+    7,
+    180
+);
 
 greenLight.position.set(
-    -10,
-    8,
-    4
+    -35,
+    30,
+    10
 );
 
 scene.add(greenLight);
 
 
-const blueLight =
-    new THREE.PointLight(
-        0x718cff,
-        11,
-        40
-    );
+const blueLight = new THREE.PointLight(
+    0x71d8e8,
+    5,
+    150
+);
 
 blueLight.position.set(
-    12,
-    4,
-    -12
+    50,
+    18,
+    -45
 );
 
 scene.add(blueLight);
 
 
 /* =========================================================
-   WORLD
-========================================================= */
-
-const world =
-    new THREE.Group();
-
-scene.add(world);
-
-
-/* MAIN STRUCTURE */
-
-const building =
-    new THREE.Group();
-
-world.add(building);
-
-
-/* REINFORCEMENT */
-
-const reinforcement =
-    new THREE.Group();
-
-world.add(reinforcement);
-
-
-/* WALLS */
-
-const walls =
-    new THREE.Group();
-
-world.add(walls);
-
-
-/* STAIRCASE */
-
-const stairs =
-    new THREE.Group();
-
-world.add(stairs);
-
-
-/* CRANE */
-
-const crane =
-    new THREE.Group();
-
-world.add(crane);
-
-
-/* BLUEPRINT */
-
-const blueprint =
-    new THREE.Group();
-
-world.add(blueprint);
-
-
-/* PARTICLES */
-
-const particles =
-    new THREE.Group();
-
-scene.add(particles);
-
-
-/* =========================================================
    MATERIALS
 ========================================================= */
 
-const steelMaterial =
-    new THREE.MeshStandardMaterial({
+const concrete = new THREE.MeshStandardMaterial({
+    color:0x777b78,
+    roughness:.86,
+    metalness:.05
+});
 
-        color:0xd9ddd7,
+const concreteDark = new THREE.MeshStandardMaterial({
+    color:0x464b49,
+    roughness:.92,
+    metalness:.04
+});
 
-        metalness:.75,
+const concreteLight = new THREE.MeshStandardMaterial({
+    color:0x9a9d98,
+    roughness:.8,
+    metalness:.03
+});
 
-        roughness:.25
+const steel = new THREE.MeshStandardMaterial({
+    color:0x56615d,
+    roughness:.35,
+    metalness:.9
+});
 
-    });
+const steelDark = new THREE.MeshStandardMaterial({
+    color:0x252c2a,
+    roughness:.3,
+    metalness:.95
+});
 
+const glassMaterial = new THREE.MeshPhysicalMaterial({
+    color:0x18312e,
+    roughness:.08,
+    metalness:.35,
+    transparent:true,
+    opacity:.58
+});
 
-const concreteMaterial =
-    new THREE.MeshStandardMaterial({
+const greenMaterial = new THREE.MeshStandardMaterial({
+    color:0x69d391,
+    roughness:.45,
+    metalness:.2,
+    emissive:0x0b2516,
+    emissiveIntensity:.7
+});
 
-        color:0x747a75,
+const brickMaterial = new THREE.MeshStandardMaterial({
+    color:0x7f6555,
+    roughness:.95
+});
 
-        metalness:.1,
+const soilMaterial = new THREE.MeshStandardMaterial({
+    color:0x302c27,
+    roughness:1
+});
 
-        roughness:.8,
-
-        transparent:true,
-
-        opacity:.42
-
-    });
-
-
-const concreteSolid =
-    new THREE.MeshStandardMaterial({
-
-        color:0x666b67,
-
-        metalness:.1,
-
-        roughness:.9,
-
-        transparent:true,
-
-        opacity:.78
-
-    });
-
-
-const rebarMaterial =
-    new THREE.MeshStandardMaterial({
-
-        color:0xd9ff32,
-
-        emissive:0x607500,
-
-        emissiveIntensity:.35,
-
-        metalness:.85,
-
-        roughness:.2
-
-    });
-
-
-const wallMaterial =
-    new THREE.MeshStandardMaterial({
-
-        color:0x2b302e,
-
-        metalness:.1,
-
-        roughness:.9,
-
-        transparent:true,
-
-        opacity:.5
-
-    });
+const roadMaterial = new THREE.MeshStandardMaterial({
+    color:0x171b1a,
+    roughness:1
+});
 
 
-const glassMaterial =
-    new THREE.MeshStandardMaterial({
+/* =========================================================
+   WORLD GROUPS
+========================================================= */
 
-        color:0x15201c,
+const world = new THREE.Group();
+scene.add(world);
 
-        metalness:.1,
+const building = new THREE.Group();
+world.add(building);
 
-        roughness:.05,
+const reinforcement = new THREE.Group();
+building.add(reinforcement);
 
-        transparent:true,
+const architecture = new THREE.Group();
+building.add(architecture);
 
-        opacity:.2
+const site = new THREE.Group();
+world.add(site);
 
-    });
+const digitalTwin = new THREE.Group();
+world.add(digitalTwin);
 
-
-const craneMaterial =
-    new THREE.MeshStandardMaterial({
-
-        color:0x7d817d,
-
-        metalness:.7,
-
-        roughness:.35
-
-    });
+const blueprint = new THREE.Group();
+world.add(blueprint);
 
 
 /* =========================================================
    HELPERS
 ========================================================= */
 
-function cube(
+function box(
     w,
     h,
     d,
     material,
-    x,
-    y,
-    z,
-    group
+    x=0,
+    y=0,
+    z=0,
+    parent=building
 ){
 
-    const mesh =
-        new THREE.Mesh(
-            new THREE.BoxGeometry(
-                w,
-                h,
-                d
-            ),
-            material
-        );
-
-    mesh.position.set(
-        x,
-        y,
-        z
+    const geo = new THREE.BoxGeometry(
+        w,
+        h,
+        d
     );
 
-    group.add(mesh);
+    const mesh = new THREE.Mesh(
+        geo,
+        material
+    );
+
+    mesh.position.set(x,y,z);
+
+    mesh.castShadow = true;
+    mesh.receiveShadow = true;
+
+    parent.add(mesh);
 
     return mesh;
-
 }
 
 
@@ -2554,409 +1850,229 @@ function cylinder(
     radius,
     height,
     material,
-    x,
-    y,
-    z,
-    group
+    x=0,
+    y=0,
+    z=0,
+    segments=12,
+    parent=building
 ){
 
-    const mesh =
-        new THREE.Mesh(
-            new THREE.CylinderGeometry(
-                radius,
-                radius,
-                height,
-                10
-            ),
-            material
-        );
+    const geo = new THREE.CylinderGeometry(
+        radius,
+        radius,
+        height,
+        segments
+    );
 
-    mesh.position.set(
+    const mesh = new THREE.Mesh(
+        geo,
+        material
+    );
+
+    mesh.position.set(x,y,z);
+
+    mesh.castShadow = true;
+    mesh.receiveShadow = true;
+
+    parent.add(mesh);
+
+    return mesh;
+}
+
+
+/* =========================================================
+   LARGE SITE
+========================================================= */
+
+box(
+    260,
+    1.2,
+    220,
+    soilMaterial,
+    0,
+    -0.7,
+    0,
+    site
+);
+
+
+/* roads */
+
+box(
+    260,
+    .18,
+    16,
+    roadMaterial,
+    0,
+    .05,
+    58,
+    site
+);
+
+box(
+    16,
+    .18,
+    220,
+    roadMaterial,
+    92,
+    .05,
+    0,
+    site
+);
+
+
+/* road lines */
+
+for(let x=-120;x<=120;x+=15){
+
+    box(
+        8,
+        .08,
+        .35,
+        greenMaterial,
         x,
-        y,
-        z
+        .18,
+        58,
+        site
     );
-
-    group.add(mesh);
-
-    return mesh;
-
-}
-
-
-function line(
-    a,
-    b,
-    material,
-    group
-){
-
-    const geometry =
-        new THREE.BufferGeometry()
-        .setFromPoints([
-
-            new THREE.Vector3(
-                a[0],
-                a[1],
-                a[2]
-            ),
-
-            new THREE.Vector3(
-                b[0],
-                b[1],
-                b[2]
-            )
-
-        ]);
-
-    const mesh =
-        new THREE.Line(
-            geometry,
-            material
-        );
-
-    group.add(mesh);
-
-    return mesh;
 
 }
 
 
 /* =========================================================
-   FOUNDATION
+   MAIN FOUNDATION
 ========================================================= */
 
-const foundations = [];
+const foundationParts = [];
 
+for(let x=-18;x<=18;x+=12){
 
-/* Four footings */
+    for(let z=-14;z<=14;z+=14){
 
-[
-    [-5,-3.5],
-    [-5,3.5],
-    [5,-3.5],
-    [5,3.5]
-
-].forEach(([x,z])=>{
-
-    const footing =
-        cube(
-            2.3,
-            .65,
-            2.3,
-            concreteSolid,
+        const footing = box(
+            8,
+            2.5,
+            8,
+            concreteDark,
             x,
-            -.35,
-            z,
-            building
+            1.25,
+            z
         );
 
-    foundations.push(
-        footing
-    );
+        foundationParts.push(footing);
 
-});
-
-
-/* Foundation beams */
-
-foundations.push(
-    cube(
-        10.5,
-        .35,
-        .35,
-        concreteSolid,
-        0,
-        -.05,
-        -3.5,
-        building
-    )
-);
-
-foundations.push(
-    cube(
-        10.5,
-        .35,
-        .35,
-        concreteSolid,
-        0,
-        -.05,
-        3.5,
-        building
-    )
-);
-
-
-/* =========================================================
-   COLUMNS + BEAMS + SLABS
-========================================================= */
-
-const columns = [];
-const beams = [];
-const slabs = [];
-
-const floors = 7;
-const floorHeight = 2.45;
-
-
-for(
-    let level = 0;
-    level < floors;
-    level++
-){
-
-    const y =
-        level * floorHeight;
-
-
-    /* SLAB */
-
-    const slab =
-        cube(
-            12,
-            .18,
-            9,
-            concreteMaterial,
-            0,
-            y,
-            0,
-            building
+        const pedestal = box(
+            3.2,
+            2.5,
+            3.2,
+            concrete,
+            x,
+            3.75,
+            z
         );
 
-    slabs.push(
-        slab
-    );
+        foundationParts.push(pedestal);
 
-
-    /* COLUMNS */
-
-    [
-
-        [-5,-3.5],
-        [-5,3.5],
-        [5,-3.5],
-        [5,3.5]
-
-    ].forEach(([x,z])=>{
-
-        const column =
-            cube(
-                .34,
-                floorHeight,
-                .34,
-                steelMaterial,
-                x,
-                y + floorHeight/2,
-                z,
-                building
-            );
-
-        columns.push(
-            column
-        );
-
-    });
-
-
-    /* LONG BEAMS */
-
-    beams.push(
-        cube(
-            10,
-            .25,
-            .25,
-            steelMaterial,
-            0,
-            y + floorHeight,
-            -3.5,
-            building
-        )
-    );
-
-
-    beams.push(
-        cube(
-            10,
-            .25,
-            .25,
-            steelMaterial,
-            0,
-            y + floorHeight,
-            3.5,
-            building
-        )
-    );
-
-
-    /* CROSS BEAMS */
-
-    beams.push(
-        cube(
-            .25,
-            .25,
-            7,
-            steelMaterial,
-            -5,
-            y + floorHeight,
-            0,
-            building
-        )
-    );
-
-
-    beams.push(
-        cube(
-            .25,
-            .25,
-            7,
-            steelMaterial,
-            5,
-            y + floorHeight,
-            0,
-            building
-        )
-    );
+    }
 
 }
 
 
 /* =========================================================
-   CENTRAL CORE
+   LARGE RCC BUILDING
 ========================================================= */
 
-const core =
-    cube(
-        2.1,
-        16,
-        2.1,
-        wallMaterial,
-        0,
-        7.4,
-        0,
-        building
-    );
+const floorHeight = 5.2;
+const floors = 9;
 
+const columnPositions = [];
 
-/* =========================================================
-   REINFORCED COLUMN CAGES
-========================================================= */
+for(let x=-18;x<=18;x+=12){
 
-for(
-    let level=0;
-    level<floors;
-    level++
-){
+    for(let z=-14;z<=14;z+=14){
 
-    const y =
-        level * floorHeight
-        + floorHeight/2;
+        columnPositions.push({x,z});
 
+        for(let f=0;f<floors;f++){
 
-    [
-        [-5,-3.5],
-        [-5,3.5],
-        [5,-3.5],
-        [5,3.5]
+            const y =
+                5.2 +
+                f * floorHeight +
+                floorHeight/2;
 
-    ].forEach(([x,z])=>{
-
-        for(
-            let r=0;
-            r<4;
-            r++
-        ){
-
-            const offset =
-                r % 2 === 0
-                ? -.11
-                : .11;
-
-            const bar =
-                cylinder(
-                    .035,
-                    floorHeight-.15,
-                    rebarMaterial,
-                    x + offset,
-                    y,
-                    z + offset,
-                    reinforcement
-                );
-
-            bar.userData.rebar = true;
+            box(
+                1.25,
+                floorHeight,
+                1.25,
+                concrete,
+                x,
+                y,
+                z
+            );
 
         }
 
-    });
+    }
 
 }
 
 
-/* =========================================================
-   SLAB REINFORCEMENT
-========================================================= */
+/* slabs */
 
-for(
-    let level=0;
-    level<floors;
-    level++
-){
+for(let f=0;f<=floors;f++){
 
     const y =
-        level * floorHeight
-        + .12;
+        5.2 +
+        f * floorHeight;
+
+    box(
+        44,
+        .7,
+        36,
+        concreteLight,
+        0,
+        y,
+        0
+    );
+
+}
 
 
-    for(
-        let i=-5;
-        i<=5;
-        i+=1
-    ){
+/* =========================================================
+   BEAMS
+========================================================= */
 
-        line(
-            [
-                i,
-                y,
-                -3.5
-            ],
-            [
-                i,
-                y,
-                3.5
-            ],
-            new THREE.LineBasicMaterial({
-                color:0xd9ff32,
-                transparent:true,
-                opacity:.55
-            }),
-            reinforcement
+for(let f=0;f<floors;f++){
+
+    const y =
+        5.2 +
+        f * floorHeight +
+        2.1;
+
+    for(let z=-14;z<=14;z+=14){
+
+        box(
+            38,
+            .75,
+            .8,
+            concreteDark,
+            0,
+            y,
+            z
         );
 
     }
 
+    for(let x=-18;x<=18;x+=12){
 
-    for(
-        let i=-3;
-        i<=3;
-        i+=1
-    ){
-
-        line(
-            [
-                -5,
-                y+.025,
-                i
-            ],
-            [
-                5,
-                y+.025,
-                i
-            ],
-            new THREE.LineBasicMaterial({
-                color:0xd9ff32,
-                transparent:true,
-                opacity:.55
-            }),
-            reinforcement
+        box(
+            .8,
+            .75,
+            30,
+            concreteDark,
+            x,
+            y,
+            0
         );
 
     }
@@ -2965,38 +2081,111 @@ for(
 
 
 /* =========================================================
-   RINGS AROUND CORE
+   REINFORCEMENT CAGES
 ========================================================= */
 
-for(
-    let level=0;
-    level<16;
-    level++
-){
+function addColumnCage(x,z){
 
-    const ring =
-        new THREE.Mesh(
+    const cage = new THREE.Group();
 
+    for(let dx of [-.42,.42]){
+
+        for(let dz of [-.42,.42]){
+
+            const bar = cylinder(
+                .075,
+                floors * floorHeight,
+                steel,
+                x+dx,
+                5.2 + floors*floorHeight/2,
+                z+dz,
+                8,
+                cage
+            );
+
+            bar.rotation.y = 0;
+
+        }
+
+    }
+
+    for(let f=0;f<floors*5;f++){
+
+        const y =
+            5.2 +
+            f * 1.04;
+
+        const ring = new THREE.Mesh(
             new THREE.TorusGeometry(
-                1.15,
-                .035,
+                .59,
+                .045,
                 6,
-                32
+                12
             ),
-
-            rebarMaterial
-
+            steelDark
         );
 
-    ring.rotation.x =
-        Math.PI/2;
+        ring.rotation.x = Math.PI/2;
+        ring.position.set(
+            x,
+            y,
+            z
+        );
 
-    ring.position.y =
-        .4 + level*.95;
+        cage.add(ring);
 
-    reinforcement.add(
-        ring
-    );
+    }
+
+    reinforcement.add(cage);
+
+}
+
+
+columnPositions.forEach(p=>{
+    addColumnCage(p.x,p.z);
+});
+
+
+/* =========================================================
+   SLAB REINFORCEMENT MESH
+========================================================= */
+
+for(let f=0;f<floors;f++){
+
+    const y =
+        5.2 +
+        f*floorHeight +
+        .55;
+
+    for(let x=-19;x<=19;x+=2){
+
+        box(
+            .055,
+            .055,
+            29,
+            steel,
+            x,
+            y,
+            0,
+            reinforcement
+        );
+
+    }
+
+    for(let z=-14;z<=14;z+=2){
+
+        box(
+            39,
+            .055,
+            .055,
+            steel,
+            0,
+            y+.08,
+            z,
+            reinforcement
+        );
+
+    }
 
 }
 
@@ -3005,90 +2194,126 @@ for(
    STAIRCASE
 ========================================================= */
 
-for(
-    let i=0;
-    i<14;
-    i++
-){
+const stair = new THREE.Group();
 
-    const step =
-        cube(
-            3,
-            .18,
-            .8,
-            concreteSolid,
-            2.3,
-            .2+i*.32,
-            -2.3+i*.38,
-            stairs
-        );
+for(let i=0;i<18;i++){
 
-    step.rotation.z =
-        -.08;
+    const step = box(
+        8,
+        .65 + i*.05,
+        2.8,
+        concreteLight,
+        -8 + i*.45,
+        6 + i*.38,
+        -20 + i*1.25,
+        stair
+    );
+
+}
+
+architecture.add(stair);
+
+
+/* =========================================================
+   BRICK WALL PANELS
+========================================================= */
+
+for(let f=1;f<=floors;f++){
+
+    const y =
+        5.2 +
+        (f-.5)*floorHeight;
+
+    /* rear wall */
+
+    box(
+        40,
+        3.8,
+        .35,
+        brickMaterial,
+        0,
+        y,
+        15.5,
+        architecture
+    );
+
+    /* side wall */
+
+    box(
+        .35,
+        3.8,
+        28,
+        brickMaterial,
+        20,
+        y,
+        0,
+        architecture
+    );
 
 }
 
 
 /* =========================================================
-   WALL PANELS
+   WINDOWS
 ========================================================= */
 
-for(
-    let level=1;
-    level<7;
-    level++
-){
+for(let f=1;f<=floors;f++){
 
     const y =
-        level*floorHeight
-        - .9;
+        5.2 +
+        (f-.5)*floorHeight;
 
+    for(let x=-14;x<=14;x+=7){
 
-    const frontWall =
-        cube(
-            9.5,
-            1.8,
+        box(
+            4.4,
+            2.8,
             .12,
-            wallMaterial,
-            0,
+            glassMaterial,
+            x,
             y,
-            -3.45,
-            walls
+            15.75,
+            architecture
         );
 
+    }
 
-    const sideWall =
-        cube(
+}
+
+
+/* =========================================================
+   BALCONIES
+========================================================= */
+
+for(let f=2;f<=floors;f+=2){
+
+    const y =
+        5.2 +
+        f*floorHeight;
+
+    box(
+        10,
+        .4,
+        5,
+        concreteLight,
+        0,
+        y,
+        -19,
+        architecture
+    );
+
+    for(let x=-4;x<=4;x+=2){
+
+        box(
             .12,
-            1.8,
-            6.8,
-            wallMaterial,
-            -4.9,
-            y,
-            0,
-            walls
+            2.5,
+            .12,
+            steelDark,
+            x,
+            y+1.2,
+            -21.2,
+            architecture
         );
-
-
-    /* window openings */
-
-    for(
-        let w=0;
-        w<3;
-        w++
-    ){
-
-        const window =
-            cube(
-                1.6,
-                .9,
-                .03,
-                glassMaterial,
-                -3+w*3,
-                y+.1,
-                -3.53,
-                walls
-            );
 
     }
 
@@ -3099,735 +2324,723 @@ for(
    ROOF
 ========================================================= */
 
-const roof =
-    cube(
-        13,
-        .3,
-        10,
-        rebarMaterial,
-        0,
-        17.6,
-        0,
-        building
-    );
+const roofY =
+    5.2 +
+    floors*floorHeight;
 
-roof.material.transparent=true;
-roof.material.opacity=.22;
+box(
+    48,
+    .9,
+    40,
+    concreteLight,
+    0,
+    roofY,
+    0
+);
+
+
+/* parapet */
+
+box(
+    48,
+    1.7,
+    .5,
+    concreteDark,
+    0,
+    roofY+1.2,
+    -19.7
+);
+
+box(
+    48,
+    1.7,
+    .5,
+    concreteDark,
+    0,
+    roofY+1.2,
+    19.7
+);
+
+box(
+    .5,
+    1.7,
+    40,
+    concreteDark,
+    -23.7,
+    roofY+1.2,
+    0
+);
+
+box(
+    .5,
+    1.7,
+    40,
+    concreteDark,
+    23.7,
+    roofY+1.2,
+    0
+);
 
 
 /* =========================================================
-   ROOF WATER TANK
+   WATER TANK
 ========================================================= */
 
-const tank =
-    cylinder(
-        1.2,
-        2.4,
-        concreteSolid,
-        2.8,
-        18.9,
-        1.8,
-        building
-    );
+cylinder(
+    4.5,
+    4,
+    concreteLight,
+    12,
+    roofY+3.2,
+    7,
+    24
+);
+
+cylinder(
+    4.7,
+    .35,
+    steelDark,
+    12,
+    roofY+5.25,
+    7,
+    24
+);
+
+
+/* tank supports */
+
+for(let x of [9.5,14.5]){
+
+    for(let z of [4.5,9.5]){
+
+        box(
+            .45,
+            3,
+            .45,
+            steelDark,
+            x,
+            roofY+1.6,
+            z
+        );
+
+    }
+
+}
 
 
 /* =========================================================
    TOWER CRANE
 ========================================================= */
 
-cube(
-    .35,
-    13,
-    .35,
-    craneMaterial,
-    -8,
-    6.5,
-    -2,
+const crane = new THREE.Group();
+
+const craneBaseX = 45;
+const craneBaseZ = -18;
+
+box(
+    5,
+    1,
+    5,
+    steelDark,
+    craneBaseX,
+    .5,
+    craneBaseZ,
     crane
 );
 
+box(
+    1.2,
+    55,
+    1.2,
+    steelDark,
+    craneBaseX,
+    28,
+    craneBaseZ,
+    crane
+);
 
-for(
-    let y=1;
-    y<13;
-    y+=1.3
-){
+box(
+    65,
+    .7,
+    .7,
+    steel,
+    craneBaseX+30,
+    55,
+    craneBaseZ,
+    crane
+);
 
-    cube(
-        2.2,
-        .07,
-        .07,
-        craneMaterial,
-        -8,
-        y,
-        -2,
-        crane
+box(
+    .6,
+    18,
+    .6,
+    steel,
+    craneBaseX+57,
+    46,
+    craneBaseZ,
+    crane
+);
+
+box(
+    .35,
+    18,
+    .35,
+    steelDark,
+    craneBaseX+57,
+    37,
+    craneBaseZ,
+    crane
+);
+
+world.add(crane);
+
+
+/* =========================================================
+   SITE CONSTRUCTION OBJECTS
+========================================================= */
+
+for(let i=0;i<12;i++){
+
+    const x =
+        -75 +
+        (i%4)*12;
+
+    const z =
+        -45 +
+        Math.floor(i/4)*10;
+
+    box(
+        8,
+        1.1,
+        4,
+        concreteLight,
+        x,
+        .55,
+        z,
+        site
     );
 
 }
 
 
-cube(
-    17,
-    .18,
-    .18,
-    rebarMaterial,
+/* steel stacks */
+
+for(let i=0;i<8;i++){
+
+    cylinder(
+        .18,
+        14,
+        steel,
+        -55,
+        .7+i*.48,
+        -8,
+        8,
+        site
+    ).rotation.z = Math.PI/2;
+
+}
+
+
+/* =========================================================
+   CONSTRUCTION CONES
+========================================================= */
+
+function cone(x,z){
+
+    const c = new THREE.Mesh(
+        new THREE.ConeGeometry(
+            .45,
+            1.3,
+            16
+        ),
+        new THREE.MeshStandardMaterial({
+            color:0xd47e3b,
+            roughness:.75
+        })
+    );
+
+    c.position.set(x,.65,z);
+
+    c.castShadow=true;
+
+    site.add(c);
+
+}
+
+for(let i=0;i<15;i++){
+
+    cone(
+        -65 + (i%5)*7,
+        25 + Math.floor(i/5)*5
+    );
+
+}
+
+
+/* =========================================================
+   DIGITAL TWIN
+========================================================= */
+
+function createDigitalTwin(){
+
+    const g = new THREE.Group();
+
+    /*
+        Stylized professional digital-twin.
+        The final profile image is used separately for
+        real identity.
+    */
+
+    const skin = new THREE.MeshStandardMaterial({
+        color:0xc88f72,
+        roughness:.72
+    });
+
+    const shirt = new THREE.MeshStandardMaterial({
+        color:0x24302c,
+        roughness:.75
+    });
+
+    const pants = new THREE.MeshStandardMaterial({
+        color:0x1a1d1d,
+        roughness:.85
+    });
+
+    const helmet = new THREE.MeshStandardMaterial({
+        color:0xd9e4de,
+        roughness:.45
+    });
+
+    const boots = new THREE.MeshStandardMaterial({
+        color:0x151716,
+        roughness:.7
+    });
+
+
+    /* legs */
+
+    const leg1 = cylinder(
+        .42,
+        2.9,
+        pants,
+        -.42,
+        1.45,
+        0,
+        10,
+        g
+    );
+
+    const leg2 = cylinder(
+        .42,
+        2.9,
+        pants,
+        .42,
+        1.45,
+        0,
+        10,
+        g
+    );
+
+
+    /* boots */
+
+    box(
+        .85,
+        .45,
+        1.35,
+        boots,
+        -.42,
+        .12,
+        -.2,
+        g
+    );
+
+    box(
+        .85,
+        .45,
+        1.35,
+        boots,
+        .42,
+        .12,
+        -.2,
+        g
+    );
+
+
+    /* torso */
+
+    box(
+        1.9,
+        2.4,
+        1.05,
+        shirt,
+        0,
+        4,
+        0,
+        g
+    );
+
+
+    /* neck */
+
+    cylinder(
+        .32,
+        .5,
+        skin,
+        0,
+        5.45,
+        0,
+        12,
+        g
+    );
+
+
+    /* head */
+
+    const head = new THREE.Mesh(
+        new THREE.SphereGeometry(
+            .65,
+            20,
+            20
+        ),
+        skin
+    );
+
+    head.position.set(
+        0,
+        6.25,
+        0
+    );
+
+    head.scale.set(
+        .9,
+        1,
+        .85
+    );
+
+    head.castShadow=true;
+
+    g.add(head);
+
+
+    /* helmet */
+
+    const h = new THREE.Mesh(
+        new THREE.SphereGeometry(
+            .77,
+            20,
+            12,
+            0,
+            Math.PI*2,
+            0,
+            Math.PI/2
+        ),
+        helmet
+    );
+
+    h.position.set(
+        0,
+        6.58,
+        0
+    );
+
+    h.castShadow=true;
+
+    g.add(h);
+
+
+    /* arms */
+
+    const arm1 = cylinder(
+        .27,
+        2.35,
+        shirt,
+        -1.25,
+        4,
+        0,
+        10,
+        g
+    );
+
+    arm1.rotation.z = -.08;
+
+    const arm2 = cylinder(
+        .27,
+        2.35,
+        shirt,
+        1.25,
+        4,
+        0,
+        10,
+        g
+    );
+
+    arm2.rotation.z = .08;
+
+
+    /* hands */
+
+    cylinder(
+        .23,
+        .5,
+        skin,
+        -1.28,
+        2.8,
+        0,
+        10,
+        g
+    );
+
+    cylinder(
+        .23,
+        .5,
+        skin,
+        1.28,
+        2.8,
+        0,
+        10,
+        g
+    );
+
+
+    /* safety vest stripe */
+
+    box(
+        1.95,
+        .16,
+        1.08,
+        greenMaterial,
+        0,
+        4.35,
+        -.55,
+        g
+    );
+
+
+    g.scale.setScalar(.82);
+
+    return g;
+
+}
+
+const avatar = createDigitalTwin();
+
+avatar.position.set(
+    -31,
     0,
-    13,
-    -2,
-    crane
+    24
 );
 
+digitalTwin.add(avatar);
 
-cube(
-    .18,
-    3,
-    .18,
-    craneMaterial,
-    8,
-    11.5,
-    -2,
-    crane
+
+/* =========================================================
+   PROFILE PHOTO BILLBOARD
+========================================================= */
+
+const profileTexture =
+    new THREE.TextureLoader().load(
+        "https://i.ibb.co/fzDzYpDF/798095-DE-7-E1F-4385-9-E59-3382-BF37015-D.png"
+    );
+
+profileTexture.encoding = THREE.sRGBEncoding;
+
+const profilePlane = new THREE.Mesh(
+    new THREE.PlaneGeometry(
+        4.2,
+        4.2
+    ),
+    new THREE.MeshBasicMaterial({
+        map:profileTexture,
+        transparent:true,
+        opacity:.95,
+        side:THREE.DoubleSide
+    })
 );
 
-
-line(
-    [8,13,-2],
-    [8,9,-2],
-    new THREE.LineBasicMaterial({
-        color:0xd9ff32
-    }),
-    crane
+profilePlane.position.set(
+    0,
+    5,
+    -.65
 );
+
+profilePlane.rotation.y = Math.PI;
+
+profilePlane.visible = false;
+
+digitalTwin.add(profilePlane);
 
 
 /* =========================================================
    BLUEPRINT GRID
 ========================================================= */
 
-const blueprintMaterial =
-    new THREE.LineBasicMaterial({
+for(let i=-30;i<=30;i+=2){
 
-        color:0x516044,
-
-        transparent:true,
-
-        opacity:.38
-
-    });
-
-
-for(
-    let i=-25;
-    i<=25;
-    i++
-){
-
-    line(
-        [-25,0,i],
-        [25,0,i],
-        blueprintMaterial,
-        blueprint
-    );
-
-
-    line(
-        [i,0,-25],
-        [i,0,25],
-        blueprintMaterial,
-        blueprint
-    );
-
-}
-
-
-/* =========================================================
-   SURVEY GRID
-========================================================= */
-
-for(
-    let i=-10;
-    i<=10;
-    i+=2
-){
-
-    line(
-        [i,.03,-8],
-        [i,.03,8],
-        new THREE.LineBasicMaterial({
-            color:0xd9ff32,
+    const line1 = box(
+        .018,
+        .018,
+        60,
+        new THREE.MeshBasicMaterial({
+            color:0x69d391,
             transparent:true,
-            opacity:.1
+            opacity:.16
         }),
+        i,
+        .08,
+        0,
+        blueprint
+    );
+
+    const line2 = box(
+        60,
+        .018,
+        .018,
+        new THREE.MeshBasicMaterial({
+            color:0x69d391,
+            transparent:true,
+            opacity:.16
+        }),
+        0,
+        .1,
+        i,
         blueprint
     );
 
 }
 
-
-/* =========================================================
-   DIMENSION LINES
-========================================================= */
-
-const dimensionMaterial =
-    new THREE.LineBasicMaterial({
-        color:0xd9ff32,
-        transparent:true,
-        opacity:.65
-    });
-
-
-line(
-    [-5,.15,-5],
-    [5,.15,-5],
-    dimensionMaterial,
-    blueprint
+blueprint.position.set(
+    -45,
+    .15,
+    -35
 );
 
-line(
-    [-5,.15,-5],
-    [-5,.15,5],
-    dimensionMaterial,
-    blueprint
-);
-
-line(
-    [-6,0,-5],
-    [-6,17,-5],
-    dimensionMaterial,
-    blueprint
-);
+blueprint.rotation.x = -.05;
 
 
 /* =========================================================
-   FLOATING PARTICLES
+   PARTICLES
 ========================================================= */
 
-const particleCount = 850;
+const particleCount =
+    window.innerWidth < 700 ? 450 : 900;
 
-const particlePositions =
-    new Float32Array(
-        particleCount * 3
-    );
+const positions = new Float32Array(
+    particleCount * 3
+);
 
+for(let i=0;i<particleCount;i++){
 
-for(
-    let i=0;
-    i<particleCount;
-    i++
-){
+    positions[i*3] =
+        (Math.random()-.5)*180;
 
-    particlePositions[i*3] =
-        (Math.random()-.5)*60;
+    positions[i*3+1] =
+        Math.random()*90;
 
-    particlePositions[i*3+1] =
-        (Math.random()-.5)*40;
-
-    particlePositions[i*3+2] =
-        (Math.random()-.5)*50;
+    positions[i*3+2] =
+        (Math.random()-.5)*140;
 
 }
 
-
-const particleGeometry =
+const particleGeo =
     new THREE.BufferGeometry();
 
-particleGeometry.setAttribute(
+particleGeo.setAttribute(
     "position",
     new THREE.BufferAttribute(
-        particlePositions,
+        positions,
         3
     )
 );
 
-
-const particleMaterial =
+const particleMat =
     new THREE.PointsMaterial({
-
-        color:0xffffff,
-
-        size:.035,
-
+        color:0xa7d9bd,
+        size:.09,
         transparent:true,
-
-        opacity:.42
-
+        opacity:.32
     });
 
-
-particles.add(
+const particles =
     new THREE.Points(
-        particleGeometry,
-        particleMaterial
-    )
-);
+        particleGeo,
+        particleMat
+    );
+
+scene.add(particles);
 
 
 /* =========================================================
-   STORE ORIGINAL POSITIONS
+   INITIAL CONSTRUCTION STATES
 ========================================================= */
 
-const constructionObjects = [
-    ...foundations,
-    ...columns,
-    ...beams,
-    ...slabs,
-    roof,
-    tank
-];
+/*
+    Deterministic animation:
+    every construction component gets a fixed
+    start and final state.
+*/
 
+const animatedObjects = [];
 
-constructionObjects.forEach(
-    (object,index)=>{
 
-        object.userData.original =
-            object.position.clone();
+function registerConstructionObject(
+    obj,
+    startY,
+    startScale=.2
+){
 
-        object.userData.index =
-            index;
+    const finalY = obj.position.y;
 
-        object.position.x +=
-            (Math.random()-.5)*12;
+    obj.userData.finalY = finalY;
+    obj.userData.startY = startY;
+    obj.userData.finalScale = obj.scale.clone();
 
-        object.position.y -=
-            12 + Math.random()*12;
+    obj.position.y = startY;
 
-        object.position.z +=
-            (Math.random()-.5)*12;
+    obj.scale.set(
+        startScale,
+        startScale,
+        startScale
+    );
 
-        object.scale.set(
-            .2,
-            .2,
-            .2
-        );
+    animatedObjects.push(obj);
 
-    }
-);
+}
 
 
-/* =========================================================
-   INITIAL VISIBILITY
-========================================================= */
+/* foundations */
 
-reinforcement.visible=false;
+foundationParts.forEach((obj,i)=>{
 
-walls.visible=false;
+    registerConstructionObject(
+        obj,
+        -5 - i*.15,
+        .12
+    );
 
-stairs.visible=false;
+});
 
-crane.visible=false;
 
+/* main building objects */
 
-/* =========================================================
-   MOUSE PARALLAX
-========================================================= */
+building.traverse(obj=>{
 
-let mouseX=0;
-let mouseY=0;
+    if(
+        obj.isMesh &&
+        !foundationParts.includes(obj)
+    ){
 
-window.addEventListener(
-    "pointermove",
-    event=>{
+        const y =
+            obj.position.y;
 
-        mouseX =
-            event.clientX /
-            innerWidth -
-            .5;
-
-        mouseY =
-            event.clientY /
-            innerHeight -
-            .5;
-
-    }
-);
-
-
-/* =========================================================
-   SCROLL CONSTRUCTION ENGINE
-========================================================= */
-
-const progressData = {
-
-    value:0
-
-};
-
-
-ScrollTrigger.create({
-
-    trigger:"body",
-
-    start:"top top",
-
-    end:"bottom bottom",
-
-    scrub:1,
-
-    onUpdate:self=>{
-
-        const p =
-            self.progress;
-
-        progressData.value=p;
-
-
-        /* =================================================
-           PROGRESS BAR
-        ================================================= */
-
-        document
-            .getElementById("progress")
-            .style.width =
-            (p*100)+"%";
-
-
-        document
-            .getElementById("hudPercent")
-            .textContent =
-            String(
-                Math.round(p*100)
-            ).padStart(2,"0")
-            + "%";
-
-
-        /* =================================================
-           HUD STAGE
-        ================================================= */
-
-        let stage =
-            "FOUNDATION";
-
-        if(p>.12)
-            stage="FRAME";
-
-        if(p>.25)
-            stage="RCC STRUCTURE";
-
-        if(p>.38)
-            stage="REINFORCEMENT";
-
-        if(p>.50)
-            stage="SITE";
-
-        if(p>.62)
-            stage="ARCHITECTURE";
-
-        if(p>.74)
-            stage="DIGITAL MODEL";
-
-        if(p>.86)
-            stage="PROJECTS";
-
-        document
-            .getElementById("hudStage")
-            .textContent =
-            stage;
-
-
-        /* =================================================
-           CONSTRUCTION ASSEMBLY
-        ================================================= */
-
-        constructionObjects
-        .forEach(
-            (object,index)=>{
-
-                const start =
-                    index /
-                    constructionObjects.length *
-                    .42;
-
-                const local =
-                    THREE.MathUtils.clamp(
-                        (
-                            p -
-                            start
-                        ) / .35,
-                        0,
-                        1
-                    );
-
-
-                const eased =
-                    1 -
-                    Math.pow(
-                        1-local,
-                        3
-                    );
-
-
-                const target =
-                    object.userData.original;
-
-
-                object.position.x =
-                    THREE.MathUtils.lerp(
-                        object.position.x,
-                        target.x,
-                        eased*.16
-                    );
-
-
-                object.position.y =
-                    THREE.MathUtils.lerp(
-                        object.position.y,
-                        target.y,
-                        eased*.16
-                    );
-
-
-                object.position.z =
-                    THREE.MathUtils.lerp(
-                        object.position.z,
-                        target.z,
-                        eased*.16
-                    );
-
-
-                const scale =
-                    THREE.MathUtils.lerp(
-                        object.scale.x,
-                        1,
-                        eased*.15
-                    );
-
-
-                object.scale.setScalar(
-                    scale
-                );
-
-            }
-        );
-
-
-        /* =================================================
-           REINFORCEMENT REVEAL
-        ================================================= */
-
-        const rebarProgress =
-            THREE.MathUtils.clamp(
-                (p-.28)/.25,
+        registerConstructionObject(
+            obj,
+            Math.max(
                 0,
-                1
-            );
-
-
-        reinforcement.visible =
-            p > .27;
-
-
-        reinforcement.scale.setScalar(
-            .3 +
-            rebarProgress*.7
+                y - 45
+            ),
+            .15
         );
-
-
-        reinforcement.rotation.y =
-            p*.9;
-
-
-        /* =================================================
-           WALL REVEAL
-        ================================================= */
-
-        walls.visible =
-            p>.53;
-
-
-        const wallProgress =
-            THREE.MathUtils.clamp(
-                (p-.53)/.16,
-                0,
-                1
-            );
-
-
-        walls.scale.y =
-            .2 +
-            wallProgress*.8;
-
-
-        /* =================================================
-           STAIR REVEAL
-        ================================================= */
-
-        stairs.visible =
-            p>.47;
-
-
-        stairs.rotation.y =
-            p*.08;
-
-
-        /* =================================================
-           CRANE
-        ================================================= */
-
-        crane.visible =
-            p>.57;
-
-
-        crane.rotation.y =
-            -.1 +
-            p*.25;
-
-
-        /* =================================================
-           BLUEPRINT
-        ================================================= */
-
-        blueprint.rotation.z =
-            -p*.35;
-
-        blueprint.position.y =
-            -.15;
-
-
-        /* =================================================
-           WORLD CAMERA JOURNEY
-        ================================================= */
-
-        if(p<.16){
-
-            camera.position.x =
-                THREE.MathUtils.lerp(
-                    13,
-                    8,
-                    p/.16
-                );
-
-            camera.position.y =
-                THREE.MathUtils.lerp(
-                    8,
-                    5,
-                    p/.16
-                );
-
-            camera.position.z =
-                THREE.MathUtils.lerp(
-                    25,
-                    19,
-                    p/.16
-                );
-
-        }
-
-
-        else if(p<.34){
-
-            const q =
-                (p-.16)/.18;
-
-            camera.position.x =
-                THREE.MathUtils.lerp(
-                    8,
-                    -7,
-                    q
-                );
-
-            camera.position.y =
-                THREE.MathUtils.lerp(
-                    5,
-                    8,
-                    q
-                );
-
-            camera.position.z =
-                THREE.MathUtils.lerp(
-                    19,
-                    15,
-                    q
-                );
-
-        }
-
-
-        else if(p<.52){
-
-            const q =
-                (p-.34)/.18;
-
-            camera.position.x =
-                THREE.MathUtils.lerp(
-                    -7,
-                    5,
-                    q
-                );
-
-            camera.position.y =
-                THREE.MathUtils.lerp(
-                    8,
-                    11,
-                    q
-                );
-
-            camera.position.z =
-                THREE.MathUtils.lerp(
-                    15,
-                    13,
-                    q
-                );
-
-        }
-
-
-        else if(p<.70){
-
-            const q =
-                (p-.52)/.18;
-
-            camera.position.x =
-                THREE.MathUtils.lerp(
-                    5,
-                    -3,
-                    q
-                );
-
-            camera.position.y =
-                THREE.MathUtils.lerp(
-                    11,
-                    14,
-                    q
-                );
-
-            camera.position.z =
-                THREE.MathUtils.lerp(
-                    13,
-                    18,
-                    q
-                );
-
-        }
-
-
-        else{
-
-            const q =
-                (p-.70)/.30;
-
-            camera.position.x =
-                THREE.MathUtils.lerp(
-                    -3,
-                    10,
-                    q
-                );
-
-            camera.position.y =
-                THREE.MathUtils.lerp(
-                    14,
-                    7,
-                    q
-                );
-
-            camera.position.z =
-                THREE.MathUtils.lerp(
-                    18,
-                    25,
-                    q
-                );
-
-        }
 
     }
 
@@ -3835,19 +3048,451 @@ ScrollTrigger.create({
 
 
 /* =========================================================
-   CAMERA TARGET
+   CAMERA PATH
 ========================================================= */
 
-const cameraTarget =
-    new THREE.Vector3(
-        0,
-        7,
-        0
+const cameraPath = {
+
+    x:[
+        48,
+        42,
+        25,
+        -22,
+        -45,
+        -30,
+        8,
+        40,
+        68,
+        30
+    ],
+
+    y:[
+        34,
+        18,
+        10,
+        18,
+        34,
+        48,
+        58,
+        72,
+        62,
+        38
+    ],
+
+    z:[
+        72,
+        60,
+        50,
+        48,
+        42,
+        32,
+        22,
+        4,
+        -25,
+        -70
+    ]
+
+};
+
+
+const cameraTarget = new THREE.Vector3(
+    0,
+    20,
+    0
+);
+
+
+function interpolateArray(arr,p){
+
+    const max =
+        arr.length-1;
+
+    const exact =
+        p*max;
+
+    const index =
+        Math.floor(exact);
+
+    const next =
+        Math.min(
+            index+1,
+            max
+        );
+
+    const local =
+        exact-index;
+
+    return THREE.MathUtils.lerp(
+        arr[index],
+        arr[next],
+        local
     );
+
+}
 
 
 /* =========================================================
-   ANIMATION LOOP
+   SCROLL PROGRESS
+========================================================= */
+
+let scrollProgress = 0;
+
+const constructionProxy = {
+    progress:0
+};
+
+gsap.to(
+    constructionProxy,
+    {
+        progress:1,
+        ease:"none",
+
+        scrollTrigger:{
+            trigger:"main",
+            start:"top top",
+            end:"bottom bottom",
+            scrub:1.2,
+
+            onUpdate:self=>{
+
+                scrollProgress =
+                    self.progress;
+
+                document.querySelector(
+                    ".progress"
+                ).style.width =
+                    `${self.progress*100}%`;
+
+                updateSceneLabel(
+                    self.progress
+                );
+
+            }
+        }
+    }
+);
+
+
+/* =========================================================
+   CONSTRUCTION ANIMATION
+========================================================= */
+
+function constructionStage(
+    progress,
+    start,
+    end
+){
+
+    return THREE.MathUtils.clamp(
+        (progress-start)/(end-start),
+        0,
+        1
+    );
+
+}
+
+
+function updateConstruction(progress){
+
+    animatedObjects.forEach((obj,i)=>{
+
+        const finalY =
+            obj.userData.finalY;
+
+        const startY =
+            obj.userData.startY;
+
+        /*
+            Components progressively assemble
+            throughout the first ~72% of the journey.
+        */
+
+        const local =
+            constructionStage(
+                progress,
+                .02 + (i/animatedObjects.length)*.50,
+                .08 + (i/animatedObjects.length)*.50
+            );
+
+        const eased =
+            1-Math.pow(
+                1-local,
+                3
+            );
+
+        obj.position.y =
+            THREE.MathUtils.lerp(
+                startY,
+                finalY,
+                eased
+            );
+
+        const s =
+            THREE.MathUtils.lerp(
+                .15,
+                1,
+                eased
+            );
+
+        obj.scale.set(
+            s,
+            s,
+            s
+        );
+
+    });
+
+}
+
+
+/* =========================================================
+   CAMERA ANIMATION
+========================================================= */
+
+function updateCamera(progress){
+
+    camera.position.x =
+        interpolateArray(
+            cameraPath.x,
+            progress
+        );
+
+    camera.position.y =
+        interpolateArray(
+            cameraPath.y,
+            progress
+        );
+
+    camera.position.z =
+        interpolateArray(
+            cameraPath.z,
+            progress
+        );
+
+
+    /*
+        Camera target gradually rises with the
+        building so the viewer feels like they
+        travel upward through the architecture.
+    */
+
+    cameraTarget.y =
+        THREE.MathUtils.lerp(
+            12,
+            38,
+            progress
+        );
+
+    cameraTarget.x =
+        THREE.MathUtils.lerp(
+            0,
+            4,
+            progress
+        );
+
+    cameraTarget.z =
+        THREE.MathUtils.lerp(
+            0,
+            -2,
+            progress
+        );
+
+    camera.lookAt(
+        cameraTarget
+    );
+
+}
+
+
+/* =========================================================
+   DIGITAL TWIN ANIMATION
+========================================================= */
+
+function updateAvatar(progress){
+
+    /*
+        The digital twin travels through
+        different areas of the construction site.
+    */
+
+    if(progress < .22){
+
+        avatar.position.x =
+            THREE.MathUtils.lerp(
+                -31,
+                -12,
+                progress/.22
+            );
+
+        avatar.position.z =
+            THREE.MathUtils.lerp(
+                24,
+                18,
+                progress/.22
+            );
+
+    }
+
+    else if(progress < .48){
+
+        const p =
+            (progress-.22)/.26;
+
+        avatar.position.x =
+            THREE.MathUtils.lerp(
+                -12,
+                19,
+                p
+            );
+
+        avatar.position.z =
+            THREE.MathUtils.lerp(
+                18,
+                -12,
+                p
+            );
+
+    }
+
+    else if(progress < .72){
+
+        const p =
+            (progress-.48)/.24;
+
+        avatar.position.x =
+            THREE.MathUtils.lerp(
+                19,
+                -10,
+                p
+            );
+
+        avatar.position.y =
+            THREE.MathUtils.lerp(
+                0,
+                17,
+                p
+            );
+
+        avatar.position.z =
+            THREE.MathUtils.lerp(
+                -12,
+                -5,
+                p
+            );
+
+    }
+
+    else{
+
+        const p =
+            (progress-.72)/.28;
+
+        avatar.position.x =
+            THREE.MathUtils.lerp(
+                -10,
+                0,
+                p
+            );
+
+        avatar.position.y =
+            THREE.MathUtils.lerp(
+                17,
+                0,
+                p
+            );
+
+        avatar.position.z =
+            THREE.MathUtils.lerp(
+                -5,
+                -30,
+                p
+            );
+
+    }
+
+
+    /*
+        Small walking / floating motion.
+    */
+
+    avatar.rotation.y =
+        Math.sin(
+            performance.now()*.001
+        )*.04;
+
+}
+
+
+/* =========================================================
+   SCENE LABEL
+========================================================= */
+
+const labels = [
+    {
+        p:0,
+        text:"01 / FOUNDATION"
+    },
+    {
+        p:.12,
+        text:"02 / STRUCTURAL FRAME"
+    },
+    {
+        p:.24,
+        text:"03 / ABOUT"
+    },
+    {
+        p:.38,
+        text:"04 / EXPERIENCE"
+    },
+    {
+        p:.49,
+        text:"05 / SURVEYING"
+    },
+    {
+        p:.61,
+        text:"06 / DIGITAL DESIGN"
+    },
+    {
+        p:.72,
+        text:"07 / PROJECTS"
+    },
+    {
+        p:.82,
+        text:"08 / ACADEMIC WORK"
+    },
+    {
+        p:.9,
+        text:"09 / EDUCATION"
+    },
+    {
+        p:.96,
+        text:"10 / COMPLETED STRUCTURE"
+    }
+];
+
+function updateSceneLabel(p){
+
+    let active =
+        labels[0];
+
+    labels.forEach(item=>{
+
+        if(p >= item.p){
+            active=item;
+        }
+
+    });
+
+    document.getElementById(
+        "sceneLabel"
+    ).textContent =
+        active.text;
+
+}
+
+
+/* =========================================================
+   RENDER LOOP
 ========================================================= */
 
 function animate(){
@@ -3856,56 +3501,30 @@ function animate(){
         animate
     );
 
+    updateConstruction(
+        scrollProgress
+    );
 
-    const time =
-        performance.now() *
-        .00025;
+    updateCamera(
+        scrollProgress
+    );
 
-
-    /* subtle floating */
-
-    building.position.y =
-        Math.sin(time*4)
-        * .025;
-
-
-    /* mouse camera movement */
-
-    const targetX =
-        mouseX * 1.4;
-
-    const targetY =
-        7 +
-        mouseY * .7;
-
-
-    camera.position.x +=
-        (
-            targetX -
-            camera.position.x
-        )*.008;
-
-
-    camera.lookAt(
-        cameraTarget
+    updateAvatar(
+        scrollProgress
     );
 
 
-    /* crane movement */
+    /*
+        Slow movement gives the enormous
+        architectural world a cinematic feel.
+    */
 
-    if(crane.visible){
+    particles.rotation.y += .00012;
 
-        crane.position.y =
-            Math.sin(time*3)
-            * .025;
-
-    }
-
-
-    /* particles */
-
-    particles.rotation.y +=
-        .00015;
+    crane.rotation.y =
+        Math.sin(
+            performance.now()*.00018
+        )*.05;
 
 
     renderer.render(
@@ -3915,27 +3534,71 @@ function animate(){
 
 }
 
-
 animate();
 
 
 /* =========================================================
-   RESIZE
+   RESPONSIVE
 ========================================================= */
 
 window.addEventListener(
     "resize",
     ()=>{
-
         camera.aspect =
-            innerWidth /
-            innerHeight;
+            window.innerWidth /
+            window.innerHeight;
 
         camera.updateProjectionMatrix();
 
         renderer.setSize(
-            innerWidth,
-            innerHeight
+            window.innerWidth,
+            window.innerHeight
+        );
+
+        renderer.setPixelRatio(
+            Math.min(
+                window.devicePixelRatio,
+                1.5
+            )
+        );
+    }
+);
+
+
+/* =========================================================
+   LOADER
+========================================================= */
+
+window.addEventListener(
+    "load",
+    ()=>{
+
+        const loaderBar =
+            document.querySelector(
+                ".loaderLine span"
+            );
+
+        gsap.to(
+            loaderBar,
+            {
+                width:"100%",
+                duration:1.4,
+                ease:"power2.inOut"
+            }
+        );
+
+        gsap.to(
+            "#loader",
+            {
+                opacity:0,
+                duration:.8,
+                delay:1.5,
+                onComplete:()=>{
+                    document.getElementById(
+                        "loader"
+                    ).style.display="none";
+                }
+            }
         );
 
     }
@@ -3943,194 +3606,49 @@ window.addEventListener(
 
 
 /* =========================================================
-   DOM SCROLL ANIMATIONS
+   SMOOTH ANIMATION OF TEXT
 ========================================================= */
 
-gsap.utils
-    .toArray(
-        ".story-box,"
-        +".profile-card,"
-        +".experience-list,"
-        +".projects-header,"
-        +".project,"
-        +".certificate,"
-        +".contact>div"
-    )
-    .forEach(
-        element=>{
+gsap.utils.toArray(
+    ".sceneContent,.experienceCard,.projectCard,.profilePanel"
+).forEach(el=>{
 
-            gsap.fromTo(
+    gsap.from(
+        el,
+        {
+            y:45,
+            opacity:0,
+            duration:1,
 
-                element,
-
-                {
-                    opacity:0,
-                    y:80,
-                    rotateX:6
-                },
-
-                {
-                    opacity:1,
-                    y:0,
-                    rotateX:0,
-
-                    ease:"power3.out",
-
-                    scrollTrigger:{
-
-                        trigger:element,
-
-                        start:"top 88%",
-
-                        end:"top 58%",
-
-                        scrub:.8
-
-                    }
-
-                }
-
-            );
-
+            scrollTrigger:{
+                trigger:el,
+                start:"top 80%",
+                toggleActions:
+                    "play none none reverse"
+            }
         }
     );
 
+});
+
 
 /* =========================================================
-   PROJECT PARALLAX
+   MOBILE PERFORMANCE
 ========================================================= */
 
-gsap.utils
-    .toArray(".project")
-    .forEach(
-        project=>{
+if(window.innerWidth < 700){
 
-            gsap.to(
-                project,
-                {
-
-                    y:-35,
-
-                    scrollTrigger:{
-
-                        trigger:project,
-
-                        start:"top bottom",
-
-                        end:"bottom top",
-
-                        scrub:1
-
-                    }
-
-                }
-            );
-
-        }
+    renderer.setPixelRatio(
+        Math.min(
+            window.devicePixelRatio,
+            1.15
+        )
     );
 
+    particleMat.size=.065;
+    particleMat.opacity=.22;
 
-/* =========================================================
-   LOADER
-========================================================= */
-
-let load=0;
-
-const loaderInterval =
-    setInterval(()=>{
-
-        load +=
-            4 +
-            Math.random()*8;
-
-        if(load>=100){
-
-            load=100;
-
-            clearInterval(
-                loaderInterval
-            );
-
-            gsap.to(
-                "#loader",
-                {
-                    autoAlpha:0,
-                    duration:.8,
-                    delay:.2
-                }
-            );
-
-        }
-
-
-        document
-            .getElementById(
-                "loaderPercent"
-            )
-            .textContent =
-            Math.floor(load)
-            + "%";
-
-
-        document
-            .getElementById(
-                "loaderBar"
-            )
-            .style.width =
-            load + "%";
-
-
-    },70);
-
-
-/* =========================================================
-   SMOOTH ANCHOR SCROLL
-========================================================= */
-
-document
-    .querySelectorAll(
-        'a[href^="#"]'
-    )
-    .forEach(
-        link=>{
-
-            link.addEventListener(
-                "click",
-                event=>{
-
-                    const id =
-                        link.getAttribute(
-                            "href"
-                        );
-
-                    if(id==="#")
-                        return;
-
-                    const target =
-                        document.querySelector(
-                            id
-                        );
-
-                    if(target){
-
-                        event.preventDefault();
-
-                        window.scrollTo({
-
-                            top:
-                                target.offsetTop,
-
-                            behavior:"smooth"
-
-                        });
-
-                    }
-
-                }
-            );
-
-        }
-    );
+}
 
 </script>
 
