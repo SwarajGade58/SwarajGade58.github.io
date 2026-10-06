@@ -1,33 +1,39 @@
 <!doctype html>
 <html lang="en">
 <head>
+
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+
+<meta name="viewport"
+      content="width=device-width,initial-scale=1,viewport-fit=cover">
 
 <title>Swaraj Gade — Civil Engineering Portfolio</title>
 
 <meta name="description"
-      content="Swaraj Gade — cinematic Civil Engineering portfolio.">
+      content="Swaraj Gade — Civil Engineering portfolio showcasing education, internships, skills, training, projects and professional goals.">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect"
+      href="https://fonts.googleapis.com">
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
       rel="stylesheet">
 
-<!-- Real app-style icons -->
+<!-- Font Awesome -->
 <link rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
 <!-- Three.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
+
 <style>
 
 /* =========================================================
-   GLOBAL
+   ROOT
 ========================================================= */
 
 :root{
+
   --bg:#060708;
   --fg:#f5f5f2;
   --muted:#9da3a6;
@@ -39,7 +45,13 @@
   --orange:#ff9b4a;
 
   --line:rgba(255,255,255,.14);
+
 }
+
+
+/* =========================================================
+   RESET
+========================================================= */
 
 *{
   box-sizing:border-box;
@@ -50,11 +62,20 @@ html{
 }
 
 body{
+
   margin:0;
+
   background:var(--bg);
+
   color:var(--fg);
-  font-family:Inter,Arial,sans-serif;
+
+  font-family:
+    Inter,
+    Arial,
+    sans-serif;
+
   overflow-x:hidden;
+
 }
 
 button,
@@ -73,43 +94,71 @@ a{
 
 
 /* =========================================================
-   3D BACKGROUND
+   THREE.JS CANVAS
 ========================================================= */
 
 #webgl{
+
   position:fixed;
+
   inset:0;
+
   width:100%;
   height:100%;
+
   z-index:0;
+
   display:block;
+
 }
 
+
+/* =========================================================
+   CINEMATIC SHADE
+========================================================= */
+
 .shade{
+
   position:fixed;
+
   inset:0;
+
   z-index:1;
+
   pointer-events:none;
 
   background:
+
     radial-gradient(
       circle at 50% 42%,
-      transparent 18%,
-      rgba(0,0,0,.18) 55%,
-      rgba(0,0,0,.82) 100%
+      transparent 15%,
+      rgba(0,0,0,.18) 52%,
+      rgba(0,0,0,.84) 100%
     );
+
 }
 
+
+/* =========================================================
+   FILM GRAIN
+========================================================= */
+
 .grain{
+
   position:fixed;
+
   inset:0;
+
   z-index:2;
+
   pointer-events:none;
+
   opacity:.035;
 
   background-image:url(
     "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"
   );
+
 }
 
 
@@ -118,7 +167,9 @@ a{
 ========================================================= */
 
 .top{
+
   position:fixed;
+
   z-index:30;
 
   left:0;
@@ -126,37 +177,52 @@ a{
   top:0;
 
   height:76px;
-  padding:0 4vw;
+
+  padding:
+    0 4vw;
 
   display:flex;
+
   align-items:center;
+
   justify-content:space-between;
 
   background:
     linear-gradient(
       180deg,
-      rgba(5,6,7,.9),
+      rgba(5,6,7,.92),
       transparent
     );
 
   pointer-events:none;
+
 }
 
+
 .brand{
+
   display:flex;
+
   gap:11px;
+
   align-items:center;
 
   pointer-events:auto;
+
 }
 
+
 .mark{
+
   width:36px;
   height:36px;
 
-  border:1px solid rgba(255,255,255,.7);
+  border:
+    1px solid
+    rgba(255,255,255,.7);
 
   display:grid;
+
   place-items:center;
 
   font:
@@ -164,9 +230,12 @@ a{
     'Space Grotesk';
 
   letter-spacing:-.04em;
+
 }
 
+
 .brand b{
+
   display:block;
 
   font:
@@ -174,9 +243,12 @@ a{
     'Space Grotesk';
 
   letter-spacing:.14em;
+
 }
 
+
 .brand small{
+
   display:block;
 
   color:#858b8d;
@@ -188,17 +260,25 @@ a{
   letter-spacing:.18em;
 
   margin-top:3px;
+
 }
 
+
 .topnav{
+
   display:flex;
+
   gap:20px;
 
   pointer-events:auto;
+
 }
 
+
 .topnav button{
+
   border:0;
+
   background:none;
 
   color:#aeb2b4;
@@ -208,16 +288,23 @@ a{
     Inter;
 
   letter-spacing:.15em;
+
   text-transform:uppercase;
 
   transition:
-    color .35s,
-    transform .35s;
+    color .35s ease,
+    transform .35s ease;
+
 }
 
+
 .topnav button:hover{
+
   color:#fff;
-  transform:translateY(-2px);
+
+  transform:
+    translateY(-2px);
+
 }
 
 
@@ -226,22 +313,30 @@ a{
 ========================================================= */
 
 .progress{
+
   position:fixed;
+
   z-index:31;
 
   left:0;
   top:75px;
 
   height:2px;
+
   width:100%;
 
-  background:rgba(255,255,255,.06);
+  background:
+    rgba(255,255,255,.06);
+
 }
 
+
 .progress i{
+
   display:block;
 
   height:100%;
+
   width:0;
 
   background:
@@ -254,7 +349,9 @@ a{
     );
 
   box-shadow:
-    0 0 16px rgba(255,211,77,.45);
+    0 0 16px
+    rgba(255,211,77,.45);
+
 }
 
 
@@ -263,27 +360,40 @@ a{
 ========================================================= */
 
 .story{
+
   position:relative;
+
   z-index:5;
 
   height:800vh;
+
 }
 
+
 .chapter{
+
   height:100vh;
 
+  min-height:100vh;
+
   display:flex;
+
   align-items:center;
 
-  padding:90px 7vw;
+  padding:
+    90px 7vw;
 
   position:relative;
 
   pointer-events:none;
+
 }
 
+
 .copy{
-  width:min(510px,88vw);
+
+  width:
+    min(570px,88vw);
 
   pointer-events:auto;
 
@@ -291,15 +401,24 @@ a{
     opacity,
     transform,
     filter;
+
 }
+
 
 .copy.right{
+
   margin-left:auto;
+
 }
 
+
 .copy.center{
-  margin:0 auto;
+
+  margin:
+    0 auto;
+
   text-align:center;
+
 }
 
 
@@ -308,24 +427,34 @@ a{
 ========================================================= */
 
 .eyebrow{
+
   font:
     700 9px
     Inter;
 
   letter-spacing:.25em;
+
   text-transform:uppercase;
 
   color:var(--red);
+
 }
+
 
 h1,
 h2,
 h3{
-  font-family:'Space Grotesk';
+
+  font-family:
+    'Space Grotesk';
+
   margin:0;
+
 }
 
+
 h1{
+
   font-size:
     clamp(
       60px,
@@ -333,21 +462,28 @@ h1{
       154px
     );
 
-  line-height:.8;
+  line-height:.80;
 
   letter-spacing:-.075em;
 
   margin-top:15px;
+
 }
 
+
 h1 span{
+
   color:transparent;
 
   -webkit-text-stroke:
-    1px rgba(255,255,255,.58);
+    1px
+    rgba(255,255,255,.58);
+
 }
 
+
 h2{
+
   font-size:
     clamp(
       40px,
@@ -355,21 +491,108 @@ h2{
       72px
     );
 
-  line-height:.88;
+  line-height:.90;
 
   letter-spacing:-.055em;
 
   margin:
     10px 0 18px;
+
 }
 
+
 .copy p{
+
   font-size:14px;
+
   line-height:1.75;
 
   color:#c3c7c8;
 
-  max-width:530px;
+  max-width:550px;
+
+}
+
+
+.quote{
+
+  margin-top:22px;
+
+  max-width:590px;
+
+  font:
+    500 15px/1.65
+    'Space Grotesk';
+
+  color:#f0f1ee;
+
+  border-left:
+    2px solid
+    var(--yellow);
+
+  padding-left:17px;
+
+}
+
+
+.quote strong{
+
+  color:#fff;
+
+}
+
+
+/* =========================================================
+   INFORMATION BLOCK
+========================================================= */
+
+.infoBlock{
+
+  margin-top:21px;
+
+  padding:
+    16px 17px;
+
+  border:
+    1px solid
+    rgba(255,255,255,.13);
+
+  background:
+    rgba(6,8,9,.38);
+
+  backdrop-filter:
+    blur(13px);
+
+}
+
+
+.infoTitle{
+
+  font:
+    700 10px
+    Inter;
+
+  letter-spacing:.16em;
+
+  text-transform:uppercase;
+
+  color:#fff;
+
+  margin-bottom:8px;
+
+}
+
+
+.infoText{
+
+  margin:0;
+
+  font-size:12px!important;
+
+  line-height:1.65!important;
+
+  color:#adb3b5!important;
+
 }
 
 
@@ -378,16 +601,22 @@ h2{
 ========================================================= */
 
 .meta{
+
   display:flex;
+
   flex-wrap:wrap;
 
   gap:7px;
 
   margin-top:20px;
+
 }
 
+
 .chip{
-  padding:8px 10px;
+
+  padding:
+    8px 10px;
 
   border:
     1px solid
@@ -404,9 +633,12 @@ h2{
 
   backdrop-filter:
     blur(10px);
+
 }
 
+
 .caption{
+
   margin-top:25px;
 
   font-size:9px!important;
@@ -416,17 +648,75 @@ h2{
   text-transform:uppercase;
 
   color:#7f8588!important;
+
 }
 
 
 /* =========================================================
-   CHAPTER NUMBER / SCROLL
+   LIST
+========================================================= */
+
+.detailList{
+
+  margin:
+    20px 0 0;
+
+  padding:0;
+
+  list-style:none;
+
+}
+
+
+.detailList li{
+
+  position:relative;
+
+  padding:
+    8px 0
+    8px 17px;
+
+  color:#c3c7c8;
+
+  font-size:12px;
+
+  line-height:1.55;
+
+  border-bottom:
+    1px solid
+    rgba(255,255,255,.07);
+
+}
+
+
+.detailList li::before{
+
+  content:"";
+
+  position:absolute;
+
+  left:0;
+
+  top:15px;
+
+  width:5px;
+  height:5px;
+
+  background:var(--yellow);
+
+}
+
+
+/* =========================================================
+   CHAPTER NUMBER
 ========================================================= */
 
 .chapterNo{
+
   position:fixed;
 
   right:4vw;
+
   bottom:27px;
 
   z-index:20;
@@ -438,14 +728,22 @@ h2{
   letter-spacing:.2em;
 
   color:#777d80;
+
 }
 
+
+/* =========================================================
+   SCROLL INDICATOR
+========================================================= */
+
 .scroll{
+
   position:fixed;
 
   z-index:20;
 
   left:4vw;
+
   bottom:27px;
 
   font:
@@ -455,12 +753,16 @@ h2{
   letter-spacing:.22em;
 
   color:#92989a;
+
 }
 
+
 .scroll b{
+
   display:inline-block;
 
   width:34px;
+
   height:1px;
 
   background:var(--yellow);
@@ -468,6 +770,7 @@ h2{
   vertical-align:middle;
 
   margin-right:9px;
+
 }
 
 
@@ -476,23 +779,30 @@ h2{
 ========================================================= */
 
 .actions{
+
   display:flex;
+
   gap:9px;
 
   flex-wrap:wrap;
 
   margin-top:24px;
+
 }
 
+
 .btn{
+
   display:inline-flex;
 
   align-items:center;
+
   justify-content:center;
 
   gap:9px;
 
-  padding:12px 15px;
+  padding:
+    12px 15px;
 
   border:
     1px solid
@@ -507,6 +817,7 @@ h2{
   color:#fff;
 
   font-size:9px;
+
   font-weight:700;
 
   letter-spacing:.13em;
@@ -514,37 +825,50 @@ h2{
   text-transform:uppercase;
 
   transition:
-    transform .35s,
-    border-color .35s,
-    background .35s;
+    transform .35s ease,
+    border-color .35s ease,
+    background .35s ease;
+
 }
 
+
 .btn:hover{
-  transform:translateY(-3px);
+
+  transform:
+    translateY(-3px);
 
   border-color:
     rgba(255,255,255,.65);
+
 }
 
+
 .btn.primary{
+
   background:var(--red);
+
   border-color:var(--red);
+
 }
 
 
 /* =========================================================
-   REAL APP ICONS
+   CONTACT ICONS
 ========================================================= */
 
 .iconbar{
+
   display:flex;
 
   gap:9px;
 
-  margin-top:23px;
+  margin-top:25px;
+
 }
 
+
 .appIcon{
+
   width:48px;
   height:48px;
 
@@ -561,17 +885,21 @@ h2{
   color:#fff;
 
   display:grid;
+
   place-items:center;
 
   font-size:18px;
 
   transition:
-    transform .35s,
-    border-color .35s,
-    background .35s;
+    transform .35s ease,
+    border-color .35s ease,
+    background .35s ease;
+
 }
 
+
 .appIcon:hover{
+
   transform:
     translateY(-4px)
     scale(1.04);
@@ -580,10 +908,9 @@ h2{
 
   background:
     rgba(255,255,255,.08);
+
 }
 
-
-/* Brand colors */
 
 .appIcon[data-brand="wa"] i{
   color:#45d483;
@@ -610,67 +937,129 @@ h2{
    PROFILE
 ========================================================= */
 
-.profileLine{
+.profileLayout{
+
   display:flex;
 
-  align-items:center;
+  align-items:flex-start;
 
-  gap:15px;
+  gap:28px;
 
   margin-top:25px;
+
 }
 
+
+.portraitWrap{
+
+  flex:
+    0 0 auto;
+
+  position:relative;
+
+}
+
+
 .portrait{
-  width:72px;
-  height:88px;
+
+  display:block;
+
+  width:300px;
+
+  height:390px;
 
   object-fit:cover;
+
   object-position:center top;
 
   border:
     1px solid
-    rgba(255,255,255,.25);
+    rgba(255,255,255,.24);
 
-  filter:saturate(.9);
+  filter:
+    saturate(.92)
+    contrast(1.02);
+
+  box-shadow:
+    0 25px 80px
+    rgba(0,0,0,.42);
+
 }
 
-.profileLine strong{
-  display:block;
+
+.portraitLabel{
+
+  position:absolute;
+
+  left:14px;
+
+  bottom:14px;
+
+  padding:
+    8px 10px;
+
+  background:
+    rgba(5,6,7,.78);
+
+  backdrop-filter:
+    blur(10px);
+
+  border:
+    1px solid
+    rgba(255,255,255,.14);
 
   font:
-    700 22px
-    'Space Grotesk';
-}
-
-.profileLine span{
-  font-size:9px;
-
-  color:#92989a;
+    700 8px
+    Inter;
 
   letter-spacing:.15em;
 
   text-transform:uppercase;
+
 }
 
-.hint{
-  margin-top:18px;
 
-  color:#737a7d;
+.profileText{
 
-  font-size:8px;
+  max-width:450px;
 
-  letter-spacing:.18em;
+}
+
+
+.profileName{
+
+  font:
+    700 27px
+    'Space Grotesk';
+
+  margin-bottom:4px;
+
+}
+
+
+.profileRole{
+
+  color:#92989a;
+
+  font-size:9px;
+
+  letter-spacing:.16em;
 
   text-transform:uppercase;
+
+  margin-bottom:15px;
+
 }
 
 
 /* =========================================================
-   CINEMATIC TRANSITION VEIL
+   CINEMATIC VEIL
 ========================================================= */
 
 #transitionVeil{
+
   position:fixed;
+
   inset:0;
 
   background:#050607;
@@ -682,11 +1071,16 @@ h2{
   pointer-events:none;
 
   transition:
-    opacity .45s ease;
+    opacity .65s
+    cubic-bezier(.2,.8,.2,1);
+
 }
 
+
 #transitionVeil.on{
+
   opacity:1;
+
 }
 
 
@@ -695,7 +1089,9 @@ h2{
 ========================================================= */
 
 .modal{
+
   position:fixed;
+
   inset:0;
 
   z-index:100;
@@ -703,6 +1099,7 @@ h2{
   display:flex;
 
   align-items:center;
+
   justify-content:center;
 
   padding:20px;
@@ -714,24 +1111,33 @@ h2{
     blur(18px);
 
   opacity:0;
+
   visibility:hidden;
+
   pointer-events:none;
 
   transition:
-    opacity .45s ease,
-    visibility .45s ease;
+    opacity .55s ease,
+    visibility .55s ease;
+
 }
 
+
 .modal.show{
+
   opacity:1;
 
   visibility:visible;
 
   pointer-events:auto;
+
 }
 
+
 .modalBox{
-  width:min(900px,94vw);
+
+  width:
+    min(900px,94vw);
 
   max-height:90vh;
 
@@ -753,26 +1159,34 @@ h2{
   position:relative;
 
   transform:
-    translateY(24px)
-    scale(.97);
+    translateY(28px)
+    scale(.965);
 
   opacity:0;
 
   transition:
-    transform .5s
-      cubic-bezier(.2,.8,.2,1),
-    opacity .45s ease;
+    transform .65s
+    cubic-bezier(.2,.8,.2,1),
+    opacity .55s ease;
+
 }
+
 
 .modal.show .modalBox{
+
   transform:none;
+
   opacity:1;
+
 }
 
+
 .close{
+
   position:absolute;
 
   right:14px;
+
   top:12px;
 
   width:38px;
@@ -790,20 +1204,30 @@ h2{
   font-size:20px;
 
   display:grid;
+
   place-items:center;
+
 }
+
 
 .modalBox h2{
+
   font-size:42px;
+
 }
 
+
 .modalBox p{
+
   color:#adb3b5;
 
   line-height:1.7;
+
 }
 
+
 .modalEyebrow{
+
   font-size:8px;
 
   letter-spacing:.25em;
@@ -811,9 +1235,12 @@ h2{
   color:var(--yellow);
 
   text-transform:uppercase;
+
 }
 
+
 .resumeImg{
+
   display:block;
 
   width:100%;
@@ -829,9 +1256,12 @@ h2{
     var(--line);
 
   margin-top:18px;
+
 }
 
+
 .modalActions{
+
   display:flex;
 
   gap:9px;
@@ -839,6 +1269,7 @@ h2{
   flex-wrap:wrap;
 
   margin-top:15px;
+
 }
 
 
@@ -847,7 +1278,9 @@ h2{
 ========================================================= */
 
 #loading{
+
   position:fixed;
+
   inset:0;
 
   z-index:200;
@@ -855,13 +1288,17 @@ h2{
   background:#070809;
 
   display:grid;
+
   place-items:center;
 
   transition:
-    opacity .8s;
+    opacity .9s ease;
+
 }
 
+
 .load{
+
   text-align:center;
 
   font:
@@ -869,27 +1306,33 @@ h2{
     Inter;
 
   letter-spacing:.25em;
+
 }
 
+
 .loadline{
+
   width:220px;
+
   height:2px;
 
   background:#1b1e20;
 
   margin-top:14px;
+
 }
 
+
 .loadline i{
+
   display:block;
 
   width:0;
+
   height:100%;
 
   background:var(--red);
 
-  transition:
-    width .5s;
 }
 
 
@@ -900,128 +1343,243 @@ h2{
 @media(max-width:760px){
 
   .top{
+
     height:62px;
 
     padding:
       0 18px;
+
   }
+
 
   .topnav{
+
     display:none;
+
   }
+
 
   .progress{
+
     top:61px;
+
   }
 
-  .story{
-    height:800vh;
-  }
 
   .chapter{
+
     padding:
       78px
-      19px
+      18px
       88px;
 
     align-items:flex-end;
+
   }
+
 
   .copy,
   .copy.right{
+
     width:100%;
 
-    max-width:390px;
+    max-width:410px;
 
     margin:0;
+
   }
 
+
   .copy p{
+
     font-size:12px;
 
     line-height:1.68;
+
   }
+
 
   .copy h2{
+
     font-size:43px;
+
   }
+
 
   .copy h1{
+
     font-size:21vw;
+
   }
+
+
+  .quote{
+
+    font-size:13px;
+
+    line-height:1.6;
+
+  }
+
+
+  .infoBlock{
+
+    padding:14px;
+
+  }
+
+
+  .detailList li{
+
+    font-size:11px;
+
+  }
+
 
   .meta{
-    max-width:350px;
+
+    max-width:360px;
+
   }
 
+
   .chip{
+
     font-size:7px;
 
     padding:
-      7px
-      8px;
+      7px 8px;
+
   }
+
 
   .scroll{
+
     left:18px;
+
     bottom:18px;
+
   }
+
 
   .chapterNo{
+
     right:18px;
+
     bottom:18px;
+
   }
+
 
   .iconbar{
+
     gap:7px;
+
+    justify-content:center;
+
   }
 
+
   .appIcon{
+
     width:43px;
     height:43px;
 
     font-size:16px;
+
   }
 
-  .modal{
-    padding:12px;
+
+  .profileLayout{
+
+    display:block;
+
+    margin-top:22px;
+
   }
 
-  .modalBox{
-    padding:
-      24px
-      18px;
-  }
-
-  .modalBox h2{
-    font-size:34px;
-  }
 
   .portrait{
-    width:60px;
-    height:76px;
+
+    width:210px;
+
+    height:275px;
+
   }
+
+
+  .profileText{
+
+    margin-top:18px;
+
+  }
+
+
+  .modal{
+
+    padding:12px;
+
+  }
+
+
+  .modalBox{
+
+    padding:
+      24px 18px;
+
+  }
+
+
+  .modalBox h2{
+
+    font-size:34px;
+
+  }
+
 }
+
 
 @media(max-width:420px){
 
   .chapter{
+
     padding-left:16px;
+
     padding-right:16px;
+
   }
+
 
   .copy h2{
+
     font-size:38px;
+
   }
+
 
   .copy p{
+
     max-width:340px;
+
   }
 
+
   .appIcon{
+
     width:40px;
     height:40px;
+
   }
+
+
+  .portrait{
+
+    width:190px;
+
+    height:250px;
+
+  }
+
 }
 
 
@@ -1032,27 +1590,35 @@ h2{
 @media(prefers-reduced-motion:reduce){
 
   *{
+
     scroll-behavior:auto!important;
 
     transition-duration:
       .01ms!important;
+
   }
 
+
   .copy{
+
     filter:none!important;
 
     transform:none!important;
+
   }
+
 }
 
 </style>
+
 </head>
 
 
 <body>
 
+
 <!-- =======================================================
-     CANVAS
+     THREE.JS
 ======================================================== -->
 
 <canvas id="webgl"></canvas>
@@ -1081,11 +1647,15 @@ h2{
     </span>
 
     <span>
-      <b>SWARAJ GADE</b>
+
+      <b>
+        SWARAJ GADE
+      </b>
 
       <small>
         CIVIL ENGINEERING
       </small>
+
     </span>
 
   </a>
@@ -1097,21 +1667,33 @@ h2{
       Intro
     </button>
 
+    <button onclick="goTo(1)">
+      Education
+    </button>
+
     <button onclick="goTo(2)">
-      About
+      Experience
     </button>
 
     <button onclick="goTo(3)">
-      Surveying
+      Skills
     </button>
 
-    <button onclick="goTo(5)">
+    <button onclick="goTo(4)">
       Projects
     </button>
 
     <button onclick="goTo(6)">
-      Profile
-    </button>
+
+  Profile
+
+</button>
+
+<button onclick="goTo(7)">
+
+  Contact
+
+</button>
 
   </nav>
 
@@ -1126,10 +1708,12 @@ h2{
   <i id="bar"></i>
 </div>
 
+
 <div class="scroll">
   <b></b>
   SCROLL / BUILD THE STORY
 </div>
+
 
 <div
   class="chapterNo"
@@ -1140,7 +1724,7 @@ h2{
 
 
 <!-- =======================================================
-     CINEMATIC STORY
+     STORY
 ======================================================== -->
 
 <main
@@ -1150,7 +1734,7 @@ h2{
 
 
 <!-- =======================================================
-     00 — INTRO
+     01 — INTRO
 ======================================================== -->
 
 <section class="chapter">
@@ -1161,18 +1745,32 @@ h2{
       Civil Engineering Portfolio
     </div>
 
+
     <h1>
       SWARAJ
       <br>
       <span>GADE.</span>
     </h1>
 
-    <p>
-      From measurements and drawings to practical
-      engineering work — enter the journey.
+
+    <p class="quote">
+      “I’m still learning how to build — but every drawing,
+      measurement and project is building the engineer I’m becoming.”
     </p>
 
+
+    <p>
+      Civil Engineering student with a growing foundation
+      in practical site work, surveying, technical drafting,
+      quantity estimation and engineering software.
+    </p>
+
+
     <div class="meta">
+
+      <span class="chip">
+        CIVIL ENGINEERING
+      </span>
 
       <span class="chip">
         SITE
@@ -1188,8 +1786,9 @@ h2{
 
     </div>
 
+
     <div class="caption">
-      Scroll. The drawing starts moving.
+      Scroll to enter the journey.
     </div>
 
   </div>
@@ -1198,7 +1797,7 @@ h2{
 
 
 <!-- =======================================================
-     01 — BLUEPRINT
+     02 — EDUCATION
 ======================================================== -->
 
 <section class="chapter">
@@ -1209,34 +1808,58 @@ h2{
       class="eyebrow"
       style="color:var(--yellow)"
     >
-      01 / Blueprint
+      02 / Education
     </div>
 
+
     <h2>
-      Lines become space.
+      The foundation
+      <br>
+      comes first.
     </h2>
 
-    <p>
-      A plan begins as a quiet drawing.
-      As you scroll, it lifts from the ground
-      and becomes foundation, columns, beams
-      and a structure.
-    </p>
 
-    <div class="meta">
+    <div class="infoBlock">
 
-      <span class="chip">
-        PLANS
-      </span>
+      <div class="infoTitle">
+        B.E. Civil Engineering
+      </div>
 
-      <span class="chip">
-        ELEVATIONS
-      </span>
+      <p class="infoText">
+        Savitribai Phule Pune University
+      </p>
 
-      <span class="chip">
-        SECTIONS
-      </span>
+    </div>
 
+
+    <div class="infoBlock">
+
+      <div class="infoTitle">
+        Diploma in Civil Engineering
+      </div>
+
+      <p class="infoText">
+        Government Polytechnic, Ahmednagar
+      </p>
+
+    </div>
+
+
+    <div class="infoBlock">
+
+      <div class="infoTitle">
+        SSC
+      </div>
+
+      <p class="infoText">
+        S.M.P. English Medium School, Akluj
+      </p>
+
+    </div>
+
+
+    <div class="caption">
+      Education → foundation → engineering practice.
     </div>
 
   </div>
@@ -1245,7 +1868,7 @@ h2{
 
 
 <!-- =======================================================
-     02 — ABOUT
+     03 — INTERNSHIPS / EXPERIENCE
 ======================================================== -->
 
 <section class="chapter">
@@ -1256,39 +1879,87 @@ h2{
       class="eyebrow"
       style="color:var(--red)"
     >
-      02 / About
+      03 / Internships & Experience
     </div>
 
+
     <h2>
-      Learn.
-      Adapt.
-      Build.
+      Learning where
+      <br>
+      drawings meet site.
     </h2>
 
-    <p>
-      I am a quick learner, adaptable and responsible,
-      with a team-oriented approach. I am confident
-      communicating in English and enjoy learning
-      technical concepts through practical work.
-    </p>
 
-    <div class="meta">
+    <div class="infoBlock">
 
-      <span class="chip">
-        QUICK LEARNER
-      </span>
+      <div class="infoTitle">
+        Bhoomi Consultants
+      </div>
 
-      <span class="chip">
-        ADAPTABLE
-      </span>
+      <p class="infoText">
 
-      <span class="chip">
-        RESPONSIBLE
-      </span>
+        Site Civil Engineering Intern
+        <br>
+        Ahilyanagar · June–July 2023
 
-      <span class="chip">
-        TEAM
-      </span>
+      </p>
+
+
+      <ul class="detailList">
+
+        <li>
+          Site measurements
+        </li>
+
+        <li>
+          Checked brickwork, plaster, concrete,
+          reinforcement and levels
+        </li>
+
+        <li>
+          Maintained site diary
+        </li>
+
+        <li>
+          Monitored labour
+        </li>
+
+      </ul>
+
+    </div>
+
+
+    <div class="infoBlock">
+
+      <div class="infoTitle">
+        Kunal Khopade Associates
+      </div>
+
+      <p class="infoText">
+
+        Internship
+        <br>
+        1–31 January 2026
+
+      </p>
+
+
+      <ul class="detailList">
+
+        <li>
+          Professional exposure to civil engineering workflows
+        </li>
+
+        <li>
+          Observed and supported routine project-related activities
+        </li>
+
+        <li>
+          Developed practical understanding through
+          site and professional exposure
+        </li>
+
+      </ul>
 
     </div>
 
@@ -1298,7 +1969,7 @@ h2{
 
 
 <!-- =======================================================
-     03 — SURVEYING
+     04 — SKILLS & TRAINING
 ======================================================== -->
 
 <section class="chapter">
@@ -1309,110 +1980,91 @@ h2{
       class="eyebrow"
       style="color:var(--blue)"
     >
-      03 / Surveying
+      04 / Skills & Training
     </div>
+
 
     <h2>
-      Measure the
-      real world.
-    </h2>
-
-    <p>
-      Total Station and GPS exposure connect
-      the physical site to coordinates, levels
-      and drawings. The scene turns into a
-      surveying setup before becoming digital
-      information.
-    </p>
-
-    <div class="meta">
-
-      <span class="chip">
-        TOTAL STATION
-      </span>
-
-      <span class="chip">
-        GPS
-      </span>
-
-      <span class="chip">
-        LEVELS
-      </span>
-
-      <span class="chip">
-        LAND SURVEYING
-      </span>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- =======================================================
-     04 — AUTOCAD
-======================================================== -->
-
-<section class="chapter">
-
-  <div class="copy">
-
-    <div
-      class="eyebrow"
-      style="color:var(--blue)"
-    >
-      04 / AutoCAD
-    </div>
-
-    <h2>
-      Site data
+      Tools to turn
       <br>
-      → drawing.
+      ideas into work.
     </h2>
 
-    <p>
-      Basic AutoCAD 2D drafting experience
-      across plans, elevations and sections,
-      supported by AutoCAD Essentials training
-      through SourceCAD.
-    </p>
 
     <div class="meta">
 
       <span class="chip">
-        AUTOCAD 2D
+        AUTOCAD
       </span>
 
       <span class="chip">
-        DRAFTING
+        REVIT
       </span>
 
       <span class="chip">
-        PLANS
+        STRUCTURAL DESIGN
       </span>
 
       <span class="chip">
-        SECTIONS
+        SITE MANAGEMENT
+      </span>
+
+      <span class="chip">
+        MS EXCEL
+      </span>
+
+      <span class="chip">
+        QUANTITY ESTIMATION
+      </span>
+
+      <span class="chip">
+        MS WORD
+      </span>
+
+      <span class="chip">
+        MS POWERPOINT
       </span>
 
     </div>
 
-    <button
-      class="btn"
-      onclick="
-        openInfo(
-          'AutoCAD',
-          '2D plans, elevations and sections with a focus on clean drafting and practical construction documentation.'
-        )
-      "
-    >
 
-      <i class="fa-solid fa-compass-drafting"></i>
+    <div class="infoBlock">
 
-      Explore Skill
+      <div class="infoTitle">
+        AutoCAD Training
+      </div>
 
-    </button>
+      <p class="infoText">
+
+        Basic AutoCAD 2D drafting experience
+        covering plans, elevations and sections,
+        supported by AutoCAD Essentials training
+        through SourceCAD.
+
+      </p>
+
+    </div>
+
+
+    <div class="infoBlock">
+
+      <div class="infoTitle">
+        Surveying Workshop
+      </div>
+
+      <p class="infoText">
+
+        Advanced surveying / land surveying exposure
+        including Total Station and GPS techniques.
+
+      </p>
+
+    </div>
+
+
+    <div class="caption">
+      Learn the tool. Understand the work. Improve the result.
+    </div>
 
   </div>
 
@@ -1425,7 +2077,7 @@ h2{
 
 <section class="chapter">
 
-  <div class="copy right">
+  <div class="copy">
 
     <div
       class="eyebrow"
@@ -1434,15 +2086,20 @@ h2{
       05 / Projects
     </div>
 
+
     <h2>
-      Ideas take form.
+      Ideas take
+      <br>
+      form.
     </h2>
 
+
     <p>
-      Projects become objects inside the scene.
-      Tap a project to open it with the same
-      cinematic fade transition.
+      A selection of academic and practical projects
+      developed through planning, visualization,
+      structural thinking and technical exploration.
     </p>
+
 
     <div class="actions">
 
@@ -1451,49 +2108,107 @@ h2{
         onclick="
           openInfo(
             '2D House Floor Plan',
-            'A residential floor-plan concept focused on practical planning and clear 2D representation.'
+            'A 2D residential house floor-plan project focused on practical planning, room arrangement and clear technical representation.'
           )
         "
       >
+
+        <i class="fa-solid fa-ruler-combined"></i>
+
         01 / House Plan
+
       </button>
+
 
       <button
         class="btn"
         onclick="
           openInfo(
-            '3D Indian House',
-            'A 3D residential visualization exploring massing, facade and Indian-house character.'
+            '3D Indian House Render',
+            'A 3D Indian residential house visualization exploring building massing, facade composition and residential character.'
           )
         "
       >
+
+        <i class="fa-solid fa-cube"></i>
+
         02 / 3D House
+
       </button>
+
 
       <button
         class="btn"
         onclick="
           openInfo(
             'Bridge Structure',
-            'A bridge-structure concept used to explore structural form and visualization.'
+            'A bridge-structure project exploring structural form, members and visual representation of a bridge concept.'
           )
         "
       >
+
+        <i class="fa-solid fa-bridge"></i>
+
         03 / Bridge
+
       </button>
+
 
       <button
         class="btn"
         onclick="
           openInfo(
             'Modern Residential House',
-            'A contemporary residential concept focused on clean geometry and visualization.'
+            'A modern residential house concept focused on contemporary geometry, planning and architectural visualization.'
           )
         "
       >
+
+        <i class="fa-solid fa-house"></i>
+
         04 / Residence
+
       </button>
 
+
+      <button
+        class="btn"
+        onclick="
+          openInfo(
+            'Green Roof Project',
+            'A project exploring green-roof concepts, environmental benefits and sustainable building practices.'
+          )
+        "
+      >
+
+        <i class="fa-solid fa-leaf"></i>
+
+        05 / Green Roof
+
+      </button>
+
+
+      <button
+        class="btn"
+        onclick="
+          openInfo(
+            'Biofiltration PBL',
+            'A biofiltration project based on a biofiltration-bed concept for water filtration and environmental engineering.'
+          )
+        "
+      >
+
+        <i class="fa-solid fa-droplet"></i>
+
+        06 / Biofiltration
+
+      </button>
+
+    </div>
+
+
+    <div class="caption">
+      Projects are part of the learning process.
     </div>
 
   </div>
@@ -1502,7 +2217,82 @@ h2{
 
 
 <!-- =======================================================
-     06 — PROFILE
+     06 — PROFESSIONAL GOAL
+======================================================== -->
+
+<section class="chapter">
+
+  <div class="copy right">
+
+    <div
+      class="eyebrow"
+      style="color:var(--orange)"
+    >
+      06 / Professional Goal
+    </div>
+
+
+    <h2>
+      Build a career
+      <br>
+      with purpose.
+    </h2>
+
+
+    <p>
+      My goal is to grow into a capable Civil Engineer
+      with strong practical understanding of construction,
+      site execution, design and estimation.
+    </p>
+
+
+    <div class="infoBlock">
+
+      <div class="infoTitle">
+        What I want to develop
+      </div>
+
+
+      <ul class="detailList">
+
+        <li>
+          Stronger practical site knowledge
+        </li>
+
+        <li>
+          Civil engineering design and drafting skills
+        </li>
+
+        <li>
+          Quantity estimation and project understanding
+        </li>
+
+        <li>
+          Better understanding of structural and
+          construction workflows
+        </li>
+
+        <li>
+          Continuous technical learning and professional growth
+        </li>
+
+      </ul>
+
+    </div>
+
+
+    <p class="quote">
+      The goal is not only to know how a structure is drawn —
+      but to understand how it is measured, planned and built.
+    </p>
+
+  </div>
+
+</section>
+
+
+<!-- =======================================================
+     07 — PROFILE
 ======================================================== -->
 
 <section class="chapter">
@@ -1513,68 +2303,94 @@ h2{
       class="eyebrow"
       style="color:var(--green)"
     >
-      06 / Profile
+      07 / Profile
     </div>
 
+
     <h2>
-      Same person.
+      The person
       <br>
-      Different stages.
+      behind the work.
     </h2>
 
-    <p>
-      The portfolio closes on the person behind
-      the drawings — learning, building and
-      growing in Civil Engineering.
-    </p>
 
-    <div class="profileLine">
+    <div class="profileLayout">
 
-      <img
-        class="portrait"
-        src="https://i.ibb.co/fzDzYpDF/798095-DE-7-E1F-4385-9-E59-3382-BF37015-D.png"
-        alt="Swaraj Gade"
-      >
 
-      <div>
+      <div class="portraitWrap">
 
-        <strong>
-          Swaraj Gade
-        </strong>
+        <img
+          class="portrait"
+          src="https://i.ibb.co/fzDzYpDF/798095-DE-7-E1F-4385-9-E59-3382-BF37015-D.png"
+          alt="Swaraj Gade"
+        >
 
-        <span>
+        <div class="portraitLabel">
           Civil Engineering
-        </span>
+        </div>
 
       </div>
 
-    </div>
+
+      <div class="profileText">
+
+        <div class="profileName">
+          Swaraj Vikas Gade
+        </div>
 
 
-    <div class="actions">
-
-      <button
-        class="btn primary"
-        onclick="openResume()"
-      >
-
-        <i class="fa-regular fa-file-lines"></i>
-
-        View Resume
-
-      </button>
+        <div class="profileRole">
+          B.E. Civil Engineering
+        </div>
 
 
-      <button
-        class="btn"
-        onclick="goTo(7)"
-      >
+        <p>
 
-        <i class="fa-solid fa-arrow-down"></i>
+          I am a quick learner, adaptable and responsible,
+          with a team-oriented approach. I am confident
+          communicating in English and enjoy learning
+          technical concepts through practical work.
 
-        Contact
+        </p>
 
-      </button>
+
+        <p>
+
+          My interests include Civil Engineering,
+          AutoCAD drafting, site work, surveying,
+          quantity estimation, design and construction.
+
+        </p>
+
+
+        <div class="actions">
+
+          <button
+            class="btn primary"
+            onclick="openResume()"
+          >
+
+            <i class="fa-regular fa-file-lines"></i>
+
+            View Resume
+
+          </button>
+
+
+          <button
+            class="btn"
+            onclick="goTo(7)"
+          >
+
+            <i class="fa-solid fa-arrow-down"></i>
+
+            Contact
+
+          </button>
+
+        </div>
+
+      </div>
 
     </div>
 
@@ -1584,7 +2400,7 @@ h2{
 
 
 <!-- =======================================================
-     07 — CONTACT
+     08 — CONTACT
 ======================================================== -->
 
 <section class="chapter">
@@ -1595,8 +2411,9 @@ h2{
       class="eyebrow"
       style="color:var(--yellow)"
     >
-      07 / Contact
+      08 / Contact
     </div>
+
 
     <h2>
       Let's build
@@ -1604,10 +2421,9 @@ h2{
       what's next.
     </h2>
 
+
     <p>
-      Use the app-style icons below.
-      Every interaction opens with a cinematic
-      transition instead of an abrupt page jump.
+      Connect with me through any of the platforms below.
     </p>
 
 
@@ -1615,6 +2431,7 @@ h2{
       class="iconbar"
       style="justify-content:center"
     >
+
 
       <!-- EMAIL -->
 
@@ -1665,7 +2482,7 @@ h2{
         onclick="
           openContact(
             'LinkedIn',
-            'Open the professional profile',
+            'Open the professional LinkedIn profile',
             'https://www.linkedin.com/in/swaraj-gade-4481b83a5/'
           )
         "
@@ -1685,7 +2502,7 @@ h2{
         onclick="
           openContact(
             'GitHub',
-            'Open the portfolio source and projects',
+            'Open the GitHub profile and projects',
             'https://github.com/swarajgade58'
           )
         "
@@ -1714,6 +2531,7 @@ h2{
         <i class="fa-solid fa-phone"></i>
 
       </button>
+
 
     </div>
 
@@ -1747,7 +2565,9 @@ h2{
       onclick="closeModal()"
       aria-label="Close"
     >
+
       <i class="fa-solid fa-xmark"></i>
+
     </button>
 
 
@@ -1755,12 +2575,12 @@ h2{
       class="modalEyebrow"
       id="modalEyebrow"
     >
-      Cinematic interaction
+      Portfolio detail
     </div>
 
 
     <h2 id="modalTitle">
-      Contact
+      Project
     </h2>
 
 
@@ -1769,17 +2589,17 @@ h2{
 
     <div class="modalActions">
 
-      <a
+      <button
         class="btn primary"
-        id="modalAction"
-        target="_blank"
-        rel="noopener"
+        id="modalCloseButton"
+        onclick="closeModal()"
       >
-        Continue
 
-        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+        Close
 
-      </a>
+        <i class="fa-solid fa-xmark"></i>
+
+      </button>
 
     </div>
 
@@ -1805,7 +2625,9 @@ h2{
       onclick="closeResume()"
       aria-label="Close"
     >
+
       <i class="fa-solid fa-xmark"></i>
+
     </button>
 
 
@@ -1821,8 +2643,8 @@ h2{
 
     <p>
       On-site resume viewer.
-      Keep <b>resume.jpg</b> in the same
-      GitHub repository as this index.html.
+      Keep <b>resume.jpg</b> in the same GitHub
+      repository as this index.html.
     </p>
 
 
@@ -1885,29 +2707,40 @@ const canvas =
 
 const renderer =
   new THREE.WebGLRenderer({
-    canvas,
+
+    canvas:canvas,
+
     antialias:true,
+
     alpha:false
+
   });
 
 
 renderer.setPixelRatio(
-  Math.min(devicePixelRatio,2)
+  Math.min(
+    window.devicePixelRatio || 1,
+    2
+  )
 );
 
+
 renderer.setSize(
-  innerWidth,
-  innerHeight
+  window.innerWidth,
+  window.innerHeight
 );
+
 
 renderer.outputEncoding =
   THREE.sRGBEncoding;
 
+
 renderer.toneMapping =
   THREE.ACESFilmicToneMapping;
 
+
 renderer.toneMappingExposure =
-  .86;
+  0.86;
 
 
 /* =========================================================
@@ -1917,13 +2750,17 @@ renderer.toneMappingExposure =
 const scene =
   new THREE.Scene();
 
+
 scene.background =
-  new THREE.Color(0x060708);
+  new THREE.Color(
+    0x060708
+  );
+
 
 scene.fog =
   new THREE.FogExp2(
     0x060708,
-    .024
+    0.024
   );
 
 
@@ -1933,10 +2770,16 @@ scene.fog =
 
 const camera =
   new THREE.PerspectiveCamera(
+
     42,
-    innerWidth / innerHeight,
-    .1,
+
+    window.innerWidth /
+    window.innerHeight,
+
+    0.1,
+
     500
+
   );
 
 
@@ -1945,19 +2788,26 @@ const camera =
 ========================================================= */
 
 scene.add(
+
   new THREE.HemisphereLight(
+
     0x9eb9d8,
     0x17130d,
     1.25
+
   )
+
 );
 
 
 const sun =
   new THREE.DirectionalLight(
+
     0xffd8a2,
     2.4
+
   );
+
 
 sun.position.set(
   -10,
@@ -1965,15 +2815,19 @@ sun.position.set(
   14
 );
 
+
 scene.add(sun);
 
 
 const rim =
   new THREE.PointLight(
+
     0x3b7cff,
     15,
     90
+
   );
+
 
 rim.position.set(
   12,
@@ -1981,21 +2835,26 @@ rim.position.set(
   -12
 );
 
+
 scene.add(rim);
 
 
 const redLight =
   new THREE.PointLight(
+
     0xff5146,
     7,
     45
+
   );
+
 
 redLight.position.set(
   -12,
   5,
   4
 );
+
 
 scene.add(redLight);
 
@@ -2007,26 +2866,27 @@ scene.add(redLight);
 const world =
   new THREE.Group();
 
+
 scene.add(world);
 
 
 /* =========================================================
-   MATERIALS
+   MATERIAL HELPER
 ========================================================= */
 
 function material(
-  c,
-  r=.5,
-  m=0
+  color,
+  roughness = 0.5,
+  metalness = 0
 ){
 
   return new THREE.MeshStandardMaterial({
 
-    color:c,
+    color:color,
 
-    roughness:r,
+    roughness:roughness,
 
-    metalness:m,
+    metalness:metalness,
 
     transparent:true,
 
@@ -2037,173 +2897,212 @@ function material(
 }
 
 
+/* =========================================================
+   MATERIALS
+========================================================= */
+
 const white =
   material(
     0xd9dcda,
-    .72
+    0.72
   );
+
 
 const concrete =
   material(
     0x777d7d,
-    .84
+    0.84
   );
+
 
 const dark =
   material(
     0x101315,
-    .58,
-    .22
+    0.58,
+    0.22
   );
+
 
 const steel =
   material(
     0x4e5558,
-    .3,
-    .78
+    0.30,
+    0.78
   );
+
 
 const red =
   material(
     0xff5146,
-    .38,
-    .25
+    0.38,
+    0.25
   );
+
 
 const blue =
   material(
     0x55a8ff,
-    .28,
-    .35
+    0.28,
+    0.35
   );
+
 
 const yellow =
   material(
     0xffd34d,
-    .38,
-    .1
+    0.38,
+    0.10
   );
+
 
 const glass =
   material(
     0x6fa9c7,
-    .12,
-    .45
+    0.12,
+    0.45
   );
 
-glass.opacity=.42;
+
+glass.opacity =
+  0.42;
 
 
 /* =========================================================
-   HELPERS
+   BOX HELPER
 ========================================================= */
 
 function box(
-  g,
+  group,
   x,
   y,
   z,
   sx,
   sy,
   sz,
-  ma
+  mat
 ){
 
-  const o =
+  const object =
     new THREE.Mesh(
+
       new THREE.BoxGeometry(
         sx,
         sy,
         sz
       ),
-      ma.clone()
+
+      mat.clone()
+
     );
 
-  o.position.set(
+
+  object.position.set(
     x,
     y,
     z
   );
 
-  g.add(o);
 
-  return o;
+  group.add(object);
+
+
+  return object;
 
 }
 
 
+/* =========================================================
+   LINE HELPER
+========================================================= */
+
 function line(
-  g,
+  group,
   a,
   b,
-  c=0xffffff,
-  w=.035
+  color = 0xffffff,
+  width = 0.035
 ){
 
-  const geo =
+  const geometry =
     new THREE.BufferGeometry()
       .setFromPoints([
-        new THREE.Vector3(...a),
-        new THREE.Vector3(...b)
+
+        new THREE.Vector3(
+          a[0],
+          a[1],
+          a[2]
+        ),
+
+        new THREE.Vector3(
+          b[0],
+          b[1],
+          b[2]
+        )
+
       ]);
 
 
-  const o =
+  const object =
     new THREE.Line(
-      geo,
+
+      geometry,
+
       new THREE.LineBasicMaterial({
 
-        color:c,
+        color:color,
 
         transparent:true,
 
         opacity:0
 
       })
+
     );
 
 
-  o.userData.baseOpacity=.8;
+  object.userData.baseOpacity =
+    0.8;
 
-  o.userData.lineWidth=w;
 
-  g.add(o);
+  object.userData.lineWidth =
+    width;
 
-  return o;
+
+  group.add(object);
+
+
+  return object;
 
 }
 
 
 /* =========================================================
-   GROUP FADE
+   GROUP ALPHA
 ========================================================= */
 
 function groupAlpha(
-  g,
-  a
+  group,
+  alpha
 ){
 
-  g.traverse(o=>{
+  group.traverse(
+    object=>{
 
-    if(o.material){
+      if(object.material){
 
-      o.material.transparent=true;
+        object.material.transparent =
+          true;
 
-      o.material.opacity =
-        (o.userData.baseOpacity ?? 1)
-        * a;
+        object.material.opacity =
+          (
+            object.userData.baseOpacity ??
+            1
+          ) * alpha;
 
-    }
-
-    if(o.isLine){
-
-      o.material.opacity =
-        (o.userData.baseOpacity ?? .8)
-        * a;
+      }
 
     }
-
-  });
+  );
 
 }
 
@@ -2212,28 +3111,32 @@ function groupAlpha(
    GROUND
 ========================================================= */
 
-const ground =
-  box(
-    world,
-    0,
-    -.55,
-    0,
-    70,
-    1,
-    70,
-    dark
-  );
+box(
+  world,
+  0,
+  -0.55,
+  0,
+  70,
+  1,
+  70,
+  dark
+);
 
 
 const grid =
   new THREE.GridHelper(
+
     60,
     30,
     0x2b3032,
     0x16191a
+
   );
 
-grid.position.y=-.03;
+
+grid.position.y =
+  -0.03;
+
 
 world.add(grid);
 
@@ -2245,29 +3148,31 @@ world.add(grid);
 const blueprint =
   new THREE.Group();
 
+
 world.add(blueprint);
 
 
 for(
-  let i=-12;
-  i<=12;
+  let i = -12;
+  i <= 12;
   i++
 ){
 
   line(
     blueprint,
-    [-12,.08,i],
-    [12,.08,i],
+    [-12,0.08,i],
+    [12,0.08,i],
     0x55a8ff,
-    .015
+    0.015
   );
+
 
   line(
     blueprint,
-    [i,.08,-12],
-    [i,.08,12],
+    [i,0.08,-12],
+    [i,0.08,12],
     0x55a8ff,
-    .015
+    0.015
   );
 
 }
@@ -2276,10 +3181,10 @@ for(
 box(
   blueprint,
   0,
-  .12,
+  0.12,
   0,
   11,
-  .08,
+  0.08,
   8,
   blue
 );
@@ -2288,14 +3193,14 @@ box(
 box(
   blueprint,
   0,
-  .2,
+  0.20,
   0,
   10,
-  .05,
+  0.05,
   7,
   material(
     0x0a1522,
-    .9
+    0.9
   )
 );
 
@@ -2307,24 +3212,25 @@ box(
 const foundation =
   new THREE.Group();
 
+
 world.add(foundation);
 
 
 for(
-  let x of [-5,0,5]
+  const x of [-5,0,5]
 ){
 
   for(
-    let z of [-3.2,3.2]
+    const z of [-3.2,3.2]
   ){
 
     box(
       foundation,
       x,
-      .4,
+      0.4,
       z,
       2.4,
-      .8,
+      0.8,
       1.8,
       concrete
     );
@@ -2333,10 +3239,10 @@ for(
     box(
       foundation,
       x,
-      .9,
+      0.9,
       z,
       1.4,
-      .25,
+      0.25,
       1.2,
       red
     );
@@ -2353,17 +3259,20 @@ for(
 const building =
   new THREE.Group();
 
+
 world.add(building);
 
 
 for(
-  let f=0;
-  f<5;
-  f++
+  let floorIndex = 0;
+  floorIndex < 5;
+  floorIndex++
 ){
 
   const y =
-    1.2 + f*2.25;
+    1.2 +
+    floorIndex * 2.25;
+
 
   const floor =
     new THREE.Group();
@@ -2375,28 +3284,28 @@ for(
     y,
     0,
     12,
-    .22,
+    0.22,
     8,
     concrete
   );
 
 
   for(
-    let x of [-5.2,0,5.2]
+    const x of [-5.2,0,5.2]
   ){
 
     for(
-      let z of [-3.2,3.2]
+      const z of [-3.2,3.2]
     ){
 
       box(
         floor,
         x,
-        y+1.1,
+        y + 1.1,
         z,
-        .35,
+        0.35,
         2.2,
-        .35,
+        0.35,
         red
       );
 
@@ -2406,17 +3315,17 @@ for(
 
 
   for(
-    let x of [-5.2,0,5.2]
+    const x of [-5.2,0,5.2]
   ){
 
     box(
       floor,
       x,
-      y+1.1,
+      y + 1.1,
       0,
-      .3,
+      0.30,
       2.2,
-      .3,
+      0.30,
       red
     );
 
@@ -2426,11 +3335,11 @@ for(
   box(
     floor,
     0,
-    y+1.1,
+    y + 1.1,
     -3.2,
     12,
-    .25,
-    .25,
+    0.25,
+    0.25,
     red
   );
 
@@ -2438,11 +3347,11 @@ for(
   box(
     floor,
     0,
-    y+1.1,
+    y + 1.1,
     3.2,
     12,
-    .25,
-    .25,
+    0.25,
+    0.25,
     red
   );
 
@@ -2452,16 +3361,19 @@ for(
 }
 
 
-/* Facade */
+/* =========================================================
+   FACADE
+========================================================= */
 
 for(
-  let f=0;
-  f<4;
+  let f = 0;
+  f < 4;
   f++
 ){
 
-  let y =
-    2.35 + f*2.25;
+  const y =
+    2.35 +
+    f * 2.25;
 
 
   box(
@@ -2471,7 +3383,7 @@ for(
     -3.28,
     2.8,
     1.6,
-    .08,
+    0.08,
     glass
   );
 
@@ -2483,14 +3395,16 @@ for(
     -3.28,
     2.8,
     1.6,
-    .08,
+    0.08,
     glass
   );
 
 }
 
 
-/* Roof */
+/* =========================================================
+   ROOF
+========================================================= */
 
 box(
   building,
@@ -2498,7 +3412,7 @@ box(
   12.5,
   0,
   12.5,
-  .3,
+  0.3,
   8.5,
   white
 );
@@ -2523,6 +3437,7 @@ box(
 const crane =
   new THREE.Group();
 
+
 world.add(crane);
 
 
@@ -2531,9 +3446,9 @@ box(
   -9,
   7,
   2,
-  .25,
+  0.25,
   14,
-  .25,
+  0.25,
   yellow
 );
 
@@ -2544,8 +3459,8 @@ box(
   13.7,
   2,
   9,
-  .18,
-  .18,
+  0.18,
+  0.18,
   yellow
 );
 
@@ -2555,9 +3470,9 @@ box(
   -1,
   13.2,
   2,
-  .12,
+  0.12,
   1.2,
-  .12,
+  0.12,
   yellow
 );
 
@@ -2567,7 +3482,7 @@ line(
   [-8.8,13.6,2],
   [-1,13.2,2],
   0xffd34d,
-  .025
+  0.025
 );
 
 
@@ -2576,16 +3491,17 @@ line(
   [-8.8,13.6,2],
   [-8.8,5,2],
   0xffd34d,
-  .025
+  0.025
 );
 
 
 /* =========================================================
-   SURVEYING
+   SURVEYING INSTRUMENT
 ========================================================= */
 
 const survey =
   new THREE.Group();
+
 
 world.add(survey);
 
@@ -2595,18 +3511,20 @@ box(
   0,
   3,
   -1,
-  .65,
-  .3,
-  .65,
+  0.65,
+  0.3,
+  0.65,
   blue
 );
 
 
 for(
-  const p of [
-    [-.8,0,-.8],
-    [.8,0,-.8],
-    [0,0,.8]
+  const point of [
+
+    [-0.8,0,-0.8],
+    [0.8,0,-0.8],
+    [0,0,0.8]
+
   ]
 ){
 
@@ -2614,12 +3532,12 @@ for(
     survey,
     [0,2.9,-1],
     [
-      p[0],
-      .05,
-      p[1]-1
+      point[0],
+      0.05,
+      point[2] - 1
     ],
     0x55a8ff,
-    .045
+    0.045
   );
 
 }
@@ -2630,9 +3548,9 @@ box(
   0,
   3.35,
   -1,
-  .55,
-  .18,
-  .3,
+  0.55,
+  0.18,
+  0.30,
   dark
 );
 
@@ -2644,6 +3562,7 @@ box(
 const cad =
   new THREE.Group();
 
+
 world.add(cad);
 
 
@@ -2654,40 +3573,40 @@ box(
   -1,
   10,
   6,
-  .12,
+  0.12,
   dark
 );
 
 
 for(
-  let i=-4;
-  i<=4;
+  let i = -4;
+  i <= 4;
   i++
 ){
 
   line(
     cad,
-    [-5,.05,i*.55-1],
-    [5,.05,i*.55-1],
+    [-5,0.05,i * 0.55 - 1],
+    [5,0.05,i * 0.55 - 1],
     0x55a8ff,
-    .015
+    0.015
   );
 
 }
 
 
 for(
-  let i=-5;
-  i<=5;
+  let i = -5;
+  i <= 5;
   i++
 ){
 
   line(
     cad,
-    [i*.9,.05,-4],
-    [i*.9,.05,4],
+    [i * 0.9,0.05,-4],
+    [i * 0.9,0.05,4],
     0x55a8ff,
-    .015
+    0.015
   );
 
 }
@@ -2696,15 +3615,17 @@ for(
 box(
   cad,
   0,
-  .15,
+  0.15,
   -1,
   7,
-  .05,
+  0.05,
   4,
   blue
 );
 
-cad.rotation.x=-.38;
+
+cad.rotation.x =
+  -0.38;
 
 
 /* =========================================================
@@ -2714,6 +3635,7 @@ cad.rotation.x=-.38;
 const projects =
   new THREE.Group();
 
+
 world.add(projects);
 
 
@@ -2722,16 +3644,18 @@ world.add(projects);
 const p1 =
   new THREE.Group();
 
+
 box(
   p1,
   -7,
-  .8,
+  0.8,
   5,
   4,
-  .2,
+  0.2,
   4,
   concrete
 );
+
 
 box(
   p1,
@@ -2744,39 +3668,42 @@ box(
   white
 );
 
+
 box(
   p1,
   -7,
   3.25,
   5,
   3.6,
-  .18,
+  0.18,
   3.4,
   dark
 );
 
+
 projects.add(p1);
 
 
-/* Modern house */
+/* Modern House */
 
 const p2 =
   new THREE.Group();
 
+
 box(
   p2,
   0,
-  .8,
+  0.8,
   6,
   5,
-  .25,
+  0.25,
   3.5,
   concrete
 );
 
 
 for(
-  let x of [-2,2]
+  const x of [-2,2]
 ){
 
   box(
@@ -2784,7 +3711,7 @@ for(
     x,
     2,
     6,
-    .18,
+    0.18,
     2.4,
     3,
     glass
@@ -2799,10 +3726,11 @@ box(
   3.3,
   6,
   5,
-  .2,
+  0.2,
   3.5,
   dark
 );
+
 
 projects.add(p2);
 
@@ -2812,30 +3740,31 @@ projects.add(p2);
 const p3 =
   new THREE.Group();
 
+
 box(
   p3,
   7,
-  .7,
+  0.7,
   5,
   5,
-  .18,
+  0.18,
   2.5,
   concrete
 );
 
 
 for(
-  let x=-2;
-  x<=2;
-  x+=1
+  let x = -2;
+  x <= 2;
+  x += 1
 ){
 
   line(
     p3,
-    [x+7,.9,4],
-    [x+7,2.8,4],
+    [x + 7,0.9,4],
+    [x + 7,2.8,4],
     0xff5146,
-    .08
+    0.08
   );
 
 }
@@ -2847,20 +3776,22 @@ box(
   2.8,
   4,
   5,
-  .12,
-  .12,
+  0.12,
+  0.12,
   red
 );
+
 
 projects.add(p3);
 
 
 /* =========================================================
-   3D AVATAR
+   AVATAR
 ========================================================= */
 
 const avatar =
   new THREE.Group();
+
 
 world.add(avatar);
 
@@ -2868,25 +3799,28 @@ world.add(avatar);
 const skin =
   material(
     0xb97959,
-    .7
+    0.7
   );
+
 
 const hair =
   material(
     0x171211,
-    .65
+    0.65
   );
+
 
 const shirt =
   material(
     0x202428,
-    .7
+    0.7
   );
+
 
 const pants =
   material(
     0x111214,
-    .8
+    0.8
   );
 
 
@@ -2897,7 +3831,7 @@ box(
   0,
   1.05,
   1.8,
-  .55,
+  0.55,
   shirt
 );
 
@@ -2907,9 +3841,9 @@ box(
   0,
   4.05,
   0,
-  .82,
-  .82,
-  .72,
+  0.82,
+  0.82,
+  0.72,
   skin
 );
 
@@ -2918,82 +3852,82 @@ box(
   avatar,
   0,
   4.48,
-  -.02,
-  .84,
-  .3,
-  .75,
+  -0.02,
+  0.84,
+  0.30,
+  0.75,
   hair
 );
 
 
 box(
   avatar,
-  -.32,
+  -0.32,
   1.45,
   0,
-  .35,
+  0.35,
   1.1,
-  .4,
+  0.4,
   pants
 );
 
 
 box(
   avatar,
-  .32,
+  0.32,
   1.45,
   0,
-  .35,
+  0.35,
   1.1,
-  .4,
+  0.4,
   pants
 );
 
 
 box(
   avatar,
-  -.72,
+  -0.72,
   2.7,
   0,
-  .3,
+  0.3,
   1.35,
-  .32,
+  0.32,
   skin
 );
 
 
 box(
   avatar,
-  .72,
+  0.72,
   2.7,
   0,
-  .3,
+  0.3,
   1.35,
-  .32,
+  0.32,
   skin
 );
 
 
 box(
   avatar,
-  -.32,
-  .78,
-  .08,
-  .42,
-  .18,
-  .65,
+  -0.32,
+  0.78,
+  0.08,
+  0.42,
+  0.18,
+  0.65,
   dark
 );
 
 
 box(
   avatar,
-  .32,
-  .78,
-  .08,
-  .42,
-  .18,
-  .65,
+  0.32,
+  0.78,
+  0.08,
+  0.42,
+  0.18,
+  0.65,
   dark
 );
 
@@ -3002,7 +3936,7 @@ box(
    CAMERA CHAPTERS
 ========================================================= */
 
-const chapters=[
+const chapters = [
 
   {
     cam:[10,7,28],
@@ -3035,17 +3969,12 @@ const chapters=[
   },
 
   {
-    cam:[5,4,14],
-    look:[0,3,0]
+    cam:[8,5,18],
+    look:[0,4,0]
   },
 
   {
     cam:[0,4,12],
-    look:[0,3,0]
-  },
-
-  {
-    cam:[0,3.5,10],
     look:[0,3,0]
   }
 
@@ -3056,9 +3985,12 @@ const chapters=[
    SCROLL STATE
 ========================================================= */
 
-let targetScroll=0;
+let targetScroll =
+  window.scrollY || 0;
 
-let scrollPos=0;
+
+let scrollPos =
+  targetScroll;
 
 
 /* =========================================================
@@ -3071,10 +4003,10 @@ function smooth(
   t
 ){
 
-  return a+
-    (b-a)*
+  return a +
+    (b-a) *
     (
-      1-
+      1 -
       Math.pow(
         1-t,
         3
@@ -3085,73 +4017,148 @@ function smooth(
 
 
 /* =========================================================
-   3D OBJECT FADE
+   SCENE FADE
 ========================================================= */
 
 function sceneFade(
   stage,
   from,
   to,
-  range=.65
+  range = 0.7
 ){
 
   const center =
-    (from+to)/2;
+    (from + to) / 2;
+
 
   const width =
-    (to-from)/2;
+    (to - from) / 2;
 
-  const d =
+
+  const distance =
     Math.abs(
-      stage-center
+      stage - center
     );
+
 
   return Math.max(
     0,
-    1-
+    1 -
     Math.max(
       0,
-      d-width
-    )/range
+      distance - width
+    ) / range
   );
 
 }
 
 
 /* =========================================================
-   HTML SLIDE FADE
+   SLOW CINEMATIC HTML FADE
+========================================================= */
+
+function cinematicCopyFade(
+  distance,
+  viewport
+){
+
+  /*
+    Long HOLD:
+    Full visibility near the chapter centre.
+
+    Slow FADE:
+    The copy begins disappearing much later.
+
+    This is intentionally wider than the old .72 viewport
+    fade so each slide stays readable for longer.
+  */
+
+  const hold =
+  viewport * 0.40;
+
+const end =
+  viewport * 1.20;
+
+
+  if(distance <= hold){
+
+    return 1;
+
+  }
+
+
+  if(distance >= end){
+
+    return 0;
+
+  }
+
+
+  const progress =
+    (
+      distance - hold
+    ) /
+    (
+      end - hold
+    );
+
+
+  /*
+    Smoothstep makes the transition
+    feel cinematic instead of linear.
+  */
+
+  const smoothStep =
+    progress *
+    progress *
+    (
+      3 -
+      2 * progress
+    );
+
+
+  return 1 - smoothStep;
+
+}
+
+
+/* =========================================================
+   UPDATE TEXT SLIDES
 ========================================================= */
 
 function updateCopies(){
 
+  const viewport =
+    window.innerHeight;
+
+
   document
     .querySelectorAll(".chapter")
     .forEach(
-      (chapter,i)=>{
+      (chapter,index)=>{
 
-        const center =
-          i*innerHeight+
-          innerHeight/2;
+        const chapterCenter =
+          index *
+          viewport +
+          viewport / 2;
+
+
+        const currentCenter =
+          scrollPos +
+          viewport / 2;
 
 
         const distance =
           Math.abs(
-            (
-              scrollPos+
-              innerHeight/2
-            )-
-            center
+            currentCenter -
+            chapterCenter
           );
 
 
         const fade =
-          Math.max(
-            0,
-            1-
-            distance/
-            (
-              innerHeight*.72
-            )
+          cinematicCopyFade(
+            distance,
+            viewport
           );
 
 
@@ -3161,36 +4168,49 @@ function updateCopies(){
           );
 
 
+        if(!copy){
+
+          return;
+
+        }
+
+
         copy.style.opacity =
           fade.toFixed(3);
+
+
+        const direction =
+          index % 2 === 0
+          ? 1
+          : -1;
+
+
+        const translate =
+          (1-fade) *
+          30 *
+          direction;
+
+
+        const scale =
+          0.975 +
+          fade * 0.025;
 
 
         copy.style.transform =
           `
           translate3d(
             0,
-            ${
-              (
-                (1-fade)*36
-              )*
-              (
-                (i%2)
-                ? -1
-                : 1
-              )
-            }px,
+            ${translate}px,
             0
           )
-          scale(
-            ${.965+fade*.035}
-          )
+          scale(${scale})
           `;
 
 
         copy.style.filter =
           `
           blur(
-            ${(1-fade)*4}px
+            ${(1-fade)*3}px
           )
           `;
 
@@ -3213,25 +4233,26 @@ function render(){
 
   scrollPos +=
     (
-      targetScroll-
+      targetScroll -
       scrollPos
-    )*.075;
+    ) * 0.065;
 
 
-  const max =
+  const maxScroll =
     Math.max(
       1,
-      document.body.scrollHeight-
-      innerHeight
+      document.body.scrollHeight -
+      window.innerHeight
     );
 
 
-  const p =
+  const progress =
     Math.max(
       0,
       Math.min(
         1,
-        scrollPos/max
+        scrollPos /
+        maxScroll
       )
     );
 
@@ -3239,62 +4260,62 @@ function render(){
   document
     .getElementById("bar")
     .style.width =
-      (p*100)+"%";
+      (
+        progress * 100
+      ) + "%";
 
 
-  const seg =
-    p*
-    (
-      chapters.length-1
-    );
+  const segment =
+  progress *
+  (chapters.length - 1);
+
+const index =
+  Math.min(
+    chapters.length - 2,
+    Math.floor(segment)
+  );
+
+const t =
+  segment - index;
+
+const A =
+  chapters[index];
+
+const B =
+  chapters[index + 1];
 
 
-  const i =
-    Math.min(
-      chapters.length-2,
-      Math.floor(seg)
-    );
-
-
-  const t =
-    seg-i;
-
-
-  const A =
-    chapters[i];
-
-  const B =
-    chapters[i+1];
-
-
-  /* Mobile camera composition */
+  /* =======================================================
+     MOBILE COMPOSITION
+  ======================================================= */
 
   const mobile =
-    innerWidth<760;
+    window.innerWidth < 760;
+
 
   const mobileOffset =
     mobile
-    ? 1.13
+    ? 1.10
     : 1;
 
 
   camera.position.set(
 
     smooth(
-      A.cam[0]*mobileOffset,
-      B.cam[0]*mobileOffset,
+      A.cam[0] * mobileOffset,
+      B.cam[0] * mobileOffset,
       t
     ),
 
     smooth(
-      A.cam[1]*mobileOffset,
-      B.cam[1]*mobileOffset,
+      A.cam[1] * mobileOffset,
+      B.cam[1] * mobileOffset,
       t
     ),
 
     smooth(
-      A.cam[2]*mobileOffset,
-      B.cam[2]*mobileOffset,
+      A.cam[2] * mobileOffset,
+      B.cam[2] * mobileOffset,
       t
     )
 
@@ -3329,34 +4350,35 @@ function render(){
 
 
   /* =======================================================
-     CINEMATIC 3D CROSSFADE
+     3D CROSSFADE
   ======================================================= */
 
-  const stage=seg;
+  const stage =
+    segment;
 
 
-  const ranges=[
+  const ranges = [
 
-    [0,1.6],    // blueprint
+    [0,1.7],
 
-    [.3,2.5],   // foundation
+    [0.3,2.6],
 
-    [.8,6.5],   // building
+    [0.8,6.6],
 
-    [1.0,5.8],  // crane
+    [1.0,5.9],
 
-    [2.5,4.9],  // survey
+    [2.4,5.1],
 
-    [3.5,6.4],  // cad
+    [3.5,6.5],
 
-    [4.6,7.4],  // projects
+    [4.5,7.6],
 
-    [5.7,8.5]   // avatar
+    [5.8,8.5]
 
   ];
 
 
-  const parts=[
+  const parts = [
 
     blueprint,
     foundation,
@@ -3379,7 +4401,7 @@ function render(){
           stage,
           ranges[k][0],
           ranges[k][1],
-          .7
+          0.72
         )
       );
 
@@ -3388,95 +4410,108 @@ function render(){
 
 
   /* =======================================================
-     OBJECT MOVEMENT
+     3D OBJECT MOVEMENT
   ======================================================= */
 
   foundation.position.y =
     Math.max(
       0,
-      (stage-.3)*.22
+      (stage - 0.3) * 0.22
     );
 
 
   building.position.y =
     Math.max(
       0,
-      (1.05-stage)*-2
+      (1.05 - stage) * -2
     );
 
 
   building.rotation.y =
-    stage*.035;
+    stage * 0.035;
 
 
   crane.rotation.y =
-    (stage-2)*.05;
+    (stage - 2) * 0.05;
 
 
   survey.position.x =
-    stage<3.6
+    stage < 3.6
     ? -2
     : 2;
 
 
   survey.position.z =
-    -2+
-    (stage-3)*1.2;
+    -2 +
+    (stage - 3) * 1.2;
 
 
   cad.rotation.y =
-    -.12+
-    (stage-4)*.22;
+    -0.12 +
+    (stage - 4) * 0.22;
 
 
   projects.position.y =
     Math.max(
       0,
-      (stage-5)*.2
+      (stage - 5) * 0.2
     );
 
 
   avatar.position.set(
 
     0,
+
     0,
+
     Math.max(
       0,
-      (stage-6)*1.3
+      (stage - 6) * 1.3
     )
 
   );
 
 
   avatar.rotation.y =
-    -.2+
-    (stage-6)*.45;
+    -0.2 +
+    (stage - 6) * 0.45;
 
 
-  /* Chapter counter */
+  /* =======================================================
+     CHAPTER NUMBER
+  ======================================================= */
 
   document
     .getElementById(
       "chapterNo"
     )
     .textContent =
+
       String(
         Math.min(
           8,
-          Math.floor(stage)+1
+          Math.floor(stage) + 1
         )
       ).padStart(
         2,
         "0"
       )
+
       +
+
       " / 08";
 
 
-  /* HTML fade */
+  /* =======================================================
+     TEXT
+  ======================================================= */
 
   updateCopies();
 
+
+  /* =======================================================
+     RENDER
+  ======================================================= */
 
   renderer.render(
     scene,
@@ -3487,18 +4522,22 @@ function render(){
 
 
 /* =========================================================
-   SCROLL
+   SCROLL LISTENER
 ========================================================= */
 
 window.addEventListener(
+
   "scroll",
+
   ()=>{
     targetScroll =
       window.scrollY;
   },
+
   {
     passive:true
   }
+
 );
 
 
@@ -3507,28 +4546,34 @@ window.addEventListener(
 ========================================================= */
 
 window.addEventListener(
+
   "resize",
+
   ()=>{
 
     camera.aspect =
-      innerWidth/
-      innerHeight;
+      window.innerWidth /
+      window.innerHeight;
+
 
     camera.updateProjectionMatrix();
 
+
     renderer.setSize(
-      innerWidth,
-      innerHeight
+      window.innerWidth,
+      window.innerHeight
     );
+
 
     renderer.setPixelRatio(
       Math.min(
-        devicePixelRatio,
+        window.devicePixelRatio || 1,
         2
       )
     );
 
   }
+
 );
 
 
@@ -3537,7 +4582,7 @@ window.addEventListener(
 ========================================================= */
 
 function cinematicAction(
-  fn
+  callback
 ){
 
   const veil =
@@ -3552,23 +4597,24 @@ function cinematicAction(
 
 
   setTimeout(
-    ()=>{
+  ()=>{
 
-      fn();
+    callback();
 
+    setTimeout(
+      ()=>{
 
-      setTimeout(
-        ()=>{
-          veil.classList.remove(
-            "on"
-          );
-        },
-        80
-      );
+        veil.classList.remove(
+          "on"
+        );
 
-    },
-    260
-  );
+      },
+      520
+    );
+
+  },
+  420
+);
 
 }
 
@@ -3577,50 +4623,75 @@ function cinematicAction(
    NAVIGATION
 ========================================================= */
 
-function goTo(n){
+function goTo(
+  chapterIndex
+){
+
+  const safeIndex =
+    Math.max(
+      0,
+      Math.min(
+        7,
+        Number(chapterIndex) || 0
+      )
+    );
+
 
   cinematicAction(
+
     ()=>{
 
       window.scrollTo({
 
         top:
-          Math.min(
-            n,
-            7
-          )*
-          innerHeight,
+          safeIndex *
+          window.innerHeight,
 
         behavior:"smooth"
 
       });
 
     }
+
   );
 
 }
 
 
 /* =========================================================
-   MODAL HELPERS
+   GENERAL MODAL
 ========================================================= */
 
 function openModalBase(){
 
   const modal =
+
     document.getElementById(
+
       "modal"
+
     );
 
+  cinematicAction(
 
-  modal.classList.add(
-    "show"
-  );
+    ()=>{
 
+      modal.classList.add(
 
-  modal.setAttribute(
-    "aria-hidden",
-    "false"
+        "show"
+
+      );
+
+      modal.setAttribute(
+
+        "aria-hidden",
+
+        "false"
+
+      );
+
+    }
+
   );
 
 }
@@ -3648,56 +4719,76 @@ function closeModal(){
 
 
 /* =========================================================
-   PROJECT / SKILL MODAL
+   PROJECT / SKILL INFORMATION
 ========================================================= */
 
 function openInfo(
+
   title,
+
   text
+
 ){
 
-  document
-    .getElementById(
-      "modalEyebrow"
-    )
-    .textContent =
-      "Portfolio detail";
+  const modal =
 
-
-  document
-    .getElementById(
-      "modalTitle"
-    )
-    .textContent =
-      title;
-
-
-  document
-    .getElementById(
-      "modalText"
-    )
-    .textContent =
-      text;
-
-
-  const action =
     document.getElementById(
-      "modalAction"
+
+      "modal"
+
     );
 
+  const button =
 
-  action.removeAttribute(
-    "href"
-  );
+    document.getElementById(
 
+      "modalCloseButton"
 
-  action.textContent =
-    "Close";
+    );
 
+  document
 
-  action.onclick =
+    .getElementById(
+
+      "modalEyebrow"
+
+    )
+
+    .textContent =
+
+      "Portfolio detail";
+
+  document
+
+    .getElementById(
+
+      "modalTitle"
+
+    )
+
+    .textContent =
+
+      title;
+
+  document
+
+    .getElementById(
+
+      "modalText"
+
+    )
+
+    .textContent =
+
+      text;
+
+  button.innerHTML =
+
+    'Close <i class="fa-solid fa-xmark"></i>';
+
+  button.onclick =
+
     closeModal;
-
 
   openModalBase();
 
@@ -3738,35 +4829,50 @@ function openContact(
       text;
 
 
-  const action =
+  const button =
     document.getElementById(
-      "modalAction"
+      "modalCloseButton"
     );
 
 
-  action.href =
-    url;
+  button.innerHTML =
+
+  'Open ' +
+
+  title +
+
+  ' <i class="fa-solid fa-arrow-up-right-from-square"></i>';
 
 
-  action.target =
-    (
-      url.startsWith(
-        "mailto:"
-      )
-      ||
-      url.startsWith(
-        "tel:"
-      )
-    )
-    ? "_self"
-    : "_blank";
+  button.onclick = ()=>{
 
+    cinematicAction(
+      ()=>{
 
-  action.textContent =
-    "Open "+title;
+        if(
+          url.startsWith("mailto:") ||
+          url.startsWith("tel:")
+        ){
 
+          window.location.href =
+            url;
 
-  action.onclick=null;
+        }else{
+
+          window.open(
+            url,
+            "_blank",
+            "noopener"
+          );
+
+        }
+
+        closeModal();
+
+      }
+    );
+
+  };
 
 
   openModalBase();
@@ -3775,25 +4881,58 @@ function openContact(
 
 
 /* =========================================================
+   RESET MODAL BUTTON
+========================================================= */
+
+document
+  .getElementById(
+    "modal"
+  )
+  .addEventListener(
+    "transitionend",
+    ()=>{
+      /*
+        The button is reset here only when
+        the modal finishes closing.
+      */
+    }
+  );
+
+
+/* =========================================================
    RESUME
 ========================================================= */
 
 function openResume(){
 
-  const modal =
-    document.getElementById(
-      "resumeModal"
-    );
+  cinematicAction(
 
+    ()=>{
 
-  modal.classList.add(
-    "show"
-  );
+      const modal =
 
+        document.getElementById(
 
-  modal.setAttribute(
-    "aria-hidden",
-    "false"
+          "resumeModal"
+
+        );
+
+      modal.classList.add(
+
+        "show"
+
+      );
+
+      modal.setAttribute(
+
+        "aria-hidden",
+
+        "false"
+
+      );
+
+    }
+
   );
 
 }
@@ -3821,17 +4960,21 @@ function closeResume(){
 
 
 /* =========================================================
-   CLICK OUTSIDE MODAL
+   CLICK OUTSIDE MODALS
 ========================================================= */
 
 document
-  .getElementById("modal")
+  .getElementById(
+    "modal"
+  )
   .addEventListener(
+
     "click",
-    e=>{
+
+    event=>{
 
       if(
-        e.target.id===
+        event.target.id ===
         "modal"
       ){
 
@@ -3840,6 +4983,7 @@ document
       }
 
     }
+
   );
 
 
@@ -3848,11 +4992,13 @@ document
     "resumeModal"
   )
   .addEventListener(
+
     "click",
-    e=>{
+
+    event=>{
 
       if(
-        e.target.id===
+        event.target.id ===
         "resumeModal"
       ){
 
@@ -3861,19 +5007,22 @@ document
       }
 
     }
+
   );
 
 
 /* =========================================================
-   ESC KEY
+   ESCAPE KEY
 ========================================================= */
 
 document.addEventListener(
+
   "keydown",
-  e=>{
+
+  event=>{
 
     if(
-      e.key===
+      event.key ===
       "Escape"
     ){
 
@@ -3884,24 +5033,27 @@ document.addEventListener(
     }
 
   }
+
 );
 
 
 /* =========================================================
-   CINEMATIC LOADER
+   LOADER
 ========================================================= */
 
-let loaded=0;
+let loaded =
+  0;
 
 
-const tick =
+const loadingTimer =
   setInterval(
+
     ()=>{
 
       loaded =
         Math.min(
           100,
-          loaded+8
+          loaded + 5
         );
 
 
@@ -3910,55 +5062,71 @@ const tick =
           "loadbar"
         )
         .style.width =
-          loaded+"%";
+          loaded + "%";
 
 
       if(
-        loaded>=100
+        loaded >= 100
       ){
 
         clearInterval(
-          tick
+          loadingTimer
         );
 
 
         setTimeout(
+
           ()=>{
 
-            document
-              .getElementById(
+            const loading =
+              document.getElementById(
                 "loading"
-              )
-              .style.opacity="0";
+              );
+
+
+            loading.style.opacity =
+              "0";
 
 
             setTimeout(
+
               ()=>{
 
-                document
-                  .getElementById(
-                    "loading"
-                  )
-                  .remove();
+                if(
+                  loading &&
+                  loading.parentNode
+                ){
+
+                  loading.remove();
+
+                }
 
               },
-              850
+
+              900
+
             );
 
           },
-          180
+
+          250
+
         );
 
       }
 
     },
-    45
+
+    50
+
   );
 
 
 /* =========================================================
-   START
+   INITIALIZE
 ========================================================= */
+
+updateCopies();
 
 render();
 
