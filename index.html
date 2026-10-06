@@ -1,4 +1,4 @@
-<!doctype html>
+ <!doctype html>
 <html lang="en">
 <head>
 
@@ -1579,12 +1579,16 @@ h2{
     </button>
 
     <button onclick="goTo(6)">
-      Profile
-    </button>
 
-    <button onclick="goTo(7)">
-      Contact
-    </button>
+  Profile
+
+</button>
+
+<button onclick="goTo(7)">
+
+  Contact
+
+</button>
 
   </nav>
 
@@ -2182,6 +2186,7 @@ h2{
 
         <div class="profileRole">
           DCE • B.E. CIVIL ENGINEER
+          
         </div>
 
         <p>
@@ -2257,13 +2262,15 @@ h2{
     </h2>
 
     <p>
-      Connect with me through any of the platforms below.
+        Connect with me through any of the platforms below.
     </p>
 
     <div
       class="iconbar"
       style="justify-content:center"
     >
+
+      <!-- EMAIL -->
 
       <button
         class="appIcon"
@@ -2282,6 +2289,8 @@ h2{
 
       </button>
 
+      <!-- WHATSAPP -->
+
       <button
         class="appIcon"
         data-brand="wa"
@@ -2298,6 +2307,8 @@ h2{
         <i class="fa-brands fa-whatsapp"></i>
 
       </button>
+
+      <!-- LINKEDIN -->
 
       <button
         class="appIcon"
@@ -2316,6 +2327,8 @@ h2{
 
       </button>
 
+      <!-- GITHUB -->
+
       <button
         class="appIcon"
         data-brand="gh"
@@ -2332,6 +2345,8 @@ h2{
         <i class="fa-brands fa-github"></i>
 
       </button>
+
+      <!-- PHONE -->
 
       <button
         class="appIcon"
@@ -2498,107 +2513,33 @@ h2{
 <script>
 
 /* =========================================================
-   DEVICE PERFORMANCE PROFILE
+   THREE.JS SETUP
 ========================================================= */
 
 const canvas =
   document.getElementById("webgl");
-
-const screenWidth =
-  window.innerWidth;
-
-const isTouchDevice =
-  window.matchMedia("(pointer: coarse)").matches ||
-  navigator.maxTouchPoints > 0;
-
-const isMobileDevice =
-  screenWidth <= 760 ||
-  (isTouchDevice && screenWidth <= 900);
-
-const isTabletDevice =
-  !isMobileDevice &&
-  (
-    screenWidth <= 1100 ||
-    isTouchDevice
-  );
-
-const deviceMemory =
-  navigator.deviceMemory || 4;
-
-const hardwareThreads =
-  navigator.hardwareConcurrency || 4;
-
-const lowPowerDevice =
-  isMobileDevice &&
-  (
-    deviceMemory <= 4 ||
-    hardwareThreads <= 4
-  );
-
-const maxDPR =
-  isMobileDevice
-    ? (
-        lowPowerDevice
-          ? 1
-          : 1.10
-      )
-    : isTabletDevice
-      ? 1.35
-      : 1.75;
-
-const targetFPS =
-  lowPowerDevice
-    ? 30
-    : isMobileDevice
-      ? 40
-      : isTabletDevice
-        ? 50
-        : 60;
-
-const frameInterval =
-  1000 / targetFPS;
-
-/* =========================================================
-   THREE.JS SETUP
-========================================================= */
 
 const renderer =
   new THREE.WebGLRenderer({
 
     canvas:canvas,
 
-    /*
-      Antialiasing is expensive on mobile GPUs.
-      Desktop keeps it for maximum visual quality.
-    */
+    antialias:true,
 
-    antialias:
-      !isMobileDevice &&
-      !isTabletDevice,
-
-    alpha:false,
-
-    powerPreference:
-      (
-        isMobileDevice ||
-        isTabletDevice
-      )
-        ? "low-power"
-        : "high-performance"
+    alpha:false
 
   });
 
 renderer.setPixelRatio(
   Math.min(
     window.devicePixelRatio || 1,
-    maxDPR
+    2
   )
 );
 
 renderer.setSize(
   window.innerWidth,
-  window.innerHeight,
-  false
+  window.innerHeight
 );
 
 renderer.outputEncoding =
@@ -2645,15 +2586,6 @@ const camera =
     500
 
   );
-
-/*
-  Reused every frame.
-  This avoids creating a new Vector3
-  on every render.
-*/
-
-const lookTarget =
-  new THREE.Vector3();
 
 /* =========================================================
    LIGHTING
@@ -2942,45 +2874,6 @@ function groupAlpha(
       }
 
     }
-  );
-
-}
-
-/*
-  Prevent expensive group traversal when
-  the alpha has barely changed.
-*/
-
-const lastGroupAlpha =
-  new WeakMap();
-
-function applyGroupAlpha(
-  group,
-  alpha
-){
-
-  const previous =
-    lastGroupAlpha.get(group);
-
-  if(
-    previous !== undefined &&
-    Math.abs(
-      previous - alpha
-    ) < 0.008
-  ){
-
-    return;
-
-  }
-
-  lastGroupAlpha.set(
-    group,
-    alpha
-  );
-
-  groupAlpha(
-    group,
-    alpha
   );
 
 }
@@ -3789,75 +3682,6 @@ let scrollPos =
   targetScroll;
 
 /* =========================================================
-   SCROLL METRICS
-========================================================= */
-
-let viewportHeight =
-  window.innerHeight;
-
-let maxScroll =
-  Math.max(
-    1,
-    document.body.scrollHeight -
-    viewportHeight
-  );
-
-function updateScrollMetrics(){
-
-  viewportHeight =
-    window.innerHeight;
-
-  maxScroll =
-    Math.max(
-      1,
-      document.body.scrollHeight -
-      viewportHeight
-    );
-
-}
-
-/* =========================================================
-   CACHE IMPORTANT DOM ELEMENTS
-========================================================= */
-
-const progressBar =
-  document.getElementById("bar");
-
-const chapterNumber =
-  document.getElementById("chapterNo");
-
-const chapterElements =
-  Array.from(
-    document.querySelectorAll(".chapter")
-  );
-
-const chapterCopies =
-  chapterElements.map(
-    (
-      chapter,
-      index
-    )=>({
-
-      index:index,
-
-      copy:
-        chapter.querySelector(
-          ".copy"
-        )
-
-    })
-  );
-
-let lastCopyScroll =
-  -Infinity;
-
-let lastProgress =
-  -1;
-
-let lastChapterDisplay =
-  -1;
-
-/* =========================================================
    SMOOTH INTERPOLATION
 ========================================================= */
 
@@ -3921,11 +3745,22 @@ function cinematicCopyFade(
   viewport
 ){
 
-  const hold =
-    viewport * 0.40;
+  /*
+    Long HOLD:
+    Full visibility near the chapter centre.
 
-  const end =
-    viewport * 1.20;
+    Slow FADE:
+    The copy begins disappearing much later.
+
+    This is intentionally wider than the old .72 viewport
+    fade so each slide stays readable for longer.
+  */
+
+  const hold =
+  viewport * 0.40;
+
+const end =
+  viewport * 1.20;
 
   if(distance <= hold){
 
@@ -3947,6 +3782,11 @@ function cinematicCopyFade(
       end - hold
     );
 
+  /*
+    Smoothstep makes the transition
+    feel cinematic instead of linear.
+  */
+
   const smoothStep =
     progress *
     progress *
@@ -3963,133 +3803,83 @@ function cinematicCopyFade(
    UPDATE TEXT SLIDES
 ========================================================= */
 
-function updateCopies(
-  force = false
-){
+function updateCopies(){
 
-  if(
-    !force &&
-    Math.abs(
-      scrollPos -
-      lastCopyScroll
-    ) < 0.15
-  ){
+  const viewport =
+    window.innerHeight;
 
-    return;
+  document
+    .querySelectorAll(".chapter")
+    .forEach(
+      (chapter,index)=>{
 
-  }
+        const chapterCenter =
+          index *
+          viewport +
+          viewport / 2;
 
-  lastCopyScroll =
-    scrollPos;
+        const currentCenter =
+          scrollPos +
+          viewport / 2;
 
-  chapterCopies.forEach(
-    ({
-      index,
-      copy
-    })=>{
+        const distance =
+          Math.abs(
+            currentCenter -
+            chapterCenter
+          );
 
-      if(!copy){
+        const fade =
+          cinematicCopyFade(
+            distance,
+            viewport
+          );
 
-        return;
+        const copy =
+          chapter.querySelector(
+            ".copy"
+          );
 
-      }
+        if(!copy){
 
-      const chapterCenter =
-        index *
-        viewportHeight +
-        viewportHeight / 2;
+          return;
 
-      const currentCenter =
-        scrollPos +
-        viewportHeight / 2;
+        }
 
-      const distance =
-        Math.abs(
-          currentCenter -
-          chapterCenter
-        );
+        copy.style.opacity =
+          fade.toFixed(3);
 
-      const fade =
-        cinematicCopyFade(
-          distance,
-          viewportHeight
-        );
-
-      copy.style.opacity =
-        fade.toFixed(3);
-
-      const direction =
-        index % 2 === 0
+        const direction =
+          index % 2 === 0
           ? 1
           : -1;
 
-      const translate =
-        (1-fade) *
-        30 *
-        direction;
+        const translate =
+          (1-fade) *
+          30 *
+          direction;
 
-      const scale =
-        0.975 +
-        fade * 0.025;
+        const scale =
+          0.975 +
+          fade * 0.025;
 
-      copy.style.transform =
-        `
-        translate3d(
-          0,
-          ${translate}px,
-          0
-        )
-        scale(${scale})
-        `;
+        copy.style.transform =
+          `
+          translate3d(
+            0,
+            ${translate}px,
+            0
+          )
+          scale(${scale})
+          `;
 
-      copy.style.filter =
-        `
-        blur(
-          ${(1-fade)*3}px
-        )
-        `;
+        copy.style.filter =
+          `
+          blur(
+            ${(1-fade)*3}px
+          )
+          `;
 
-    }
-  );
-
-}
-
-/* =========================================================
-   RENDER CONTROL
-========================================================= */
-
-let rafId =
-  0;
-
-let rendererRunning =
-  false;
-
-let needsRender =
-  true;
-
-let lastFrameTime =
-  0;
-
-function wakeRenderer(){
-
-  needsRender =
-    true;
-
-  if(
-    document.hidden ||
-    rendererRunning
-  ){
-
-    return;
-
-  }
-
-  rendererRunning =
-    true;
-
-  rafId =
-    requestAnimationFrame(
-      render
+      }
     );
 
 }
@@ -4098,76 +3888,24 @@ function wakeRenderer(){
    RENDER LOOP
 ========================================================= */
 
-function render(
-  now
-){
+function render(){
 
-  if(document.hidden){
+  requestAnimationFrame(
+    render
+  );
 
-    rendererRunning =
-      false;
+  scrollPos +=
+    (
+      targetScroll -
+      scrollPos
+    ) * 0.065;
 
-    rafId =
-      0;
-
-    return;
-
-  }
-
-  /*
-    FPS limiter.
-
-    requestAnimationFrame itself can run at
-    60/90/120/144Hz. We intentionally don't
-    render the heavy 3D scene that often.
-  */
-
-  if(
-    now -
-    lastFrameTime <
-    frameInterval
-  ){
-
-    rafId =
-      requestAnimationFrame(
-        render
-      );
-
-    return;
-
-  }
-
-  lastFrameTime =
-    now;
-
-  /* =======================================================
-     SCROLL SMOOTHING
-  ======================================================= */
-
-  const scrollDelta =
-    targetScroll -
-    scrollPos;
-
-  if(
-    Math.abs(
-      scrollDelta
-    ) > 0.08
-  ){
-
-    scrollPos +=
-      scrollDelta *
-      0.065;
-
-  }else{
-
-    scrollPos =
-      targetScroll;
-
-  }
-
-  /* =======================================================
-     PROGRESS
-  ======================================================= */
+  const maxScroll =
+    Math.max(
+      1,
+      document.body.scrollHeight -
+      window.innerHeight
+    );
 
   const progress =
     Math.max(
@@ -4179,126 +3917,90 @@ function render(
       )
     );
 
-  if(
-    Math.abs(
-      progress -
-      lastProgress
-    ) > 0.0005
-  ){
-
-    progressBar.style.width =
+  document
+    .getElementById("bar")
+    .style.width =
       (
         progress * 100
       ) + "%";
 
-    lastProgress =
-      progress;
+  const segment =
+  progress *
+  (chapters.length - 1);
 
-  }
+const index =
+  Math.min(
+    chapters.length - 2,
+    Math.floor(segment)
+  );
+
+const t =
+  segment - index;
+
+const A =
+  chapters[index];
+
+const B =
+  chapters[index + 1];
 
   /* =======================================================
-     CAMERA
+     MOBILE COMPOSITION
   ======================================================= */
 
-  const segment =
-    progress *
-    (
-      chapters.length -
-      1
-    );
-
-  const index =
-    Math.min(
-      chapters.length - 2,
-      Math.floor(segment)
-    );
-
-  const t =
-    segment -
-    index;
-
-  const A =
-    chapters[index];
-
-  const B =
-    chapters[index + 1];
-
-  /*
-    The original mobile composition is preserved.
-  */
-
   const mobile =
-    window.innerWidth <
-    760;
+    window.innerWidth < 760;
 
   const mobileOffset =
     mobile
-      ? 1.10
-      : 1;
+    ? 1.10
+    : 1;
 
   camera.position.set(
 
     smooth(
-      A.cam[0] *
-      mobileOffset,
-
-      B.cam[0] *
-      mobileOffset,
-
+      A.cam[0] * mobileOffset,
+      B.cam[0] * mobileOffset,
       t
     ),
 
     smooth(
-      A.cam[1] *
-      mobileOffset,
-
-      B.cam[1] *
-      mobileOffset,
-
+      A.cam[1] * mobileOffset,
+      B.cam[1] * mobileOffset,
       t
     ),
 
     smooth(
-      A.cam[2] *
-      mobileOffset,
-
-      B.cam[2] *
-      mobileOffset,
-
-      t
-    )
-
-  );
-
-  /*
-    Reuse the same Vector3 instead of
-    creating a new object every frame.
-  */
-
-  lookTarget.set(
-
-    smooth(
-      A.look[0],
-      B.look[0],
-      t
-    ),
-
-    smooth(
-      A.look[1],
-      B.look[1],
-      t
-    ),
-
-    smooth(
-      A.look[2],
-      B.look[2],
+      A.cam[2] * mobileOffset,
+      B.cam[2] * mobileOffset,
       t
     )
 
   );
 
   camera.lookAt(
-    lookTarget
+
+    new THREE.Vector3(
+
+      smooth(
+        A.look[0],
+        B.look[0],
+        t
+      ),
+
+      smooth(
+        A.look[1],
+        B.look[1],
+        t
+      ),
+
+      smooth(
+        A.look[2],
+        B.look[2],
+        t
+      )
+
+    )
+
   );
 
   /* =======================================================
@@ -4307,19 +4009,6 @@ function render(
 
   const stage =
     segment;
-
-  const parts = [
-
-    blueprint,
-    foundation,
-    building,
-    crane,
-    survey,
-    cad,
-    projects,
-    avatar
-
-  ];
 
   const ranges = [
 
@@ -4341,26 +4030,34 @@ function render(
 
   ];
 
-  for(
-    let k = 0;
-    k < parts.length;
-    k++
-  ){
+  const parts = [
 
-    applyGroupAlpha(
+    blueprint,
+    foundation,
+    building,
+    crane,
+    survey,
+    cad,
+    projects,
+    avatar
 
-      parts[k],
+  ];
 
-      sceneFade(
-        stage,
-        ranges[k][0],
-        ranges[k][1],
-        0.72
-      )
+  parts.forEach(
+    (group,k)=>{
 
-    );
+      groupAlpha(
+        group,
+        sceneFade(
+          stage,
+          ranges[k][0],
+          ranges[k][1],
+          0.72
+        )
+      );
 
-  }
+    }
+  );
 
   /* =======================================================
      3D OBJECT MOVEMENT
@@ -4386,8 +4083,8 @@ function render(
 
   survey.position.x =
     stage < 3.6
-      ? -2
-      : 2;
+    ? -2
+    : 2;
 
   survey.position.z =
     -2 +
@@ -4424,21 +4121,17 @@ function render(
      CHAPTER NUMBER
   ======================================================= */
 
-  const chapterDisplay =
-    Math.min(
-      8,
-      Math.floor(stage) + 1
-    );
-
-  if(
-    chapterDisplay !==
-    lastChapterDisplay
-  ){
-
-    chapterNumber.textContent =
+  document
+    .getElementById(
+      "chapterNo"
+    )
+    .textContent =
 
       String(
-        chapterDisplay
+        Math.min(
+          8,
+          Math.floor(stage) + 1
+        )
       ).padStart(
         2,
         "0"
@@ -4448,11 +4141,6 @@ function render(
 
       " / 08";
 
-    lastChapterDisplay =
-      chapterDisplay;
-
-  }
-
   /* =======================================================
      TEXT
   ======================================================= */
@@ -4460,47 +4148,13 @@ function render(
   updateCopies();
 
   /* =======================================================
-     GPU RENDER
+     RENDER
   ======================================================= */
 
   renderer.render(
     scene,
     camera
   );
-
-  /*
-    If the page is still moving, keep rendering.
-    Otherwise the renderer goes completely idle.
-  */
-
-  const stillMoving =
-    Math.abs(
-      targetScroll -
-      scrollPos
-    ) > 0.08;
-
-  needsRender =
-    false;
-
-  if(
-    stillMoving ||
-    needsRender
-  ){
-
-    rafId =
-      requestAnimationFrame(
-        render
-      );
-
-  }else{
-
-    rendererRunning =
-      false;
-
-    rafId =
-      0;
-
-  }
 
 }
 
@@ -4513,18 +4167,8 @@ window.addEventListener(
   "scroll",
 
   ()=>{
-
     targetScroll =
-      Math.max(
-        0,
-        Math.min(
-          window.scrollY,
-          maxScroll
-        )
-      );
-
-    wakeRenderer();
-
+      window.scrollY;
   },
 
   {
@@ -4551,97 +4195,15 @@ window.addEventListener(
 
     renderer.setSize(
       window.innerWidth,
-      window.innerHeight,
-      false
+      window.innerHeight
     );
 
     renderer.setPixelRatio(
       Math.min(
         window.devicePixelRatio || 1,
-        maxDPR
+        2
       )
     );
-
-    updateScrollMetrics();
-
-    updateCopies(
-      true
-    );
-
-    wakeRenderer();
-
-  }
-
-);
-
-/* =========================================================
-   ORIENTATION CHANGE
-========================================================= */
-
-window.addEventListener(
-  "orientationchange",
-  ()=>{
-    setTimeout(
-      ()=>{
-        updateScrollMetrics();
-        updateCopies(true);
-        wakeRenderer();
-      },
-      100
-    );
-  },
-  {
-    passive:true
-  }
-);
-
-/* =========================================================
-   VISIBILITY / BACKGROUND PAUSE
-========================================================= */
-
-document.addEventListener(
-
-  "visibilitychange",
-
-  ()=>{
-
-    if(
-      document.hidden
-    ){
-
-      /*
-        The render loop will stop immediately.
-        This prevents unnecessary GPU work while
-        the user is on another app or the screen
-        is locked.
-      */
-
-      rendererRunning =
-        false;
-
-      if(rafId){
-
-        cancelAnimationFrame(
-          rafId
-        );
-
-      }
-
-      rafId =
-        0;
-
-      return;
-
-    }
-
-    /*
-      Resume only when the page becomes visible again.
-    */
-
-    lastFrameTime =
-      performance.now();
-
-    wakeRenderer();
 
   }
 
@@ -4665,24 +4227,24 @@ function cinematicAction(
   );
 
   setTimeout(
-    ()=>{
+  ()=>{
 
-      callback();
+    callback();
 
-      setTimeout(
-        ()=>{
+    setTimeout(
+      ()=>{
 
-          veil.classList.remove(
-            "on"
-          );
+        veil.classList.remove(
+          "on"
+        );
 
-        },
-        520
-      );
+      },
+      520
+    );
 
-    },
-    420
-  );
+  },
+  420
+);
 
 }
 
@@ -4717,8 +4279,6 @@ function goTo(
 
       });
 
-      wakeRenderer();
-
     }
 
   );
@@ -4732,8 +4292,11 @@ function goTo(
 function openModalBase(){
 
   const modal =
+
     document.getElementById(
+
       "modal"
+
     );
 
   cinematicAction(
@@ -4741,12 +4304,17 @@ function openModalBase(){
     ()=>{
 
       modal.classList.add(
+
         "show"
+
       );
 
       modal.setAttribute(
+
         "aria-hidden",
+
         "false"
+
       );
 
     }
@@ -4778,46 +4346,71 @@ function closeModal(){
 ========================================================= */
 
 function openInfo(
+
   title,
+
   text
+
 ){
 
   const modal =
+
     document.getElementById(
+
       "modal"
+
     );
 
   const button =
+
     document.getElementById(
+
       "modalCloseButton"
+
     );
 
   document
+
     .getElementById(
+
       "modalEyebrow"
+
     )
+
     .textContent =
+
       "Portfolio detail";
 
   document
+
     .getElementById(
+
       "modalTitle"
+
     )
+
     .textContent =
+
       title;
 
   document
+
     .getElementById(
+
       "modalText"
+
     )
-    )
+
     .textContent =
+
       text;
 
   button.innerHTML =
+
     'Close <i class="fa-solid fa-xmark"></i>';
 
   button.onclick =
+
     closeModal;
 
   openModalBase();
@@ -4862,47 +4455,41 @@ function openContact(
 
   button.innerHTML =
 
-    'Open ' +
+  'Open ' +
 
-    title +
+  title +
 
-    ' <i class="fa-solid fa-arrow-up-right-from-square"></i>';
+  ' <i class="fa-solid fa-arrow-up-right-from-square"></i>';
 
-  button.onclick =
-    ()=>{
+  button.onclick = ()=>{
 
-      cinematicAction(
-        ()=>{
+    cinematicAction(
+      ()=>{
 
-          if(
-            url.startsWith(
-              "mailto:"
-            ) ||
+        if(
+          url.startsWith("mailto:") ||
+          url.startsWith("tel:")
+        ){
 
-            url.startsWith(
-              "tel:"
-            )
-          ){
+          window.location.href =
+            url;
 
-            window.location.href =
-              url;
+        }else{
 
-          }else{
-
-            window.open(
-              url,
-              "_blank",
-              "noopener"
-            );
-
-          }
-
-          closeModal();
+          window.open(
+            url,
+            "_blank",
+            "noopener"
+          );
 
         }
-      );
 
-    };
+        closeModal();
+
+      }
+    );
+
+  };
 
   openModalBase();
 
@@ -4937,17 +4524,25 @@ function openResume(){
     ()=>{
 
       const modal =
+
         document.getElementById(
+
           "resumeModal"
+
         );
 
       modal.classList.add(
+
         "show"
+
       );
 
       modal.setAttribute(
+
         "aria-hidden",
+
         "false"
+
       );
 
     }
@@ -5131,21 +4726,8 @@ const loadingTimer =
    INITIALIZE
 ========================================================= */
 
-updateScrollMetrics();
+updateCopies();
 
-updateCopies(
-  true
-);
-
-/*
-  Start the renderer only when needed.
-  It will automatically stop after the scene
-  becomes idle.
-*/
-
-wakeRenderer();
+render();
 
 </script>
-
-</body>
-</html>
