@@ -1,29 +1,22 @@
- <!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
 
 <meta charset="utf-8">
-
-<meta name="viewport"
-      content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#060708">
 
 <title>Swaraj Gade — CIVIL ENGINEERING PORTFOLIO</title>
 
-<meta name="description"
-      content="Swaraj Gade — CIVIL ENGINEERING PORTFOLIO showcasing education, internships, skills, training, projects and professional goals.">
+<meta name="description" content="Swaraj Gade — CIVIL ENGINEERING PORTFOLIO showcasing education, internships, skills, training, projects and professional goals.">
 
-<link rel="preconnect"
-      href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
-      rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 
-<!-- Font Awesome -->
-<link rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-
-<!-- Three.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
 <style>
 
@@ -32,7 +25,6 @@
 ========================================================= */
 
 :root{
-
   --bg:#060708;
   --fg:#f5f5f2;
   --muted:#9da3a6;
@@ -44,7 +36,6 @@
   --orange:#ff9b4a;
 
   --line:rgba(255,255,255,.14);
-
 }
 
 /* =========================================================
@@ -53,27 +44,25 @@
 
 *{
   box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+[hidden]{
+  display:none !important;
 }
 
 html{
   scroll-behavior:auto;
+  -webkit-text-size-adjust:100%;
+  text-size-adjust:100%;
 }
 
 body{
-
   margin:0;
-
   background:var(--bg);
-
   color:var(--fg);
-
-  font-family:
-    Inter,
-    Arial,
-    sans-serif;
-
+  font-family:Inter, Arial, sans-serif;
   overflow-x:hidden;
-
 }
 
 button,
@@ -91,22 +80,36 @@ a{
 }
 
 /* =========================================================
-   THREE.JS CANVAS
+   BACKGROUND LAYERS
 ========================================================= */
 
 #webgl{
-
   position:fixed;
-
   inset:0;
-
   width:100%;
   height:100%;
-
   z-index:0;
-
   display:block;
+}
 
+/* Lightweight background used on low-power devices (no WebGL) */
+.liteBg{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  display:none;
+  background:
+    linear-gradient(rgba(85,168,255,.07) 1px, transparent 1px) 0 0 / 60px 60px,
+    linear-gradient(90deg, rgba(85,168,255,.07) 1px, transparent 1px) 0 0 / 60px 60px,
+    radial-gradient(circle at 50% 40%, #171b1d 0%, #060708 70%);
+}
+
+body.lite .liteBg{
+  display:block;
+}
+
+body.lite #webgl{
+  display:none;
 }
 
 /* =========================================================
@@ -114,46 +117,37 @@ a{
 ========================================================= */
 
 .shade{
-
   position:fixed;
-
   inset:0;
-
   z-index:1;
-
   pointer-events:none;
-
   background:
-
     radial-gradient(
       circle at 50% 42%,
       transparent 15%,
       rgba(0,0,0,.18) 52%,
       rgba(0,0,0,.84) 100%
     );
-
 }
 
 /* =========================================================
-   FILM GRAIN
+   FILM GRAIN (high quality devices only)
 ========================================================= */
 
 .grain{
-
   position:fixed;
-
   inset:0;
-
   z-index:2;
-
   pointer-events:none;
-
   opacity:.035;
-
   background-image:url(
     "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"
   );
+}
 
+body.lite .grain,
+body.tier-medium .grain{
+  display:none;
 }
 
 /* =========================================================
@@ -161,182 +155,93 @@ a{
 ========================================================= */
 
 .top{
-
   position:fixed;
-
   z-index:30;
-
   left:0;
   right:0;
   top:0;
-
   height:76px;
-
-  padding:
-    0 4vw;
-
+  padding:0 4vw;
   display:flex;
-
   align-items:center;
-
   justify-content:space-between;
-
-  background:
-    linear-gradient(
-      180deg,
-      rgba(5,6,7,.92),
-      transparent
-    );
-
+  background:linear-gradient(180deg, rgba(5,6,7,.92), transparent);
   pointer-events:none;
-
 }
 
 .brand{
-
   display:flex;
-
   gap:11px;
-
   align-items:center;
-
   pointer-events:auto;
-
 }
 
 .mark{
-
   width:36px;
   height:36px;
-
-  border:
-    1px solid
-    rgba(255,255,255,.7);
-
+  border:1px solid rgba(255,255,255,.7);
   display:grid;
-
   place-items:center;
-
-  font:
-    700 11px
-    'Space Grotesk';
-
+  font:700 11px 'Space Grotesk';
   letter-spacing:-.04em;
-
 }
 
 .brand b{
-
   display:block;
-
-  font:
-    700 12px
-    'Space Grotesk';
-
+  font:700 12px 'Space Grotesk';
   letter-spacing:.14em;
-
 }
 
 .brand small{
-
   display:block;
-
   color:#858b8d;
-
-  font:
-    500 8px
-    Inter;
-
+  font:500 8px Inter;
   letter-spacing:.18em;
-
   margin-top:3px;
-
 }
 
 .topnav{
-
   display:flex;
-
   gap:20px;
-
   pointer-events:auto;
-
 }
 
 .topnav button{
-
   border:0;
-
   background:none;
-
   color:#aeb2b4;
-
-  font:
-    600 9px
-    Inter;
-
+  font:600 9px Inter;
   letter-spacing:.15em;
-
   text-transform:uppercase;
-
-  transition:
-    color .35s ease,
-    transform .35s ease;
-
+  transition:color .35s ease, transform .35s ease;
 }
 
 .topnav button:hover{
-
   color:#fff;
-
-  transform:
-    translateY(-2px);
-
+  transform:translateY(-2px);
 }
 
 /* =========================================================
-   PROGRESS
+   PROGRESS (transform based, so it costs almost nothing)
 ========================================================= */
 
 .progress{
-
   position:fixed;
-
   z-index:31;
-
   left:0;
   top:75px;
-
   height:2px;
-
   width:100%;
-
-  background:
-    rgba(255,255,255,.06);
-
+  background:rgba(255,255,255,.06);
 }
 
 .progress i{
-
   display:block;
-
   height:100%;
-
-  width:0;
-
-  background:
-    linear-gradient(
-      90deg,
-      var(--red),
-      var(--yellow),
-      var(--blue),
-      var(--green)
-    );
-
-  box-shadow:
-    0 0 16px
-    rgba(255,211,77,.45);
-
+  width:100%;
+  transform:scaleX(0);
+  transform-origin:0 50%;
+  background:linear-gradient(90deg, var(--red), var(--yellow), var(--blue), var(--green));
 }
 
 /* =========================================================
@@ -344,61 +249,32 @@ a{
 ========================================================= */
 
 .story{
-
   position:relative;
-
   z-index:5;
-
-  height:800vh;
-
 }
 
 .chapter{
-
   height:100vh;
-
-  min-height:100vh;
-
+  height:100dvh;
   display:flex;
-
   align-items:center;
-
-  padding:
-    90px 7vw;
-
+  padding:90px 7vw;
   position:relative;
-
   pointer-events:none;
-
 }
 
 .copy{
-
-  width:
-    min(570px,88vw);
-
+  width:min(570px, 88vw);
   pointer-events:auto;
-
-  will-change:
-    opacity,
-    transform,
-    filter;
-
 }
 
 .copy.right{
-
   margin-left:auto;
-
 }
 
 .copy.center{
-
-  margin:
-    0 auto;
-
+  margin:0 auto;
   text-align:center;
-
 }
 
 /* =========================================================
@@ -406,162 +282,82 @@ a{
 ========================================================= */
 
 .eyebrow{
-
-  font:
-    700 9px
-    Inter;
-
+  font:700 9px Inter;
   letter-spacing:.25em;
-
   text-transform:uppercase;
-
   color:var(--red);
-
 }
 
 h1,
 h2,
 h3{
-
-  font-family:
-    'Space Grotesk';
-
+  font-family:'Space Grotesk';
   margin:0;
-
 }
 
 h1{
-
-  font-size:
-    clamp(
-      60px,
-      11vw,
-      154px
-    );
-
+  font-size:clamp(60px, 11vw, 154px);
   line-height:.80;
-
   letter-spacing:-.075em;
-
   margin-top:15px;
-
 }
 
 h1 span{
-
   color:transparent;
-
-  -webkit-text-stroke:
-    1px
-    rgba(255,255,255,.58);
-
+  -webkit-text-stroke:1px rgba(255,255,255,.58);
 }
 
 h2{
-
-  font-size:
-    clamp(
-      40px,
-      5.2vw,
-      72px
-    );
-
+  font-size:clamp(40px, 5.2vw, 72px);
   line-height:.90;
-
   letter-spacing:-.055em;
-
-  margin:
-    10px 0 18px;
-
+  margin:10px 0 18px;
 }
 
 .copy p{
-
   font-size:14px;
-
   line-height:1.75;
-
   color:#c3c7c8;
-
   max-width:550px;
-
 }
 
 .quote{
-
   margin-top:22px;
-
   max-width:590px;
-
-  font:
-    500 15px/1.65
-    'Space Grotesk';
-
+  font:500 15px/1.65 'Space Grotesk';
   color:#f0f1ee;
-
-  border-left:
-    2px solid
-    var(--yellow);
-
+  border-left:2px solid var(--yellow);
   padding-left:17px;
-
 }
 
 .quote strong{
-
   color:#fff;
-
 }
 
 /* =========================================================
-   INFORMATION BLOCK
+   INFORMATION BLOCKS
 ========================================================= */
 
 .infoBlock{
-
   margin-top:21px;
-
-  padding:
-    16px 17px;
-
-  border:
-    1px solid
-    rgba(255,255,255,.13);
-
-  background:
-    rgba(6,8,9,.38);
-
-  backdrop-filter:
-    blur(13px);
-
+  padding:16px 17px;
+  border:1px solid rgba(255,255,255,.13);
+  background:rgba(6,8,9,.62);
 }
 
 .infoTitle{
-
-  font:
-    700 10px
-    Inter;
-
+  font:700 10px Inter;
   letter-spacing:.16em;
-
   text-transform:uppercase;
-
   color:#fff;
-
   margin-bottom:8px;
-
 }
 
 .infoText{
-
   margin:0;
-
-  font-size:12px!important;
-
-  line-height:1.65!important;
-
-  color:#adb3b5!important;
-
+  font-size:12px !important;
+  line-height:1.65 !important;
+  color:#adb3b5 !important;
 }
 
 /* =========================================================
@@ -569,52 +365,35 @@ h2{
 ========================================================= */
 
 .meta{
-
   display:flex;
-
   flex-wrap:wrap;
-
   gap:7px;
-
   margin-top:20px;
-
 }
 
 .chip{
-
-  padding:
-    8px 10px;
-
-  border:
-    1px solid
-    rgba(255,255,255,.15);
-
+  padding:8px 10px;
+  border:1px solid rgba(255,255,255,.15);
   font-size:8px;
-
   letter-spacing:.12em;
-
   text-transform:uppercase;
-
-  background:
-    rgba(5,7,8,.42);
-
-  backdrop-filter:
-    blur(10px);
-
+  background:rgba(5,7,8,.62);
 }
 
 .caption{
-
   margin-top:25px;
-
-  font-size:9px!important;
-
+  font-size:9px !important;
   letter-spacing:.18em;
-
   text-transform:uppercase;
+  color:#7f8588 !important;
+}
 
-  color:#7f8588!important;
-
+.hint{
+  margin-top:28px;
+  font-size:10px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:#7f8588;
 }
 
 /* =========================================================
@@ -622,115 +401,61 @@ h2{
 ========================================================= */
 
 .detailList{
-
-  margin:
-    20px 0 0;
-
+  margin:20px 0 0;
   padding:0;
-
   list-style:none;
-
 }
 
 .detailList li{
-
   position:relative;
-
-  padding:
-    8px 0
-    8px 17px;
-
+  padding:8px 0 8px 17px;
   color:#c3c7c8;
-
   font-size:12px;
-
   line-height:1.55;
-
-  border-bottom:
-    1px solid
-    rgba(255,255,255,.07);
-
+  border-bottom:1px solid rgba(255,255,255,.07);
 }
 
 .detailList li::before{
-
   content:"";
-
   position:absolute;
-
   left:0;
-
   top:15px;
-
   width:5px;
   height:5px;
-
   background:var(--yellow);
-
 }
 
 /* =========================================================
-   CHAPTER NUMBER
+   CHAPTER NUMBER + SCROLL INDICATOR
 ========================================================= */
 
 .chapterNo{
-
   position:fixed;
-
   right:4vw;
-
   bottom:27px;
-
   z-index:20;
-
-  font:
-    600 9px
-    Inter;
-
+  font:600 9px Inter;
   letter-spacing:.2em;
-
   color:#777d80;
-
 }
 
-/* =========================================================
-   SCROLL INDICATOR
-========================================================= */
-
 .scroll{
-
   position:fixed;
-
   z-index:20;
-
   left:4vw;
-
   bottom:27px;
-
-  font:
-    700 8px
-    Inter;
-
+  font:700 8px Inter;
   letter-spacing:.22em;
-
   color:#92989a;
-
 }
 
 .scroll b{
-
   display:inline-block;
-
   width:34px;
-
   height:1px;
-
   background:var(--yellow);
-
   vertical-align:middle;
-
   margin-right:9px;
-
 }
 
 /* =========================================================
@@ -738,73 +463,36 @@ h2{
 ========================================================= */
 
 .actions{
-
   display:flex;
-
   gap:9px;
-
   flex-wrap:wrap;
-
   margin-top:24px;
-
 }
 
 .btn{
-
   display:inline-flex;
-
   align-items:center;
-
   justify-content:center;
-
   gap:9px;
-
-  padding:
-    12px 15px;
-
-  border:
-    1px solid
-    var(--line);
-
-  background:
-    rgba(10,12,13,.66);
-
-  backdrop-filter:
-    blur(14px);
-
+  padding:12px 15px;
+  border:1px solid var(--line);
+  background:rgba(10,12,13,.8);
   color:#fff;
-
   font-size:9px;
-
   font-weight:700;
-
   letter-spacing:.13em;
-
   text-transform:uppercase;
-
-  transition:
-    transform .35s ease,
-    border-color .35s ease,
-    background .35s ease;
-
+  transition:transform .35s ease, border-color .35s ease, background .35s ease;
 }
 
 .btn:hover{
-
-  transform:
-    translateY(-3px);
-
-  border-color:
-    rgba(255,255,255,.65);
-
+  transform:translateY(-3px);
+  border-color:rgba(255,255,255,.65);
 }
 
 .btn.primary{
-
   background:var(--red);
-
   border-color:var(--red);
-
 }
 
 /* =========================================================
@@ -812,56 +500,27 @@ h2{
 ========================================================= */
 
 .iconbar{
-
   display:flex;
-
   gap:9px;
-
   margin-top:25px;
-
 }
 
 .appIcon{
-
   width:48px;
   height:48px;
-
-  border:
-    1px solid
-    rgba(255,255,255,.16);
-
-  background:
-    rgba(5,7,8,.68);
-
-  backdrop-filter:
-    blur(14px);
-
+  border:1px solid rgba(255,255,255,.16);
+  background:rgba(5,7,8,.8);
   color:#fff;
-
   display:grid;
-
   place-items:center;
-
   font-size:18px;
-
-  transition:
-    transform .35s ease,
-    border-color .35s ease,
-    background .35s ease;
-
+  transition:transform .35s ease, border-color .35s ease, background .35s ease;
 }
 
 .appIcon:hover{
-
-  transform:
-    translateY(-4px)
-    scale(1.04);
-
+  transform:translateY(-4px) scale(1.04);
   border-color:#fff;
-
-  background:
-    rgba(255,255,255,.08);
-
+  background:rgba(255,255,255,.08);
 }
 
 .appIcon[data-brand="wa"] i{
@@ -889,111 +548,55 @@ h2{
 ========================================================= */
 
 .profileLayout{
-
   display:flex;
-
   align-items:flex-start;
-
   gap:28px;
-
   margin-top:25px;
-
 }
 
 .portraitWrap{
-
-  flex:
-    0 0 auto;
-
+  flex:0 0 auto;
   position:relative;
-
 }
 
 .portrait{
-
   display:block;
-
   width:300px;
-
   height:390px;
-
   object-fit:cover;
-
   object-position:center top;
-
-  border:
-    1px solid
-    rgba(255,255,255,.24);
-
-  filter:
-    saturate(.92)
-    contrast(1.02);
-
-  box-shadow:
-    0 25px 80px
-    rgba(0,0,0,.42);
-
+  border:1px solid rgba(255,255,255,.24);
+  filter:saturate(.92) contrast(1.02);
+  box-shadow:0 25px 80px rgba(0,0,0,.42);
 }
 
 .portraitLabel{
-
   position:absolute;
-
   left:14px;
-
   bottom:14px;
-
-  padding:
-    8px 10px;
-
-  background:
-    rgba(5,6,7,.78);
-
-  backdrop-filter:
-    blur(10px);
-
-  border:
-    1px solid
-    rgba(255,255,255,.14);
-
-  font:
-    700 8px
-    Inter;
-
+  padding:8px 10px;
+  background:rgba(5,6,7,.86);
+  border:1px solid rgba(255,255,255,.14);
+  font:700 8px Inter;
   letter-spacing:.15em;
-
   text-transform:uppercase;
-
 }
 
 .profileText{
-
   max-width:450px;
-
 }
 
 .profileName{
-
-  font:
-    700 27px
-    'Space Grotesk';
-
+  font:700 27px 'Space Grotesk';
   margin-bottom:4px;
-
 }
 
 .profileRole{
-
   color:#92989a;
-
   font-size:9px;
-
   letter-spacing:.16em;
-
   text-transform:uppercase;
-
   margin-bottom:15px;
-
 }
 
 /* =========================================================
@@ -1001,208 +604,107 @@ h2{
 ========================================================= */
 
 #transitionVeil{
-
   position:fixed;
-
   inset:0;
-
   background:#050607;
-
   z-index:90;
-
   opacity:0;
-
   pointer-events:none;
-
-  transition:
-    opacity .65s
-    cubic-bezier(.2,.8,.2,1);
-
+  transition:opacity .65s cubic-bezier(.2,.8,.2,1);
 }
 
 #transitionVeil.on{
-
   opacity:1;
-
 }
 
 /* =========================================================
-   MODALS
+   MODALS (no backdrop blur: it is very expensive on phones)
 ========================================================= */
 
 .modal{
-
   position:fixed;
-
   inset:0;
-
   z-index:100;
-
   display:flex;
-
   align-items:center;
-
   justify-content:center;
-
   padding:20px;
-
-  background:
-    rgba(0,0,0,.78);
-
-  backdrop-filter:
-    blur(18px);
-
+  background:rgba(0,0,0,.84);
   opacity:0;
-
   visibility:hidden;
-
   pointer-events:none;
-
-  transition:
-    opacity .55s ease,
-    visibility .55s ease;
-
+  transition:opacity .55s ease, visibility .55s ease;
 }
 
 .modal.show{
-
   opacity:1;
-
   visibility:visible;
-
   pointer-events:auto;
-
 }
 
 .modalBox{
-
-  width:
-    min(900px,94vw);
-
+  width:min(900px, 94vw);
   max-height:90vh;
-
   overflow:auto;
-
-  background:
-    linear-gradient(
-      145deg,
-      #111416,
-      #080a0b
-    );
-
-  border:
-    1px solid
-    rgba(255,255,255,.15);
-
+  background:linear-gradient(145deg, #111416, #080a0b);
+  border:1px solid rgba(255,255,255,.15);
   padding:30px;
-
   position:relative;
-
-  transform:
-    translateY(28px)
-    scale(.965);
-
+  transform:translateY(28px) scale(.965);
   opacity:0;
-
-  transition:
-    transform .65s
-    cubic-bezier(.2,.8,.2,1),
-    opacity .55s ease;
-
+  transition:transform .65s cubic-bezier(.2,.8,.2,1), opacity .55s ease;
 }
 
 .modal.show .modalBox{
-
   transform:none;
-
   opacity:1;
-
 }
 
 .close{
-
   position:absolute;
-
   right:14px;
-
   top:12px;
-
   width:38px;
   height:38px;
-
-  border:
-    1px solid
-    var(--line);
-
-  background:
-    rgba(255,255,255,.04);
-
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.04);
   color:#fff;
-
   font-size:20px;
-
   display:grid;
-
   place-items:center;
-
 }
 
 .modalBox h2{
-
   font-size:42px;
-
 }
 
 .modalBox p{
-
   color:#adb3b5;
-
   line-height:1.7;
-
 }
 
 .modalEyebrow{
-
   font-size:8px;
-
   letter-spacing:.25em;
-
   color:var(--yellow);
-
   text-transform:uppercase;
-
 }
 
 .resumeImg{
-
   display:block;
-
   width:100%;
-
   max-height:68vh;
-
   object-fit:contain;
-
   background:#1a1c1d;
-
-  border:
-    1px solid
-    var(--line);
-
+  border:1px solid var(--line);
   margin-top:18px;
-
 }
 
 .modalActions{
-
   display:flex;
-
   gap:9px;
-
   flex-wrap:wrap;
-
   margin-top:15px;
-
 }
 
 /* =========================================================
@@ -1210,275 +712,173 @@ h2{
 ========================================================= */
 
 #loading{
-
   position:fixed;
-
   inset:0;
-
   z-index:200;
-
   background:#070809;
-
   display:grid;
-
   place-items:center;
-
-  transition:
-    opacity .9s ease;
-
+  transition:opacity .9s ease;
 }
 
 .load{
-
   text-align:center;
-
-  font:
-    700 9px
-    Inter;
-
+  font:700 9px Inter;
   letter-spacing:.25em;
-
 }
 
 .loadline{
-
   width:220px;
-
   height:2px;
-
   background:#1b1e20;
-
   margin-top:14px;
-
 }
 
 .loadline i{
-
   display:block;
-
   width:0;
-
   height:100%;
-
   background:var(--red);
-
 }
 
 /* =========================================================
    MOBILE
 ========================================================= */
 
-@media(max-width:760px){
+@media (max-width:760px){
 
   .top{
-
     height:62px;
-
-    padding:
-      0 18px;
-
+    padding:0 18px;
   }
 
   .topnav{
-
     display:none;
-
   }
 
   .progress{
-
     top:61px;
-
   }
 
   .chapter{
-
-    padding:
-      78px
-      18px
-      88px;
-
+    padding:78px 18px 88px;
     align-items:flex-end;
-
   }
 
   .copy,
   .copy.right{
-
     width:100%;
-
     max-width:410px;
-
     margin:0;
-
   }
 
   .copy p{
-
     font-size:12px;
-
     line-height:1.68;
-
   }
 
   .copy h2{
-
     font-size:43px;
-
   }
 
   .copy h1{
-
     font-size:21vw;
-
   }
 
   .quote{
-
     font-size:13px;
-
     line-height:1.6;
-
   }
 
   .infoBlock{
-
     padding:14px;
-
   }
 
   .detailList li{
-
     font-size:11px;
-
   }
 
   .meta{
-
     max-width:360px;
-
   }
 
   .chip{
-
     font-size:7px;
-
-    padding:
-      7px 8px;
-
+    padding:7px 8px;
   }
 
   .scroll{
-
     left:18px;
-
     bottom:18px;
-
   }
 
   .chapterNo{
-
     right:18px;
-
     bottom:18px;
-
   }
 
   .iconbar{
-
     gap:7px;
-
     justify-content:center;
-
   }
 
   .appIcon{
-
     width:43px;
     height:43px;
-
     font-size:16px;
-
   }
 
   .profileLayout{
-
     display:block;
-
     margin-top:22px;
-
   }
 
   .portrait{
-
     width:210px;
-
     height:275px;
-
   }
 
   .profileText{
-
     margin-top:18px;
-
   }
 
   .modal{
-
     padding:12px;
-
   }
 
   .modalBox{
-
-    padding:
-      24px 18px;
-
+    padding:24px 18px;
   }
 
   .modalBox h2{
-
     font-size:34px;
-
   }
 
 }
 
-@media(max-width:420px){
+@media (max-width:420px){
 
   .chapter{
-
     padding-left:16px;
-
     padding-right:16px;
-
   }
 
   .copy h2{
-
     font-size:38px;
-
   }
 
   .copy p{
-
     max-width:340px;
-
   }
 
   .appIcon{
-
     width:40px;
     height:40px;
-
   }
 
   .portrait{
-
     width:190px;
-
     height:250px;
-
   }
 
 }
@@ -1487,23 +887,15 @@ h2{
    REDUCED MOTION
 ========================================================= */
 
-@media(prefers-reduced-motion:reduce){
+@media (prefers-reduced-motion:reduce){
 
   *{
-
-    scroll-behavior:auto!important;
-
-    transition-duration:
-      .01ms!important;
-
+    scroll-behavior:auto !important;
+    transition-duration:.01ms !important;
   }
 
   .copy{
-
-    filter:none!important;
-
-    transform:none!important;
-
+    transform:none !important;
   }
 
 }
@@ -1515,15 +907,13 @@ h2{
 <body>
 
 <!-- =======================================================
-     THREE.JS
+     BACKGROUND
 ======================================================== -->
 
 <canvas id="webgl"></canvas>
-
+<div class="liteBg" aria-hidden="true"></div>
 <div class="shade"></div>
-
 <div class="grain"></div>
-
 <div id="transitionVeil"></div>
 
 <!-- =======================================================
@@ -1532,70 +922,31 @@ h2{
 
 <header class="top">
 
-  <a
-    class="brand"
-    href="#top"
-    onclick="goTo(0);return false"
-  >
+  <a class="brand" href="#top" data-goto="0">
 
-    <span class="mark">
-      SG
-    </span>
+    <span class="mark">SG</span>
 
     <span>
-
-      <b>
-        SWARAJ GADE
-      </b>
-
-      <small>
-        BUILD • DESIGN • INNOVATE
-      </small>
-
+      <b>SWARAJ GADE</b>
+      <small>BUILD • DESIGN • INNOVATE</small>
     </span>
 
   </a>
 
   <nav class="topnav">
-
-    <button onclick="goTo(0)">
-      Intro
-    </button>
-
-    <button onclick="goTo(1)">
-      Education
-    </button>
-
-    <button onclick="goTo(2)">
-      Experience
-    </button>
-
-    <button onclick="goTo(3)">
-      Skills
-    </button>
-
-    <button onclick="goTo(4)">
-      Projects
-    </button>
-
-    <button onclick="goTo(6)">
-
-  Profile
-
-</button>
-
-<button onclick="goTo(7)">
-
-  Contact
-
-</button>
-
+    <button type="button" data-goto="0">Intro</button>
+    <button type="button" data-goto="1">Education</button>
+    <button type="button" data-goto="2">Experience</button>
+    <button type="button" data-goto="3">Skills</button>
+    <button type="button" data-goto="4">Projects</button>
+    <button type="button" data-goto="6">Profile</button>
+    <button type="button" data-goto="7">Contact</button>
   </nav>
 
 </header>
 
 <!-- =======================================================
-     PROGRESS
+     PROGRESS / INDICATORS
 ======================================================== -->
 
 <div class="progress">
@@ -1607,33 +958,21 @@ h2{
   SCROLL / BUILD THE STORY
 </div>
 
-<div
-  class="chapterNo"
-  id="chapterNo"
->
-  01 / 08
-</div>
+<div class="chapterNo" id="chapterNo">01 / 08</div>
 
 <!-- =======================================================
      STORY
 ======================================================== -->
 
-<main
-  class="story"
-  id="top"
->
+<main class="story" id="top">
 
-<!-- =======================================================
-     01 — INTRO
-======================================================== -->
+<!-- 01 — INTRO -->
 
 <section class="chapter">
 
   <div class="copy">
 
-    <div class="eyebrow">
-      VISION • PRECISION • CREATION
-    </div>
+    <div class="eyebrow">VISION • PRECISION • CREATION</div>
 
     <h1>
       SWARAJ
@@ -1653,47 +992,25 @@ h2{
     </p>
 
     <div class="meta">
-
-      <span class="chip">
-        CIVIL ENGINEERING
-      </span>
-
-      <span class="chip">
-        SITE
-      </span>
-
-      <span class="chip">
-        SURVEYING
-      </span>
-
-      <span class="chip">
-        AUTOCAD
-      </span>
-
+      <span class="chip">CIVIL ENGINEERING</span>
+      <span class="chip">SITE</span>
+      <span class="chip">SURVEYING</span>
+      <span class="chip">AUTOCAD</span>
     </div>
 
-    <div class="caption">
-      Scroll to enter the journey.
-    </div>
+    <div class="caption">Scroll to enter the journey.</div>
 
   </div>
 
 </section>
 
-<!-- =======================================================
-     02 — EDUCATION
-======================================================== -->
+<!-- 02 — EDUCATION -->
 
 <section class="chapter">
 
   <div class="copy right">
 
-    <div
-      class="eyebrow"
-      style="color:var(--yellow)"
-    >
-      02 / Education
-    </div>
+    <div class="eyebrow" style="color:var(--yellow)">02 / Education</div>
 
     <h2>
       The foundation
@@ -1702,63 +1019,33 @@ h2{
     </h2>
 
     <div class="infoBlock">
-
-      <div class="infoTitle">
-        B.E. Civil Engineering
-      </div>
-
-      <p class="infoText">
-        Savitribai Phule Pune University
-      </p>
-
+      <div class="infoTitle">B.E. Civil Engineering</div>
+      <p class="infoText">Savitribai Phule Pune University</p>
     </div>
 
     <div class="infoBlock">
-
-      <div class="infoTitle">
-        Diploma in Civil Engineering
-      </div>
-
-      <p class="infoText">
-        Government Polytechnic, Ahmednagar
-      </p>
-
+      <div class="infoTitle">Diploma in Civil Engineering</div>
+      <p class="infoText">Government Polytechnic, Ahmednagar</p>
     </div>
 
     <div class="infoBlock">
-
-      <div class="infoTitle">
-        SSC
-      </div>
-
-      <p class="infoText">
-        S.M.P. English Medium School, Akluj
-      </p>
-
+      <div class="infoTitle">SSC</div>
+      <p class="infoText">S.M.P. English Medium School, Akluj</p>
     </div>
 
-    <div class="caption">
-      Education → foundation → engineering practice.
-    </div>
+    <div class="caption">Education → foundation → engineering practice.</div>
 
   </div>
 
 </section>
 
-<!-- =======================================================
-     03 — INTERNSHIPS / EXPERIENCE
-======================================================== -->
+<!-- 03 — INTERNSHIPS / EXPERIENCE -->
 
 <section class="chapter">
 
   <div class="copy">
 
-    <div
-      class="eyebrow"
-      style="color:var(--red)"
-    >
-      03 / Internships & Experience
-    </div>
+    <div class="eyebrow" style="color:var(--red)">03 / Internships & Experience</div>
 
     <h2>
       Learning where
@@ -1768,70 +1055,37 @@ h2{
 
     <div class="infoBlock">
 
-      <div class="infoTitle">
-        Bhoomi Consultants
-      </div>
+      <div class="infoTitle">Bhoomi Consultants</div>
 
       <p class="infoText">
-
         Site Civil Engineering Intern
         <br>
         Ahilyanagar · June–July 2023
-
       </p>
 
       <ul class="detailList">
-
-        <li>
-          Site measurements
-        </li>
-
-        <li>
-          Checked brickwork, plaster, concrete,
-          reinforcement and levels
-        </li>
-
-        <li>
-          Maintained site diary
-        </li>
-
-        <li>
-          Monitored labour
-        </li>
-
+        <li>Site measurements</li>
+        <li>Checked brickwork, plaster, concrete, reinforcement and levels</li>
+        <li>Maintained site diary</li>
+        <li>Monitored labour</li>
       </ul>
 
     </div>
 
     <div class="infoBlock">
 
-      <div class="infoTitle">
-        Kunal Khopade Associates
-      </div>
+      <div class="infoTitle">Kunal Khopade Associates</div>
 
       <p class="infoText">
-
         Internship
         <br>
         1–31 January 2026
-
       </p>
 
       <ul class="detailList">
-
-        <li>
-          Professional exposure to civil engineering workflows
-        </li>
-
-        <li>
-          Observed and supported routine project-related activities
-        </li>
-
-        <li>
-          Developed practical understanding through
-          site and professional exposure
-        </li>
-
+        <li>Professional exposure to civil engineering workflows</li>
+        <li>Observed and supported routine project-related activities</li>
+        <li>Developed practical understanding through site and professional exposure</li>
       </ul>
 
     </div>
@@ -1840,20 +1094,13 @@ h2{
 
 </section>
 
-<!-- =======================================================
-     04 — SKILLS & TRAINING
-======================================================== -->
+<!-- 04 — SKILLS & TRAINING -->
 
 <section class="chapter">
 
   <div class="copy right">
 
-    <div
-      class="eyebrow"
-      style="color:var(--blue)"
-    >
-      04 / Skills & Training
-    </div>
+    <div class="eyebrow" style="color:var(--blue)">04 / Skills & Training</div>
 
     <h2>
       Tools to turn
@@ -1862,95 +1109,45 @@ h2{
     </h2>
 
     <div class="meta">
-
-      <span class="chip">
-        AUTOCAD
-      </span>
-
-      <span class="chip">
-        REVIT
-      </span>
-
-      <span class="chip">
-        STRUCTURAL DESIGN
-      </span>
-
-      <span class="chip">
-        SITE MANAGEMENT
-      </span>
-
-      <span class="chip">
-        MS EXCEL
-      </span>
-
-      <span class="chip">
-        QUANTITY ESTIMATION
-      </span>
-
-      <span class="chip">
-        MS WORD
-      </span>
-
-      <span class="chip">
-        MS POWERPOINT
-      </span>
-
+      <span class="chip">AUTOCAD</span>
+      <span class="chip">REVIT</span>
+      <span class="chip">STRUCTURAL DESIGN</span>
+      <span class="chip">SITE MANAGEMENT</span>
+      <span class="chip">MS EXCEL</span>
+      <span class="chip">QUANTITY ESTIMATION</span>
+      <span class="chip">MS WORD</span>
+      <span class="chip">MS POWERPOINT</span>
     </div>
 
     <div class="infoBlock">
-
-      <div class="infoTitle">
-        AutoCAD Training
-      </div>
-
+      <div class="infoTitle">AutoCAD Training</div>
       <p class="infoText">
-
-        Basic AutoCAD 2D drafting experience
-        covering plans, elevations and sections,
-        supported by AutoCAD Essentials training
-        through SourceCAD.
-
+        Basic AutoCAD 2D drafting experience covering plans, elevations
+        and sections, supported by AutoCAD Essentials training through SourceCAD.
       </p>
-
     </div>
 
     <div class="infoBlock">
-
-      <div class="infoTitle">
-        Surveying Workshop
-      </div>
-
+      <div class="infoTitle">Surveying Workshop</div>
       <p class="infoText">
-
-        Advanced surveying / land surveying exposure
-        including Total Station and GPS techniques.
-
+        Advanced surveying / land surveying exposure including
+        Total Station and GPS techniques.
       </p>
-
     </div>
 
-    <div class="caption">
-      Learn the tool. Understand the work. Improve the result.
-    </div>
+    <div class="caption">Learn the tool. Understand the work. Improve the result.</div>
 
   </div>
 
 </section>
 
-<!-- =======================================================
-     05 — PROJECTS
-======================================================== -->
+<!-- 05 — PROJECTS -->
 
 <section class="chapter">
 
   <div class="copy">
 
-    <div
-      class="eyebrow"
-      style="color:var(--green)"
-    >
-      05 / Projects
-    </div>
+    <div class="eyebrow" style="color:var(--green)">05 / Projects</div>
 
     <h2>
       Ideas take
@@ -1959,133 +1156,69 @@ h2{
     </h2>
 
     <p>
-      A selection of academic and practical projects
-      developed through planning, visualization,
-      structural thinking and technical exploration.
+      A selection of academic and practical projects developed through
+      planning, visualization, structural thinking and technical exploration.
     </p>
 
     <div class="actions">
 
-      <button
-        class="btn"
-        onclick="
-          openInfo(
-            '2D House Floor Plan',
-            'A 2D residential house floor-plan project focused on practical planning, room arrangement and clear technical representation.'
-          )
-        "
-      >
-
+      <button class="btn" type="button"
+        data-info-title="2D House Floor Plan"
+        data-info-text="A 2D residential house floor-plan project focused on practical planning, room arrangement and clear technical representation.">
         <i class="fa-solid fa-ruler-combined"></i>
-
         01 / House Plan
-
       </button>
 
-      <button
-        class="btn"
-        onclick="
-          openInfo(
-            '3D Indian House Render',
-            'A 3D Indian residential house visualization exploring building massing, facade composition and residential character.'
-          )
-        "
-      >
-
+      <button class="btn" type="button"
+        data-info-title="3D Indian House Render"
+        data-info-text="A 3D Indian residential house visualization exploring building massing, facade composition and residential character.">
         <i class="fa-solid fa-cube"></i>
-
         02 / 3D House
-
       </button>
 
-      <button
-        class="btn"
-        onclick="
-          openInfo(
-            'Bridge Structure',
-            'A bridge-structure project exploring structural form, members and visual representation of a bridge concept.'
-          )
-        "
-      >
-
+      <button class="btn" type="button"
+        data-info-title="Bridge Structure"
+        data-info-text="A bridge-structure project exploring structural form, members and visual representation of a bridge concept.">
         <i class="fa-solid fa-bridge"></i>
-
         03 / Bridge
-
       </button>
 
-      <button
-        class="btn"
-        onclick="
-          openInfo(
-            'Modern Residential House',
-            'A modern residential house concept focused on contemporary geometry, planning and architectural visualization.'
-          )
-        "
-      >
-
+      <button class="btn" type="button"
+        data-info-title="Modern Residential House"
+        data-info-text="A modern residential house concept focused on contemporary geometry, planning and architectural visualization.">
         <i class="fa-solid fa-house"></i>
-
         04 / Residence
-
       </button>
 
-      <button
-        class="btn"
-        onclick="
-          openInfo(
-            'Green Roof Project',
-            'A project exploring green-roof concepts, environmental benefits and sustainable building practices.'
-          )
-        "
-      >
-
+      <button class="btn" type="button"
+        data-info-title="Green Roof Project"
+        data-info-text="A project exploring green-roof concepts, environmental benefits and sustainable building practices.">
         <i class="fa-solid fa-leaf"></i>
-
         05 / Green Roof
-
       </button>
 
-      <button
-        class="btn"
-        onclick="
-          openInfo(
-            'Biofiltration PBL',
-            'A biofiltration project based on a biofiltration-bed concept for water filtration and environmental engineering.'
-          )
-        "
-      >
-
+      <button class="btn" type="button"
+        data-info-title="Biofiltration PBL"
+        data-info-text="A biofiltration project based on a biofiltration-bed concept for water filtration and environmental engineering.">
         <i class="fa-solid fa-droplet"></i>
-
         06 / Biofiltration
-
       </button>
 
     </div>
 
-    <div class="caption">
-      Projects are part of the learning process.
-    </div>
+    <div class="caption">Projects are part of the learning process.</div>
 
   </div>
 
 </section>
 
-<!-- =======================================================
-     06 — PROFESSIONAL GOAL
-======================================================== -->
+<!-- 06 — PROFESSIONAL GOAL -->
 
 <section class="chapter">
 
   <div class="copy right">
 
-    <div
-      class="eyebrow"
-      style="color:var(--orange)"
-    >
-      06 / Professional Goal
-    </div>
+    <div class="eyebrow" style="color:var(--orange)">06 / Professional Goal</div>
 
     <h2>
       Build a career
@@ -2094,40 +1227,20 @@ h2{
     </h2>
 
     <p>
-      My goal is to grow into a capable Civil Engineer
-      with strong practical understanding of construction,
-      site execution, design and estimation.
+      My goal is to grow into a capable Civil Engineer with strong practical
+      understanding of construction, site execution, design and estimation.
     </p>
 
     <div class="infoBlock">
 
-      <div class="infoTitle">
-        What I want to develop
-      </div>
+      <div class="infoTitle">What I want to develop</div>
 
       <ul class="detailList">
-
-        <li>
-          Stronger practical site knowledge
-        </li>
-
-        <li>
-          Civil engineering design and drafting skills
-        </li>
-
-        <li>
-          Quantity estimation and project understanding
-        </li>
-
-        <li>
-          Better understanding of structural and
-          construction workflows
-        </li>
-
-        <li>
-          Continuous technical learning and professional growth
-        </li>
-
+        <li>Stronger practical site knowledge</li>
+        <li>Civil engineering design and drafting skills</li>
+        <li>Quantity estimation and project understanding</li>
+        <li>Better understanding of structural and construction workflows</li>
+        <li>Continuous technical learning and professional growth</li>
       </ul>
 
     </div>
@@ -2141,20 +1254,13 @@ h2{
 
 </section>
 
-<!-- =======================================================
-     07 — PROFILE
-======================================================== -->
+<!-- 07 — PROFILE -->
 
 <section class="chapter">
 
   <div class="copy">
 
-    <div
-      class="eyebrow"
-      style="color:var(--green)"
-    >
-      07 / Profile
-    </div>
+    <div class="eyebrow" style="color:var(--green)">07 / Profile</div>
 
     <h2>
       The person
@@ -2170,64 +1276,43 @@ h2{
           class="portrait"
           src="https://i.ibb.co/fzDzYpDF/798095-DE-7-E1F-4385-9-E59-3382-BF37015-D.png"
           alt="Swaraj Gade"
+          loading="lazy"
+          decoding="async"
         >
 
-        <div class="portraitLabel">
-          Myself
-        </div>
+        <div class="portraitLabel">Myself</div>
 
       </div>
 
       <div class="profileText">
 
-        <div class="profileName">
-          Swaraj Vikas Gade
-        </div>
+        <div class="profileName">Swaraj Vikas Gade</div>
 
-        <div class="profileRole">
-          DCE • B.E. CIVIL ENGINEER
-          
-        </div>
+        <div class="profileRole">DCE • B.E. CIVIL ENGINEER</div>
 
         <p>
-
           I am a quick learner, adaptable and responsible,
           with a team-oriented approach. I am confident
           communicating in English and enjoy learning
           technical concepts through practical work.
-
         </p>
 
         <p>
-
           My interests include Civil Engineering,
           AutoCAD drafting, site work, surveying,
           quantity estimation, design and construction.
-
         </p>
 
         <div class="actions">
 
-          <button
-            class="btn primary"
-            onclick="openResume()"
-          >
-
+          <button class="btn primary" type="button" data-open-resume>
             <i class="fa-regular fa-file-lines"></i>
-
             View Resume
-
           </button>
 
-          <button
-            class="btn"
-            onclick="goTo(7)"
-          >
-
+          <button class="btn" type="button" data-goto="7">
             <i class="fa-solid fa-arrow-down"></i>
-
             Contact
-
           </button>
 
         </div>
@@ -2240,20 +1325,13 @@ h2{
 
 </section>
 
-<!-- =======================================================
-     08 — CONTACT
-======================================================== -->
+<!-- 08 — CONTACT -->
 
 <section class="chapter">
 
   <div class="copy center">
 
-    <div
-      class="eyebrow"
-      style="color:var(--yellow)"
-    >
-      08 / Contact
-    </div>
+    <div class="eyebrow" style="color:var(--yellow)">08 / Contact</div>
 
     <h2>
       Let's build
@@ -2261,115 +1339,48 @@ h2{
       what's next.
     </h2>
 
-    <p>
-        Connect with me through any of the platforms below.
-    </p>
+    <p>Connect with me through any of the platforms below.</p>
 
-    <div
-      class="iconbar"
-      style="justify-content:center"
-    >
+    <div class="iconbar" style="justify-content:center">
 
-      <!-- EMAIL -->
-
-      <button
-        class="appIcon"
-        data-brand="mail"
-        aria-label="Email"
-        onclick="
-          openContact(
-            'Email',
-            'swarajgade58@gmail.com',
-            'mailto:swarajgade58@gmail.com'
-          )
-        "
-      >
-
+      <button class="appIcon" type="button" data-brand="mail" aria-label="Email"
+        data-contact-title="Email"
+        data-contact-text="swarajgade58@gmail.com"
+        data-contact-url="mailto:swarajgade58@gmail.com">
         <i class="fa-solid fa-envelope"></i>
-
       </button>
 
-      <!-- WHATSAPP -->
-
-      <button
-        class="appIcon"
-        data-brand="wa"
-        aria-label="WhatsApp"
-        onclick="
-          openContact(
-            'WhatsApp',
-            'Chat with Swaraj on WhatsApp',
-            'https://wa.me/918177918199'
-          )
-        "
-      >
-
+      <button class="appIcon" type="button" data-brand="wa" aria-label="WhatsApp"
+        data-contact-title="WhatsApp"
+        data-contact-text="Chat with Swaraj on WhatsApp"
+        data-contact-url="https://wa.me/918177918199">
         <i class="fa-brands fa-whatsapp"></i>
-
       </button>
 
-      <!-- LINKEDIN -->
-
-      <button
-        class="appIcon"
-        data-brand="in"
-        aria-label="LinkedIn"
-        onclick="
-          openContact(
-            'LinkedIn',
-            'Open the professional LinkedIn profile',
-            'https://www.linkedin.com/in/swaraj-gade-4481b83a5/'
-          )
-        "
-      >
-
+      <button class="appIcon" type="button" data-brand="in" aria-label="LinkedIn"
+        data-contact-title="LinkedIn"
+        data-contact-text="Open the professional LinkedIn profile"
+        data-contact-url="https://www.linkedin.com/in/swaraj-gade-4481b83a5/">
         <i class="fa-brands fa-linkedin-in"></i>
-
       </button>
 
-      <!-- GITHUB -->
-
-      <button
-        class="appIcon"
-        data-brand="gh"
-        aria-label="GitHub"
-        onclick="
-          openContact(
-            'GitHub',
-            'Open the GitHub profile and projects',
-            'https://github.com/swarajgade58'
-          )
-        "
-      >
-
+      <button class="appIcon" type="button" data-brand="gh" aria-label="GitHub"
+        data-contact-title="GitHub"
+        data-contact-text="Open the GitHub profile and projects"
+        data-contact-url="https://github.com/swarajgade58">
         <i class="fa-brands fa-github"></i>
-
       </button>
 
-      <!-- PHONE -->
-
-      <button
-        class="appIcon"
-        data-brand="phone"
-        aria-label="Phone"
-        onclick="
-          openContact(
-            'Phone',
-            'Call Swaraj',
-            'tel:+918177918199'
-          )
-        "
-      >
-
+      <button class="appIcon" type="button" data-brand="phone" aria-label="Phone"
+        data-contact-title="Phone"
+        data-contact-text="Call Swaraj"
+        data-contact-url="tel:+918177918199">
         <i class="fa-solid fa-phone"></i>
-
       </button>
 
     </div>
 
-    <div class="hint">
-      Thanks For Visiting.
-    </div>
+    <div class="hint">Thanks For Visiting.</div>
 
   </div>
 
@@ -2378,52 +1389,29 @@ h2{
 </main>
 
 <!-- =======================================================
-     GENERAL MODAL
+     PROJECT / CONTACT MODAL
 ======================================================== -->
 
-<div
-  class="modal"
-  id="modal"
-  aria-hidden="true"
->
+<div class="modal" id="modal" aria-hidden="true">
 
-  <div class="modalBox">
+  <div class="modalBox" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
 
-    <button
-      class="close"
-      onclick="closeModal()"
-      aria-label="Close"
-    >
-
+    <button class="close" type="button" data-close-modal aria-label="Close">
       <i class="fa-solid fa-xmark"></i>
-
     </button>
 
-    <div
-      class="modalEyebrow"
-      id="modalEyebrow"
-    >
-      Portfolio detail
-    </div>
+    <div class="modalEyebrow" id="modalEyebrow">Portfolio detail</div>
 
-    <h2 id="modalTitle">
-      Project
-    </h2>
+    <h2 id="modalTitle">Project</h2>
 
     <p id="modalText"></p>
 
     <div class="modalActions">
 
-      <button
-        class="btn primary"
-        id="modalCloseButton"
-        onclick="closeModal()"
-      >
+      <a class="btn primary" id="modalLink" href="#" hidden></a>
 
-        Close
-
-        <i class="fa-solid fa-xmark"></i>
-
+      <button class="btn primary" id="modalCloseButton" type="button" data-close-modal>
+        Close <i class="fa-solid fa-xmark"></i>
       </button>
 
     </div>
@@ -2436,56 +1424,27 @@ h2{
      RESUME MODAL
 ======================================================== -->
 
-<div
-  class="modal"
-  id="resumeModal"
-  aria-hidden="true"
->
+<div class="modal" id="resumeModal" aria-hidden="true">
 
-  <div class="modalBox">
+  <div class="modalBox" role="dialog" aria-modal="true" aria-labelledby="resumeTitle">
 
-    <button
-      class="close"
-      onclick="closeResume()"
-      aria-label="Close"
-    >
-
+    <button class="close" type="button" data-close-resume aria-label="Close">
       <i class="fa-solid fa-xmark"></i>
-
     </button>
 
-    <div class="modalEyebrow">
-      Profile document
-    </div>
+    <div class="modalEyebrow">Profile document</div>
 
-    <h2>
-      Resume
-    </h2>
+    <h2 id="resumeTitle">Resume</h2>
 
-    <p>
-      Click To Download <b>resume.jpg</b>.
-    </p>
+    <p>Click To Download <b>resume.jpg</b>.</p>
 
-    <img
-      class="resumeImg"
-      src="resume.jpg"
-      alt="Swaraj Gade resume"
-    >
+    <img class="resumeImg" src="resume.jpg" alt="Swaraj Gade resume" loading="lazy">
 
     <div class="modalActions">
-
-      <a
-        class="btn primary"
-        href="resume.jpg"
-        download
-      >
-
+      <a class="btn primary" href="resume.jpg" download>
         <i class="fa-solid fa-download"></i>
-
         Download Resume
-
       </a>
-
     </div>
 
   </div>
@@ -2497,2237 +1456,648 @@ h2{
 ======================================================== -->
 
 <div id="loading">
-
   <div class="load">
-
     BUILDING THE EXPERIENCE
-
     <div class="loadline">
       <i id="loadbar"></i>
     </div>
-
   </div>
-
 </div>
 
+<!-- =======================================================
+     SCRIPT
+======================================================== -->
+
 <script>
+(function () {
+  "use strict";
 
-/* =========================================================
-   THREE.JS SETUP
-========================================================= */
+  /* =========================================================
+     SETTINGS
+  ========================================================= */
 
-const canvas =
-  document.getElementById("webgl");
+  const THREE_SRC =
+    "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js";
 
-const renderer =
-  new THREE.WebGLRenderer({
-
-    canvas:canvas,
-
-    antialias:true,
-
-    alpha:false
-
-  });
-
-renderer.setPixelRatio(
-  Math.min(
-    window.devicePixelRatio || 1,
-    2
-  )
-);
-
-renderer.setSize(
-  window.innerWidth,
-  window.innerHeight
-);
-
-renderer.outputEncoding =
-  THREE.sRGBEncoding;
-
-renderer.toneMapping =
-  THREE.ACESFilmicToneMapping;
-
-renderer.toneMappingExposure =
-  0.86;
-
-/* =========================================================
-   SCENE
-========================================================= */
-
-const scene =
-  new THREE.Scene();
-
-scene.background =
-  new THREE.Color(
-    0x060708
-  );
-
-scene.fog =
-  new THREE.FogExp2(
-    0x060708,
-    0.024
-  );
-
-/* =========================================================
-   CAMERA
-========================================================= */
-
-const camera =
-  new THREE.PerspectiveCamera(
-
-    42,
-
-    window.innerWidth /
-    window.innerHeight,
-
-    0.1,
-
-    500
-
-  );
-
-/* =========================================================
-   LIGHTING
-========================================================= */
-
-scene.add(
-
-  new THREE.HemisphereLight(
-
-    0x9eb9d8,
-    0x17130d,
-    1.25
-
-  )
-
-);
-
-const sun =
-  new THREE.DirectionalLight(
-
-    0xffd8a2,
-    2.4
-
-  );
-
-sun.position.set(
-  -10,
-  18,
-  14
-);
-
-scene.add(sun);
-
-const rim =
-  new THREE.PointLight(
-
-    0x3b7cff,
-    15,
-    90
-
-  );
-
-rim.position.set(
-  12,
-  8,
-  -12
-);
-
-scene.add(rim);
-
-const redLight =
-  new THREE.PointLight(
-
-    0xff5146,
-    7,
-    45
-
-  );
-
-redLight.position.set(
-  -12,
-  5,
-  4
-);
-
-scene.add(redLight);
-
-/* =========================================================
-   WORLD
-========================================================= */
-
-const world =
-  new THREE.Group();
-
-scene.add(world);
-
-/* =========================================================
-   MATERIAL HELPER
-========================================================= */
-
-function material(
-  color,
-  roughness = 0.5,
-  metalness = 0
-){
-
-  return new THREE.MeshStandardMaterial({
-
-    color:color,
-
-    roughness:roughness,
-
-    metalness:metalness,
-
-    transparent:true,
-
-    opacity:1
-
-  });
-
-}
-
-/* =========================================================
-   MATERIALS
-========================================================= */
-
-const white =
-  material(
-    0xd9dcda,
-    0.72
-  );
-
-const concrete =
-  material(
-    0x777d7d,
-    0.84
-  );
-
-const dark =
-  material(
-    0x101315,
-    0.58,
-    0.22
-  );
-
-const steel =
-  material(
-    0x4e5558,
-    0.30,
-    0.78
-  );
-
-const red =
-  material(
-    0xff5146,
-    0.38,
-    0.25
-  );
-
-const blue =
-  material(
-    0x55a8ff,
-    0.28,
-    0.35
-  );
-
-const yellow =
-  material(
-    0xffd34d,
-    0.38,
-    0.10
-  );
-
-const glass =
-  material(
-    0x6fa9c7,
-    0.12,
-    0.45
-  );
-
-glass.opacity =
-  0.42;
-
-/* =========================================================
-   BOX HELPER
-========================================================= */
-
-function box(
-  group,
-  x,
-  y,
-  z,
-  sx,
-  sy,
-  sz,
-  mat
-){
-
-  const object =
-    new THREE.Mesh(
-
-      new THREE.BoxGeometry(
-        sx,
-        sy,
-        sz
-      ),
-
-      mat.clone()
-
-    );
-
-  object.position.set(
-    x,
-    y,
-    z
-  );
-
-  group.add(object);
-
-  return object;
-
-}
-
-/* =========================================================
-   LINE HELPER
-========================================================= */
-
-function line(
-  group,
-  a,
-  b,
-  color = 0xffffff,
-  width = 0.035
-){
-
-  const geometry =
-    new THREE.BufferGeometry()
-      .setFromPoints([
-
-        new THREE.Vector3(
-          a[0],
-          a[1],
-          a[2]
-        ),
-
-        new THREE.Vector3(
-          b[0],
-          b[1],
-          b[2]
-        )
-
-      ]);
-
-  const object =
-    new THREE.Line(
-
-      geometry,
-
-      new THREE.LineBasicMaterial({
-
-        color:color,
-
-        transparent:true,
-
-        opacity:0
-
-      })
-
-    );
-
-  object.userData.baseOpacity =
-    0.8;
-
-  object.userData.lineWidth =
-    width;
-
-  group.add(object);
-
-  return object;
-
-}
-
-/* =========================================================
-   GROUP ALPHA
-========================================================= */
-
-function groupAlpha(
-  group,
-  alpha
-){
-
-  group.traverse(
-    object=>{
-
-      if(object.material){
-
-        object.material.transparent =
-          true;
-
-        object.material.opacity =
-          (
-            object.userData.baseOpacity ??
-            1
-          ) * alpha;
-
-      }
-
-    }
-  );
-
-}
-
-/* =========================================================
-   GROUND
-========================================================= */
-
-box(
-  world,
-  0,
-  -0.55,
-  0,
-  70,
-  1,
-  70,
-  dark
-);
-
-const grid =
-  new THREE.GridHelper(
-
-    60,
-    30,
-    0x2b3032,
-    0x16191a
-
-  );
-
-grid.position.y =
-  -0.03;
-
-world.add(grid);
-
-/* =========================================================
-   BLUEPRINT
-========================================================= */
-
-const blueprint =
-  new THREE.Group();
-
-world.add(blueprint);
-
-for(
-  let i = -12;
-  i <= 12;
-  i++
-){
-
-  line(
-    blueprint,
-    [-12,0.08,i],
-    [12,0.08,i],
-    0x55a8ff,
-    0.015
-  );
-
-  line(
-    blueprint,
-    [i,0.08,-12],
-    [i,0.08,12],
-    0x55a8ff,
-    0.015
-  );
-
-}
-
-box(
-  blueprint,
-  0,
-  0.12,
-  0,
-  11,
-  0.08,
-  8,
-  blue
-);
-
-box(
-  blueprint,
-  0,
-  0.20,
-  0,
-  10,
-  0.05,
-  7,
-  material(
-    0x0a1522,
-    0.9
-  )
-);
-
-/* =========================================================
-   FOUNDATION
-========================================================= */
-
-const foundation =
-  new THREE.Group();
-
-world.add(foundation);
-
-for(
-  const x of [-5,0,5]
-){
-
-  for(
-    const z of [-3.2,3.2]
-  ){
-
-    box(
-      foundation,
-      x,
-      0.4,
-      z,
-      2.4,
-      0.8,
-      1.8,
-      concrete
-    );
-
-    box(
-      foundation,
-      x,
-      0.9,
-      z,
-      1.4,
-      0.25,
-      1.2,
-      red
-    );
-
-  }
-
-}
-
-/* =========================================================
-   BUILDING
-========================================================= */
-
-const building =
-  new THREE.Group();
-
-world.add(building);
-
-for(
-  let floorIndex = 0;
-  floorIndex < 5;
-  floorIndex++
-){
-
-  const y =
-    1.2 +
-    floorIndex * 2.25;
-
-  const floor =
-    new THREE.Group();
-
-  box(
-    floor,
-    0,
-    y,
-    0,
-    12,
-    0.22,
-    8,
-    concrete
-  );
-
-  for(
-    const x of [-5.2,0,5.2]
-  ){
-
-    for(
-      const z of [-3.2,3.2]
-    ){
-
-      box(
-        floor,
-        x,
-        y + 1.1,
-        z,
-        0.35,
-        2.2,
-        0.35,
-        red
-      );
-
-    }
-
-  }
-
-  for(
-    const x of [-5.2,0,5.2]
-  ){
-
-    box(
-      floor,
-      x,
-      y + 1.1,
-      0,
-      0.30,
-      2.2,
-      0.30,
-      red
-    );
-
-  }
-
-  box(
-    floor,
-    0,
-    y + 1.1,
-    -3.2,
-    12,
-    0.25,
-    0.25,
-    red
-  );
-
-  box(
-    floor,
-    0,
-    y + 1.1,
-    3.2,
-    12,
-    0.25,
-    0.25,
-    red
-  );
-
-  building.add(floor);
-
-}
-
-/* =========================================================
-   FACADE
-========================================================= */
-
-for(
-  let f = 0;
-  f < 4;
-  f++
-){
-
-  const y =
-    2.35 +
-    f * 2.25;
-
-  box(
-    building,
-    -3.2,
-    y,
-    -3.28,
-    2.8,
-    1.6,
-    0.08,
-    glass
-  );
-
-  box(
-    building,
-    3.2,
-    y,
-    -3.28,
-    2.8,
-    1.6,
-    0.08,
-    glass
-  );
-
-}
-
-/* =========================================================
-   ROOF
-========================================================= */
-
-box(
-  building,
-  0,
-  12.5,
-  0,
-  12.5,
-  0.3,
-  8.5,
-  white
-);
-
-box(
-  building,
-  0,
-  13.2,
-  0,
-  2.4,
-  1.1,
-  2.4,
-  steel
-);
-
-/* =========================================================
-   CRANE
-========================================================= */
-
-const crane =
-  new THREE.Group();
-
-world.add(crane);
-
-box(
-  crane,
-  -9,
-  7,
-  2,
-  0.25,
-  14,
-  0.25,
-  yellow
-);
-
-box(
-  crane,
-  -4.5,
-  13.7,
-  2,
-  9,
-  0.18,
-  0.18,
-  yellow
-);
-
-box(
-  crane,
-  -1,
-  13.2,
-  2,
-  0.12,
-  1.2,
-  0.12,
-  yellow
-);
-
-line(
-  crane,
-  [-8.8,13.6,2],
-  [-1,13.2,2],
-  0xffd34d,
-  0.025
-);
-
-line(
-  crane,
-  [-8.8,13.6,2],
-  [-8.8,5,2],
-  0xffd34d,
-  0.025
-);
-
-/* =========================================================
-   SURVEYING INSTRUMENT
-========================================================= */
-
-const survey =
-  new THREE.Group();
-
-world.add(survey);
-
-box(
-  survey,
-  0,
-  3,
-  -1,
-  0.65,
-  0.3,
-  0.65,
-  blue
-);
-
-for(
-  const point of [
-
-    [-0.8,0,-0.8],
-    [0.8,0,-0.8],
-    [0,0,0.8]
-
-  ]
-){
-
-  line(
-    survey,
-    [0,2.9,-1],
-    [
-      point[0],
-      0.05,
-      point[2] - 1
-    ],
-    0x55a8ff,
-    0.045
-  );
-
-}
-
-box(
-  survey,
-  0,
-  3.35,
-  -1,
-  0.55,
-  0.18,
-  0.30,
-  dark
-);
-
-/* =========================================================
-   CAD
-========================================================= */
-
-const cad =
-  new THREE.Group();
-
-world.add(cad);
-
-box(
-  cad,
-  0,
-  5,
-  -1,
-  10,
-  6,
-  0.12,
-  dark
-);
-
-for(
-  let i = -4;
-  i <= 4;
-  i++
-){
-
-  line(
-    cad,
-    [-5,0.05,i * 0.55 - 1],
-    [5,0.05,i * 0.55 - 1],
-    0x55a8ff,
-    0.015
-  );
-
-}
-
-for(
-  let i = -5;
-  i <= 5;
-  i++
-){
-
-  line(
-    cad,
-    [i * 0.9,0.05,-4],
-    [i * 0.9,0.05,4],
-    0x55a8ff,
-    0.015
-  );
-
-}
-
-box(
-  cad,
-  0,
-  0.15,
-  -1,
-  7,
-  0.05,
-  4,
-  blue
-);
-
-cad.rotation.x =
-  -0.38;
-
-/* =========================================================
-   PROJECT OBJECTS
-========================================================= */
-
-const projects =
-  new THREE.Group();
-
-world.add(projects);
-
-/* House */
-
-const p1 =
-  new THREE.Group();
-
-box(
-  p1,
-  -7,
-  0.8,
-  5,
-  4,
-  0.2,
-  4,
-  concrete
-);
-
-box(
-  p1,
-  -7,
-  2,
-  5,
-  3.4,
-  2.3,
-  3.2,
-  white
-);
-
-box(
-  p1,
-  -7,
-  3.25,
-  5,
-  3.6,
-  0.18,
-  3.4,
-  dark
-);
-
-projects.add(p1);
-
-/* Modern House */
-
-const p2 =
-  new THREE.Group();
-
-box(
-  p2,
-  0,
-  0.8,
-  6,
-  5,
-  0.25,
-  3.5,
-  concrete
-);
-
-for(
-  const x of [-2,2]
-){
-
-  box(
-    p2,
-    x,
-    2,
-    6,
-    0.18,
-    2.4,
-    3,
-    glass
-  );
-
-}
-
-box(
-  p2,
-  0,
-  3.3,
-  6,
-  5,
-  0.2,
-  3.5,
-  dark
-);
-
-projects.add(p2);
-
-/* Bridge */
-
-const p3 =
-  new THREE.Group();
-
-box(
-  p3,
-  7,
-  0.7,
-  5,
-  5,
-  0.18,
-  2.5,
-  concrete
-);
-
-for(
-  let x = -2;
-  x <= 2;
-  x += 1
-){
-
-  line(
-    p3,
-    [x + 7,0.9,4],
-    [x + 7,2.8,4],
-    0xff5146,
-    0.08
-  );
-
-}
-
-box(
-  p3,
-  7,
-  2.8,
-  4,
-  5,
-  0.12,
-  0.12,
-  red
-);
-
-projects.add(p3);
-
-/* =========================================================
-   AVATAR
-========================================================= */
-
-const avatar =
-  new THREE.Group();
-
-world.add(avatar);
-
-const skin =
-  material(
-    0xb97959,
-    0.7
-  );
-
-const hair =
-  material(
-    0x171211,
-    0.65
-  );
-
-const shirt =
-  material(
-    0x202428,
-    0.7
-  );
-
-const pants =
-  material(
-    0x111214,
-    0.8
-  );
-
-box(
-  avatar,
-  0,
-  2.7,
-  0,
-  1.05,
-  1.8,
-  0.55,
-  shirt
-);
-
-box(
-  avatar,
-  0,
-  4.05,
-  0,
-  0.82,
-  0.82,
-  0.72,
-  skin
-);
-
-box(
-  avatar,
-  0,
-  4.48,
-  -0.02,
-  0.84,
-  0.30,
-  0.75,
-  hair
-);
-
-box(
-  avatar,
-  -0.32,
-  1.45,
-  0,
-  0.35,
-  1.1,
-  0.4,
-  pants
-);
-
-box(
-  avatar,
-  0.32,
-  1.45,
-  0,
-  0.35,
-  1.1,
-  0.4,
-  pants
-);
-
-box(
-  avatar,
-  -0.72,
-  2.7,
-  0,
-  0.3,
-  1.35,
-  0.32,
-  skin
-);
-
-box(
-  avatar,
-  0.72,
-  2.7,
-  0,
-  0.3,
-  1.35,
-  0.32,
-  skin
-);
-
-box(
-  avatar,
-  -0.32,
-  0.78,
-  0.08,
-  0.42,
-  0.18,
-  0.65,
-  dark
-);
-
-box(
-  avatar,
-  0.32,
-  0.78,
-  0.08,
-  0.42,
-  0.18,
-  0.65,
-  dark
-);
-
-/* =========================================================
-   CAMERA CHAPTERS
-========================================================= */
-
-const chapters = [
-
-  {
-    cam:[10,7,28],
-    look:[0,2,0]
-  },
-
-  {
-    cam:[13,8,25],
-    look:[0,4,0]
-  },
-
-  {
-    cam:[15,6,23],
-    look:[0,5,0]
-  },
-
-  {
-    cam:[9,5,18],
-    look:[0,4,0]
-  },
-
-  {
-    cam:[6,6,20],
-    look:[0,5,0]
-  },
-
-  {
-    cam:[15,6,22],
-    look:[0,3,3]
-  },
-
-  {
-    cam:[8,5,18],
-    look:[0,4,0]
-  },
-
-  {
-    cam:[0,4,12],
-    look:[0,3,0]
-  }
-
-];
-
-/* =========================================================
-   SCROLL STATE
-========================================================= */
-
-let targetScroll =
-  window.scrollY || 0;
-
-let scrollPos =
-  targetScroll;
-
-/* =========================================================
-   SMOOTH INTERPOLATION
-========================================================= */
-
-function smooth(
-  a,
-  b,
-  t
-){
-
-  return a +
-    (b-a) *
-    (
-      1 -
-      Math.pow(
-        1-t,
-        3
-      )
-    );
-
-}
-
-/* =========================================================
-   SCENE FADE
-========================================================= */
-
-function sceneFade(
-  stage,
-  from,
-  to,
-  range = 0.7
-){
-
-  const center =
-    (from + to) / 2;
-
-  const width =
-    (to - from) / 2;
-
-  const distance =
-    Math.abs(
-      stage - center
-    );
-
-  return Math.max(
-    0,
-    1 -
-    Math.max(
-      0,
-      distance - width
-    ) / range
-  );
-
-}
-
-/* =========================================================
-   SLOW CINEMATIC HTML FADE
-========================================================= */
-
-function cinematicCopyFade(
-  distance,
-  viewport
-){
+  const CHAPTER_COUNT = 8;
+  const SCROLL_EASE = 0.065;
 
   /*
-    Long HOLD:
-    Full visibility near the chapter centre.
-
-    Slow FADE:
-    The copy begins disappearing much later.
-
-    This is intentionally wider than the old .72 viewport
-    fade so each slide stays readable for longer.
+    Quality tiers. Chosen from device capability.
+    "lite" = no WebGL at all (CSS background only).
   */
-
-  const hold =
-  viewport * 0.40;
-
-const end =
-  viewport * 1.20;
-
-  if(distance <= hold){
-
-    return 1;
-
-  }
-
-  if(distance >= end){
-
-    return 0;
-
-  }
-
-  const progress =
-    (
-      distance - hold
-    ) /
-    (
-      end - hold
-    );
-
-  /*
-    Smoothstep makes the transition
-    feel cinematic instead of linear.
-  */
-
-  const smoothStep =
-    progress *
-    progress *
-    (
-      3 -
-      2 * progress
-    );
-
-  return 1 - smoothStep;
-
-}
-
-/* =========================================================
-   UPDATE TEXT SLIDES
-========================================================= */
-
-function updateCopies(){
-
-  const viewport =
-    window.innerHeight;
-
-  document
-    .querySelectorAll(".chapter")
-    .forEach(
-      (chapter,index)=>{
-
-        const chapterCenter =
-          index *
-          viewport +
-          viewport / 2;
-
-        const currentCenter =
-          scrollPos +
-          viewport / 2;
-
-        const distance =
-          Math.abs(
-            currentCenter -
-            chapterCenter
-          );
-
-        const fade =
-          cinematicCopyFade(
-            distance,
-            viewport
-          );
-
-        const copy =
-          chapter.querySelector(
-            ".copy"
-          );
-
-        if(!copy){
-
-          return;
-
-        }
-
-        copy.style.opacity =
-          fade.toFixed(3);
-
-        const direction =
-          index % 2 === 0
-          ? 1
-          : -1;
-
-        const translate =
-          (1-fade) *
-          30 *
-          direction;
-
-        const scale =
-          0.975 +
-          fade * 0.025;
-
-        copy.style.transform =
-          `
-          translate3d(
-            0,
-            ${translate}px,
-            0
-          )
-          scale(${scale})
-          `;
-
-        copy.style.filter =
-          `
-          blur(
-            ${(1-fade)*3}px
-          )
-          `;
-
-      }
-    );
-
-}
-
-/* =========================================================
-   RENDER LOOP
-========================================================= */
-
-function render(){
-
-  requestAnimationFrame(
-    render
-  );
-
-  scrollPos +=
-    (
-      targetScroll -
-      scrollPos
-    ) * 0.065;
-
-  const maxScroll =
-    Math.max(
-      1,
-      document.body.scrollHeight -
-      window.innerHeight
-    );
-
-  const progress =
-    Math.max(
-      0,
-      Math.min(
-        1,
-        scrollPos /
-        maxScroll
-      )
-    );
-
-  document
-    .getElementById("bar")
-    .style.width =
-      (
-        progress * 100
-      ) + "%";
-
-  const segment =
-  progress *
-  (chapters.length - 1);
-
-const index =
-  Math.min(
-    chapters.length - 2,
-    Math.floor(segment)
-  );
-
-const t =
-  segment - index;
-
-const A =
-  chapters[index];
-
-const B =
-  chapters[index + 1];
-
-  /* =======================================================
-     MOBILE COMPOSITION
-  ======================================================= */
-
-  const mobile =
-    window.innerWidth < 760;
-
-  const mobileOffset =
-    mobile
-    ? 1.10
-    : 1;
-
-  camera.position.set(
-
-    smooth(
-      A.cam[0] * mobileOffset,
-      B.cam[0] * mobileOffset,
-      t
-    ),
-
-    smooth(
-      A.cam[1] * mobileOffset,
-      B.cam[1] * mobileOffset,
-      t
-    ),
-
-    smooth(
-      A.cam[2] * mobileOffset,
-      B.cam[2] * mobileOffset,
-      t
-    )
-
-  );
-
-  camera.lookAt(
-
-    new THREE.Vector3(
-
-      smooth(
-        A.look[0],
-        B.look[0],
-        t
-      ),
-
-      smooth(
-        A.look[1],
-        B.look[1],
-        t
-      ),
-
-      smooth(
-        A.look[2],
-        B.look[2],
-        t
-      )
-
-    )
-
-  );
-
-  /* =======================================================
-     3D CROSSFADE
-  ======================================================= */
-
-  const stage =
-    segment;
-
-  const ranges = [
-
-    [0,1.7],
-
-    [0.3,2.6],
-
-    [0.8,6.6],
-
-    [1.0,5.9],
-
-    [2.4,5.1],
-
-    [3.5,6.5],
-
-    [4.5,7.6],
-
-    [5.8,8.5]
-
-  ];
-
-  const parts = [
-
-    blueprint,
-    foundation,
-    building,
-    crane,
-    survey,
-    cad,
-    projects,
-    avatar
-
-  ];
-
-  parts.forEach(
-    (group,k)=>{
-
-      groupAlpha(
-        group,
-        sceneFade(
-          stage,
-          ranges[k][0],
-          ranges[k][1],
-          0.72
-        )
-      );
-
+  const TIERS = {
+    high: {
+      maxPixelRatio: 1.75,
+      standard: true,
+      antialias: true,
+      precision: "highp"
+    },
+    medium: {
+      maxPixelRatio: 1.25,
+      standard: false,
+      antialias: false,
+      precision: "mediump"
     }
-  );
-
-  /* =======================================================
-     3D OBJECT MOVEMENT
-  ======================================================= */
-
-  foundation.position.y =
-    Math.max(
-      0,
-      (stage - 0.3) * 0.22
-    );
-
-  building.position.y =
-    Math.max(
-      0,
-      (1.05 - stage) * -2
-    );
-
-  building.rotation.y =
-    stage * 0.035;
-
-  crane.rotation.y =
-    (stage - 2) * 0.05;
-
-  survey.position.x =
-    stage < 3.6
-    ? -2
-    : 2;
-
-  survey.position.z =
-    -2 +
-    (stage - 3) * 1.2;
-
-  cad.rotation.y =
-    -0.12 +
-    (stage - 4) * 0.22;
-
-  projects.position.y =
-    Math.max(
-      0,
-      (stage - 5) * 0.2
-    );
-
-  avatar.position.set(
-
-    0,
-
-    0,
-
-    Math.max(
-      0,
-      (stage - 6) * 1.3
-    )
-
-  );
-
-  avatar.rotation.y =
-    -0.2 +
-    (stage - 6) * 0.45;
-
-  /* =======================================================
-     CHAPTER NUMBER
-  ======================================================= */
-
-  document
-    .getElementById(
-      "chapterNo"
-    )
-    .textContent =
-
-      String(
-        Math.min(
-          8,
-          Math.floor(stage) + 1
-        )
-      ).padStart(
-        2,
-        "0"
-      )
-
-      +
-
-      " / 08";
-
-  /* =======================================================
-     TEXT
-  ======================================================= */
-
-  updateCopies();
-
-  /* =======================================================
-     RENDER
-  ======================================================= */
-
-  renderer.render(
-    scene,
-    camera
-  );
-
-}
-
-/* =========================================================
-   SCROLL LISTENER
-========================================================= */
-
-window.addEventListener(
-
-  "scroll",
-
-  ()=>{
-    targetScroll =
-      window.scrollY;
-  },
-
-  {
-    passive:true
-  }
-
-);
-
-/* =========================================================
-   RESIZE
-========================================================= */
-
-window.addEventListener(
-
-  "resize",
-
-  ()=>{
-
-    camera.aspect =
-      window.innerWidth /
-      window.innerHeight;
-
-    camera.updateProjectionMatrix();
-
-    renderer.setSize(
-      window.innerWidth,
-      window.innerHeight
-    );
-
-    renderer.setPixelRatio(
-      Math.min(
-        window.devicePixelRatio || 1,
-        2
-      )
-    );
-
-  }
-
-);
-
-/* =========================================================
-   CINEMATIC CLICK TRANSITION
-========================================================= */
-
-function cinematicAction(
-  callback
-){
-
-  const veil =
-    document.getElementById(
-      "transitionVeil"
-    );
-
-  veil.classList.add(
-    "on"
-  );
-
-  setTimeout(
-  ()=>{
-
-    callback();
-
-    setTimeout(
-      ()=>{
-
-        veil.classList.remove(
-          "on"
-        );
-
-      },
-      520
-    );
-
-  },
-  420
-);
-
-}
-
-/* =========================================================
-   NAVIGATION
-========================================================= */
-
-function goTo(
-  chapterIndex
-){
-
-  const safeIndex =
-    Math.max(
-      0,
-      Math.min(
-        7,
-        Number(chapterIndex) || 0
-      )
-    );
-
-  cinematicAction(
-
-    ()=>{
-
-      window.scrollTo({
-
-        top:
-          safeIndex *
-          window.innerHeight,
-
-        behavior:"smooth"
-
-      });
-
-    }
-
-  );
-
-}
-
-/* =========================================================
-   GENERAL MODAL
-========================================================= */
-
-function openModalBase(){
-
-  const modal =
-
-    document.getElementById(
-
-      "modal"
-
-    );
-
-  cinematicAction(
-
-    ()=>{
-
-      modal.classList.add(
-
-        "show"
-
-      );
-
-      modal.setAttribute(
-
-        "aria-hidden",
-
-        "false"
-
-      );
-
-    }
-
-  );
-
-}
-
-function closeModal(){
-
-  const modal =
-    document.getElementById(
-      "modal"
-    );
-
-  modal.classList.remove(
-    "show"
-  );
-
-  modal.setAttribute(
-    "aria-hidden",
-    "true"
-  );
-
-}
-
-/* =========================================================
-   PROJECT / SKILL INFORMATION
-========================================================= */
-
-function openInfo(
-
-  title,
-
-  text
-
-){
-
-  const modal =
-
-    document.getElementById(
-
-      "modal"
-
-    );
-
-  const button =
-
-    document.getElementById(
-
-      "modalCloseButton"
-
-    );
-
-  document
-
-    .getElementById(
-
-      "modalEyebrow"
-
-    )
-
-    .textContent =
-
-      "Portfolio detail";
-
-  document
-
-    .getElementById(
-
-      "modalTitle"
-
-    )
-
-    .textContent =
-
-      title;
-
-  document
-
-    .getElementById(
-
-      "modalText"
-
-    )
-
-    .textContent =
-
-      text;
-
-  button.innerHTML =
-
-    'Close <i class="fa-solid fa-xmark"></i>';
-
-  button.onclick =
-
-    closeModal;
-
-  openModalBase();
-
-}
-
-/* =========================================================
-   CONTACT MODAL
-========================================================= */
-
-function openContact(
-  title,
-  text,
-  url
-){
-
-  document
-    .getElementById(
-      "modalEyebrow"
-    )
-    .textContent =
-      "Contact";
-
-  document
-    .getElementById(
-      "modalTitle"
-    )
-    .textContent =
-      title;
-
-  document
-    .getElementById(
-      "modalText"
-    )
-    .textContent =
-      text;
-
-  const button =
-    document.getElementById(
-      "modalCloseButton"
-    );
-
-  button.innerHTML =
-
-  'Open ' +
-
-  title +
-
-  ' <i class="fa-solid fa-arrow-up-right-from-square"></i>';
-
-  button.onclick = ()=>{
-
-    cinematicAction(
-      ()=>{
-
-        if(
-          url.startsWith("mailto:") ||
-          url.startsWith("tel:")
-        ){
-
-          window.location.href =
-            url;
-
-        }else{
-
-          window.open(
-            url,
-            "_blank",
-            "noopener"
-          );
-
-        }
-
-        closeModal();
-
-      }
-    );
-
   };
 
-  openModalBase();
-
-}
-
-/* =========================================================
-   RESET MODAL BUTTON
-========================================================= */
-
-document
-  .getElementById(
-    "modal"
-  )
-  .addEventListener(
-    "transitionend",
-    ()=>{
-      /*
-        The button is reset here only when
-        the modal finishes closing.
-      */
-    }
+  const REDUCED_MOTION = !!(
+    window.matchMedia &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches
   );
 
-/* =========================================================
-   RESUME
-========================================================= */
+  const UA = navigator.userAgent || "";
+  const IS_MOBILE =
+    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(UA) ||
+    (navigator.maxTouchPoints > 1 && /Macintosh/.test(UA));
+  const CORES = navigator.hardwareConcurrency || 4;
+  const MEMORY = navigator.deviceMemory || 0; // 0 = unknown
 
-function openResume(){
+  /* Camera keyframes, one per chapter */
+  const CAM_KEYS = [
+    { cam: [10, 7, 28], look: [0, 2, 0] },
+    { cam: [13, 8, 25], look: [0, 4, 0] },
+    { cam: [15, 6, 23], look: [0, 5, 0] },
+    { cam: [9, 5, 18],  look: [0, 4, 0] },
+    { cam: [6, 6, 20],  look: [0, 5, 0] },
+    { cam: [15, 6, 22], look: [0, 3, 3] },
+    { cam: [8, 5, 18],  look: [0, 4, 0] },
+    { cam: [0, 4, 12],  look: [0, 3, 0] }
+  ];
 
-  cinematicAction(
+  /* Fade ranges for each 3D group (same order as "parts") */
+  const FADE_RANGES = [
+    [0, 1.7], [0.3, 2.6], [0.8, 6.6], [1.0, 5.9],
+    [2.4, 5.1], [3.5, 6.5], [4.5, 7.6], [5.8, 8.5]
+  ];
 
-    ()=>{
+  /* Materials (colour + surface values) */
+  const PAL = {
+    white:    { color: 0xd9dcda, roughness: 0.72, metalness: 0.00 },
+    concrete: { color: 0x777d7d, roughness: 0.84, metalness: 0.00 },
+    dark:     { color: 0x101315, roughness: 0.58, metalness: 0.22 },
+    steel:    { color: 0x4e5558, roughness: 0.30, metalness: 0.78 },
+    red:      { color: 0xff5146, roughness: 0.38, metalness: 0.25 },
+    blue:     { color: 0x55a8ff, roughness: 0.28, metalness: 0.35 },
+    yellow:   { color: 0xffd34d, roughness: 0.38, metalness: 0.10 },
+    glass:    { color: 0x6fa9c7, roughness: 0.12, metalness: 0.45 },
+    ink:      { color: 0x0a1522, roughness: 0.90, metalness: 0.00 },
+    skin:     { color: 0xb97959, roughness: 0.70, metalness: 0.00 },
+    hair:     { color: 0x171211, roughness: 0.65, metalness: 0.00 },
+    shirt:    { color: 0x202428, roughness: 0.70, metalness: 0.00 },
+    pants:    { color: 0x111214, roughness: 0.80, metalness: 0.00 }
+  };
 
-      const modal =
+  /* =========================================================
+     DOM REFERENCES
+  ========================================================= */
 
-        document.getElementById(
+  const canvas = document.getElementById("webgl");
+  const barEl = document.getElementById("bar");
+  const chapterNoEl = document.getElementById("chapterNo");
+  const loadingEl = document.getElementById("loading");
+  const loadbarEl = document.getElementById("loadbar");
+  const chapterEls = Array.prototype.slice.call(document.querySelectorAll(".chapter"));
+  const copyEls = chapterEls.map(function (c) { return c.querySelector(".copy"); });
+  const copyState = copyEls.map(function () { return { opacity: -1, vis: "" }; });
 
-          "resumeModal"
+  /* =========================================================
+     STATE
+  ========================================================= */
 
-        );
+  let renderer = null;
+  let scene = null;
+  let camera = null;
+  let tmpLook = null;
 
-      modal.classList.add(
+  let world, blueprint, foundation, building, crane, survey, cad, projects, avatar;
+  let parts = [];
+  let useStandard = false;
 
-        "show"
+  let webglActive = false;
+  let liteMode = false;
+  let appReady = false;
 
-      );
+  let targetScroll = window.scrollY || 0;
+  let scrollPos = targetScroll;
+  let chapterH = window.innerHeight || 800;
+  let maxScroll = 1;
 
-      modal.setAttribute(
+  let lastBar = "";
+  let lastLabel = "";
+  let uiQueued = false;
 
-        "aria-hidden",
+  let modalOpen = false;
+  let loopRunning = false;
+  let lastTick = 0;
+  let lastDrawAt = 0;
+  let warmupUntil = 0;
+  let resizeTimer = 0;
 
-        "false"
+  const quality = { base: 1, scale: 1, samples: [] };
+  const fadeCache = new Float32Array(FADE_RANGES.length).fill(-1);
+  const geometryCache = {};
 
-      );
+  /* =========================================================
+     MATH HELPERS
+  ========================================================= */
 
-    }
-
-  );
-
-}
-
-function closeResume(){
-
-  const modal =
-    document.getElementById(
-      "resumeModal"
-    );
-
-  modal.classList.remove(
-    "show"
-  );
-
-  modal.setAttribute(
-    "aria-hidden",
-    "true"
-  );
-
-}
-
-/* =========================================================
-   CLICK OUTSIDE MODALS
-========================================================= */
-
-document
-  .getElementById(
-    "modal"
-  )
-  .addEventListener(
-
-    "click",
-
-    event=>{
-
-      if(
-        event.target.id ===
-        "modal"
-      ){
-
-        closeModal();
-
-      }
-
-    }
-
-  );
-
-document
-  .getElementById(
-    "resumeModal"
-  )
-  .addEventListener(
-
-    "click",
-
-    event=>{
-
-      if(
-        event.target.id ===
-        "resumeModal"
-      ){
-
-        closeResume();
-
-      }
-
-    }
-
-  );
-
-/* =========================================================
-   ESCAPE KEY
-========================================================= */
-
-document.addEventListener(
-
-  "keydown",
-
-  event=>{
-
-    if(
-      event.key ===
-      "Escape"
-    ){
-
-      closeModal();
-
-      closeResume();
-
-    }
-
+  function smooth(a, b, t) {
+    return a + (b - a) * (1 - Math.pow(1 - t, 3));
   }
 
-);
+  function sceneFade(stage, from, to, range) {
+    const center = (from + to) / 2;
+    const width = (to - from) / 2;
+    const distance = Math.abs(stage - center);
+    return Math.max(0, 1 - Math.max(0, distance - width) / range);
+  }
 
-/* =========================================================
-   LOADER
-========================================================= */
+  function copyFade(distance, viewport) {
+    const hold = viewport * 0.4;
+    const end = viewport * 1.2;
+    if (distance <= hold) return 1;
+    if (distance >= end) return 0;
+    const p = (distance - hold) / (end - hold);
+    return 1 - p * p * (3 - 2 * p);
+  }
 
-let loaded =
-  0;
+  function stageFromScroll(sp) {
+    return Math.min(CHAPTER_COUNT - 1, Math.max(0, sp / chapterH));
+  }
 
-const loadingTimer =
-  setInterval(
+  /* =========================================================
+     MEASUREMENT (uses real chapter size, so mobile toolbars do not break sync)
+  ========================================================= */
 
-    ()=>{
+  function measure() {
+    chapterH = Math.max(1, chapterEls[0].offsetHeight || window.innerHeight);
+    maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+  }
 
-      loaded =
-        Math.min(
-          100,
-          loaded + 5
-        );
+  /* =========================================================
+     TEXT / PROGRESS UI (only writes when something changed)
+  ========================================================= */
 
-      document
-        .getElementById(
-          "loadbar"
-        )
-        .style.width =
-          loaded + "%";
+  function updateUI(sp) {
+    const ratio = Math.min(1, Math.max(0, sp / maxScroll));
+    const bar = ratio.toFixed(4);
+    if (bar !== lastBar) {
+      barEl.style.transform = "scaleX(" + bar + ")";
+      lastBar = bar;
+    }
 
-      if(
-        loaded >= 100
-      ){
+    const stage = stageFromScroll(sp);
+    const label =
+      String(Math.min(CHAPTER_COUNT, Math.floor(stage) + 1)).padStart(2, "0") +
+      " / " +
+      String(CHAPTER_COUNT).padStart(2, "0");
+    if (label !== lastLabel) {
+      chapterNoEl.textContent = label;
+      lastLabel = label;
+    }
 
-        clearInterval(
-          loadingTimer
-        );
+    for (let i = 0; i < copyEls.length; i++) {
+      const el = copyEls[i];
+      if (!el) continue;
 
-        setTimeout(
+      const fade = copyFade(Math.abs(sp - i * chapterH), chapterH);
+      const st = copyState[i];
+      if (Math.abs(fade - st.opacity) < 0.002) continue;
+      st.opacity = fade;
 
-          ()=>{
+      const dir = i % 2 === 0 ? 1 : -1;
+      const ty = (1 - fade) * 30 * dir;
+      const sc = 0.975 + fade * 0.025;
 
-            const loading =
-              document.getElementById(
-                "loading"
-              );
+      el.style.opacity = fade.toFixed(3);
+      el.style.transform =
+        "translate3d(0," + ty.toFixed(2) + "px,0) scale(" + sc.toFixed(4) + ")";
 
-            loading.style.opacity =
-              "0";
-
-            setTimeout(
-
-              ()=>{
-
-                if(
-                  loading &&
-                  loading.parentNode
-                ){
-
-                  loading.remove();
-
-                }
-
-              },
-
-              900
-
-            );
-
-          },
-
-          250
-
-        );
-
+      const vis = fade > 0.001 ? "visible" : "hidden";
+      if (vis !== st.vis) {
+        el.style.visibility = vis;
+        st.vis = vis;
       }
+    }
+  }
 
-    },
+  /* =========================================================
+     3D HELPERS
+  ========================================================= */
 
-    50
+  function makeMaterial(spec) {
+    if (useStandard) {
+      return new THREE.MeshStandardMaterial({
+        color: spec.color,
+        roughness: spec.roughness,
+        metalness: spec.metalness,
+        transparent: false,
+        opacity: 1
+      });
+    }
+    return new THREE.MeshLambertMaterial({
+      color: spec.color,
+      transparent: false,
+      opacity: 1
+    });
+  }
 
-  );
+  function trackMaterial(group, mat, base) {
+    mat.userData.base = base;
+    if (!group.userData.mats) group.userData.mats = [];
+    group.userData.mats.push(mat);
+  }
 
-/* =========================================================
-   INITIALIZE
-========================================================= */
+  function boxGeometry(sx, sy, sz) {
+    const key = sx + "_" + sy + "_" + sz;
+    if (!geometryCache[key]) {
+      geometryCache[key] = new THREE.BoxGeometry(sx, sy, sz);
+    }
+    return geometryCache[key];
+  }
 
-updateCopies();
+  function box(group, x, y, z, sx, sy, sz, spec, base) {
+    const mat = makeMaterial(spec);
+    const mesh = new THREE.Mesh(boxGeometry(sx, sy, sz), mat);
+    mesh.position.set(x, y, z);
+    group.add(mesh);
+    trackMaterial(group, mat, base === undefined ? 1 : base);
+    return mesh;
+  }
 
-render();
+  /* Many thin lines in one draw call */
+  function addLines(group, segments, color) {
+    const pos = new Float32Array(segments.length * 6);
+    for (let i = 0; i < segments.length; i++) {
+      const a = segments[i][0];
+      const b = segments[i][1];
+      const o = i * 6;
+      pos[o] = a[0]; pos[o + 1] = a[1]; pos[o + 2] = a[2];
+      pos[o + 3] = b[0]; pos[o + 4] = b[1]; pos[o + 5] = b[2];
+    }
 
-</script>
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+
+    const mat = new THREE.LineBasicMaterial({
+      color: color,
+      transparent: true,
+      opacity: 0
+    });
+
+    const obj = new THREE.LineSegments(geo, mat);
+    group.add(obj);
+    trackMaterial(group, mat, 0.8);
+    return obj;
+  }
+
+  /* =========================================================
+     SCENE BUILD (same design as before)
+  ========================================================= */
+
+  function buildScene() {
+
+    world = new THREE.Group();
+    scene.add(world);
+
+    blueprint = new THREE.Group();  world.add(blueprint);
+    foundation = new THREE.Group(); world.add(foundation);
+    building = new THREE.Group();   world.add(building);
+    crane = new THREE.Group();      world.add(crane);
+    survey = new THREE.Group();     world.add(survey);
+    cad = new THREE.Group();        world.add(cad);
+    projects = new THREE.Group();   world.add(projects);
+    avatar = new THREE.Group();     world.add(avatar);
+
+    parts = [blueprint, foundation, building, crane, survey, cad, projects, avatar];
+
+    /* Lights */
+    scene.add(new THREE.HemisphereLight(0x9eb9d8, 0x17130d, 1.25));
+
+    const sun = new THREE.DirectionalLight(0xffd8a2, 2.4);
+    sun.position.set(-10, 18, 14);
+    scene.add(sun);
+
+    const rim = new THREE.PointLight(0x3b7cff, 15, 90);
+    rim.position.set(12, 8, -12);
+    scene.add(rim);
+
+    const redLight = new THREE.PointLight(0xff5146, 7, 45);
+    redLight.position.set(-12, 5, 4);
+    scene.add(redLight);
+
+    /* Ground + grid */
+    box(world, 0, -0.55, 0, 70, 1, 70, PAL.dark);
+
+    const grid = new THREE.GridHelper(60, 30, 0x2b3032, 0x16191a);
+    grid.position.y = -0.03;
+    world.add(grid);
+
+    /* Blueprint */
+    const bpLines = [];
+    for (let i = -12; i <= 12; i++) {
+      bpLines.push([[-12, 0.08, i], [12, 0.08, i]]);
+      bpLines.push([[i, 0.08, -12], [i, 0.08, 12]]);
+    }
+    addLines(blueprint, bpLines, 0x55a8ff);
+    box(blueprint, 0, 0.12, 0, 11, 0.08, 8, PAL.blue);
+    box(blueprint, 0, 0.20, 0, 10, 0.05, 7, PAL.ink);
+
+    /* Foundation */
+    [-5, 0, 5].forEach(function (x) {
+      [-3.2, 3.2].forEach(function (z) {
+        box(foundation, x, 0.4, z, 2.4, 0.8, 1.8, PAL.concrete);
+        box(foundation, x, 0.9, z, 1.4, 0.25, 1.2, PAL.red);
+      });
+    });
+
+    /* Building frame */
+    for (let f = 0; f < 5; f++) {
+      const y = 1.2 + f * 2.25;
+
+      box(building, 0, y, 0, 12, 0.22, 8, PAL.concrete);
+
+      [-5.2, 0, 5.2].forEach(function (x) {
+        [-3.2, 3.2].forEach(function (z) {
+          box(building, x, y + 1.1, z, 0.35, 2.2, 0.35, PAL.red);
+        });
+      });
+
+      [-5.2, 0, 5.2].forEach(function (x) {
+        box(building, x, y + 1.1, 0, 0.30, 2.2, 0.30, PAL.red);
+      });
+
+      box(building, 0, y + 1.1, -3.2, 12, 0.25, 0.25, PAL.red);
+      box(building, 0, y + 1.1, 3.2, 12, 0.25, 0.25, PAL.red);
+    }
+
+    /* Facade panels */
+    for (let f = 0; f < 4; f++) {
+      const y = 2.35 + f * 2.25;
+      box(building, -3.2, y, -3.28, 2.8, 1.6, 0.08, PAL.glass);
+      box(building, 3.2, y, -3.28, 2.8, 1.6, 0.08, PAL.glass);
+    }
+
+    /* Roof */
+    box(building, 0, 12.5, 0, 12.5, 0.3, 8.5, PAL.white);
+    box(building, 0, 13.2, 0, 2.4, 1.1, 2.4, PAL.steel);
+
+    /* Crane */
+    box(crane, -9, 7, 2, 0.25, 14, 0.25, PAL.yellow);
+    box(crane, -4.5, 13.7, 2, 9, 0.18, 0.18, PAL.yellow);
+    box(crane, -1, 13.2, 2, 0.12, 1.2, 0.12, PAL.yellow);
+    addLines(crane, [
+      [[-8.8, 13.6, 2], [-1, 13.2, 2]],
+      [[-8.8, 13.6, 2], [-8.8, 5, 2]]
+    ], 0xffd34d);
+
+    /* Surveying instrument */
+    box(survey, 0, 3, -1, 0.65, 0.3, 0.65, PAL.blue);
+    const surveyLines = [[-0.8, 0, -0.8], [0.8, 0, -0.8], [0, 0, 0.8]].map(function (p) {
+      return [[0, 2.9, -1], [p[0], 0.05, p[2] - 1]];
+    });
+    addLines(survey, surveyLines, 0x55a8ff);
+    box(survey, 0, 3.35, -1, 0.55, 0.18, 0.30, PAL.dark);
+
+    /* CAD sheet */
+    box(cad, 0, 5, -1, 10, 6, 0.12, PAL.dark);
+    const cadLines = [];
+    for (let i = -4; i <= 4; i++) {
+      cadLines.push([[-5, 0.05, i * 0.55 - 1], [5, 0.05, i * 0.55 - 1]]);
+    }
+    for (let i = -5; i <= 5; i++) {
+      cadLines.push([[i * 0.9, 0.05, -4], [i * 0.9, 0.05, 4]]);
+    }
+    addLines(cad, cadLines, 0x55a8ff);
+    box(cad, 0, 0.15, -1, 7, 0.05, 4, PAL.blue);
+    cad.rotation.x = -0.38;
+
+    /* Project objects */
+    box(projects, -7, 0.8, 5, 4, 0.2, 4, PAL.concrete);
+    box(projects, -7, 2, 5, 3.4, 2.3, 3.2, PAL.white);
+    box(projects, -7, 3.25, 5, 3.6, 0.18, 3.4, PAL.dark);
+
+    box(projects, 0, 0.8, 6, 5, 0.25, 3.5, PAL.concrete);
+    box(projects, -2, 2, 6, 0.18, 2.4, 3, PAL.glass);
+    box(projects, 2, 2, 6, 0.18, 2.4, 3, PAL.glass);
+    box(projects, 0, 3.3, 6, 5, 0.2, 3.5, PAL.dark);
+
+    box(projects, 7, 0.7, 5, 5, 0.18, 2.5, PAL.concrete);
+    const bridgeLines = [];
+    for (let x = -2; x <= 2; x += 1) {
+      bridgeLines.push([[x + 7, 0.9, 4], [x + 7, 2.8, 4]]);
+    }
+    addLines(projects, bridgeLines, 0xff5146);
+    box(projects, 7, 2.8, 4, 5, 0.12, 0.12, PAL.red);
+
+    /* Avatar */
+    box(avatar, 0, 2.7, 0, 1.05, 1.8, 0.55, PAL.shirt);
+    box(avatar, 0, 4.05, 0, 0.82, 0.82, 0.72, PAL.skin);
+    box(avatar, 0, 4.48, -0.02, 0.84, 0.30, 0.75, PAL.hair);
+    box(avatar, -0.32, 1.45, 0, 0.35, 1.1, 0.4, PAL.pants);
+    box(avatar, 0.32, 1.45, 0, 0.35, 1.1, 0.4, PAL.pants);
+    box(avatar, -0.72, 2.7, 0, 0.3, 1.35, 0.32, PAL.skin);
+    box(avatar, 0.72, 2.7, 0, 0.3, 1.35, 0.32, PAL.skin);
+    box(avatar, -0.32, 0.78, 0.08, 0.42, 0.18, 0.65, PAL.dark);
+    box(avatar, 0.32, 0.78, 0.08, 0.42, 0.18, 0.65, PAL.dark);
+  }
+
+  /*
+    Fades a group in or out. Caches the value so materials are only
+    updated when the change is visible, and hides fully invisible groups.
+  */
+  function applyGroupAlpha(group, k, alpha) {
+    const visible = alpha > 0.003;
+    if (group.visible !== visible) group.visible = visible;
+
+    if (Math.abs(fadeCache[k] - alpha) < 0.002) return;
+    fadeCache[k] = alpha;
+    if (!visible) return;
+
+    const mats = group.userData.mats;
+    if (!mats) return;
+
+    const opaque = alpha >= 0.999;
+    for (let i = 0; i < mats.length; i++) {
+      const m = mats[i];
+      const base = m.userData.base;
+      m.opacity = base * alpha;
+      m.transparent = !opaque || base < 1;
+    }
+  }
+
+  function updateCamera(stage) {
+    const index = Math.min(CAM_KEYS.length - 2, Math.floor(stage));
+    const t = stage - index;
+    const A = CAM_KEYS[index];
+    const B = CAM_KEYS[index + 1];
+    const m = window.innerWidth < 760 ? 1.1 : 1;
+
+    camera.position.set(
+      smooth(A.cam[0] * m, B.cam[0] * m, t),
+      smooth(A.cam[1] * m, B.cam[1] * m, t),
+      smooth(A.cam[2] * m, B.cam[2] * m, t)
+    );
+
+    tmpLook.set(
+      smooth(A.look[0], B.look[0], t),
+      smooth(A.look[1], B.look[1], t),
+      smooth(A.look[2], B.look[2], t)
+    );
+    camera.lookAt(tmpLook);
+  }
+
+  function updateScene(stage) {
+    for (let k = 0; k < parts.length; k++) {
+      applyGroupAlpha(
+        parts[k],
+        k,
+        sceneFade(stage, FADE_RANGES[k][0], FADE_RANGES[k][1], 0.72)
+      );
+    }
+
+    foundation.position.y = Math.max(0, (stage - 0.3) * 0.22);
+    building.position.y = Math.max(0, (1.05 - stage) * -2);
+    building.rotation.y = stage * 0.035;
+    crane.rotation.y = (stage - 2) * 0.05;
+    survey.position.x = stage < 3.6 ? -2 : 2;
+    survey.position.z = -2 + (stage - 3) * 1.2;
+    cad.rotation.y = -0.12 + (stage - 4) * 0.22;
+    projects.position.y = Math.max(0, (stage - 5) * 0.2);
+    avatar.position.set(0, 0, Math.max(0, (stage - 6) * 1.3));
+    avatar.rotation.y = -0.2 + (stage - 6) * 0.45;
+  }
+
+  /* =========================================================
+     RENDERER SETUP + QUALITY
+  ========================================================= */
+
+  function resizeCamera() {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+  }
+
+  function applyPixelRatio() {
+    if (!renderer) return;
+    renderer.setPixelRatio(Math.max(0.5, quality.base * quality.scale));
+    renderer.setSize(window.innerWidth, window.innerHeight, false);
+  }
+
+  function initWebGL(tier) {
+    if (typeof THREE === "undefined") {
+      throw new Error("Three.js is not available");
+    }
+
+    const cfg = TIERS[tier];
+    useStandard = cfg.standard;
+
+    renderer = new THREE.WebGLRenderer({
+      canvas: canvas,
+      antialias: cfg.antialias,
+      alpha: false,
+      stencil: false,
+      precision: cfg.precision,
+      failIfMajorPerformanceCaveat: true
+    });
+    renderer.outputEncoding = THREE.sRGBEncoding;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 0.86;
+
+    scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x060708);
+    scene.fog = new THREE.FogExp2(0x060708, 0.024);
+
+    camera = new THREE.PerspectiveCamera(
+      42,
+      window.innerWidth / window.innerHeight,
+      0.1,
+      500
+    );
+    tmpLook = new THREE.Vector3();
+
+    buildScene();
+
+    quality.base = Math.min(window.devicePixelRatio || 1, cfg.maxPixelRatio);
+    quality.scale = 1;
+    applyPixelRatio();
+    resizeCamera();
+
+    try {
+      renderer.compile(scene, camera); // pre-compile shaders to avoid a stutter on first scroll
+    } catch (e) { /* non-fatal */ }
+
+    canvas.addEventListener("webglcontextlost", onContextLost, false);
+    document.body.classList.add("tier-" + tier);
+
+    webglActive = true;
+    warmupUntil = performance.now() + 2500;
+    scrollPos = targetScroll;
+    measure();
+    kick();
+    appReady = true;
+  }
+
+  function onContextLost(event) {
+    if (event && event.preventDefault) event.preventDefault();
+    enterLiteMode();
+  }
+
+  /* Stops WebGL entirely and switches to the lightweight background */
+  function enterLiteMode() {
+    if (liteMode) return;
+    liteMode = true;
+    webglActive = false;
+    loopRunning = false;
+
+    if (renderer) {
+      try {
+        renderer.dispose();
+        renderer.forceContextLoss();
+      } catch (e) { /* ignore */ }
+    }
+
+    canvas.style.display = "none";
+    document.body.classList.remove("tier-high", "tier-medium");
+    document.body.classList.add("lite");
+    appReady = true;
+    requestUI();
+  }
+
+  /* Reduces resolution, then falls back to lite mode, if the frame rate stays low */
+  function sampleFrame(dt) {
+    const s = quality.samples;
+    s.push(dt);
+    if (s.length < 30) return;
+
+    let sum = 0;
+    for (let i = 0; i < s.length; i++) sum += s[i];
+    const avg = sum / s.length;
+    s.length = 0;
+
+    if (avg > 36) degradeQuality();
+  }
+
+  function degradeQuality() {
+    if (quality.scale > 0.6) {
+      quality.scale *= 0.8;
+      applyPixelRatio();
+    } else {
+      enterLiteMode();
+    }
+  }
+
+  /* =========================================================
+     RENDER LOOP (only runs while something is changing)
+  ========================================================= */
+
+  function kick() {
+    if (!webglActive || modalOpen || loopRunning) return;
+    loopRunning = true;
+    lastTick = 0;
+    lastDrawAt = 0;
+    requestAnimationFrame(frame);
+  }
+
+  function frame(now) {
+    if (!webglActive || modalO
