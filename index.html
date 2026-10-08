@@ -18,6 +18,18 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
+<noscript>
+  <style>#loading{display:none !important}</style>
+</noscript>
+
+<script>
+  /* Safety net: removes the loading screen even if the main script fails */
+  setTimeout(function () {
+    var l = document.getElementById("loading");
+    if (l) l.style.display = "none";
+  }, 6000);
+</script>
+
 <style>
 
 /* =========================================================
@@ -92,7 +104,7 @@ a{
   display:block;
 }
 
-/* Lightweight background used on low-power devices (no WebGL) */
+/* Lightweight background for low-power devices (no 3D) */
 .liteBg{
   position:fixed;
   inset:0;
@@ -131,7 +143,7 @@ body.lite #webgl{
 }
 
 /* =========================================================
-   FILM GRAIN (high quality devices only)
+   FILM GRAIN (high-quality devices only)
 ========================================================= */
 
 .grain{
@@ -739,6 +751,7 @@ h2{
   width:0;
   height:100%;
   background:var(--red);
+  transition:width 1.1s ease;
 }
 
 /* =========================================================
@@ -923,14 +936,11 @@ h2{
 <header class="top">
 
   <a class="brand" href="#top" data-goto="0">
-
     <span class="mark">SG</span>
-
     <span>
       <b>SWARAJ GADE</b>
       <small>BUILD • DESIGN • INNOVATE</small>
     </span>
-
   </a>
 
   <nav class="topnav">
@@ -1410,7 +1420,7 @@ h2{
 
       <a class="btn primary" id="modalLink" href="#" hidden></a>
 
-      <button class="btn primary" id="modalCloseButton" type="button" data-close-modal>
+      <button class="btn" id="modalCloseButton" type="button" data-close-modal>
         Close <i class="fa-solid fa-xmark"></i>
       </button>
 
@@ -1438,7 +1448,7 @@ h2{
 
     <p>Click To Download <b>resume.jpg</b>.</p>
 
-    <img class="resumeImg" src="resume.jpg" alt="Swaraj Gade resume" loading="lazy">
+    <img class="resumeImg" src="resume.jpg" alt="Swaraj Gade resume">
 
     <div class="modalActions">
       <a class="btn primary" href="resume.jpg" download>
@@ -1476,45 +1486,19 @@ h2{
      SETTINGS
   ========================================================= */
 
-  const THREE_SRC =
-    "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js";
+  var THREE_SRC = "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js";
+  var CHAPTER_COUNT = 8;
+  var SCROLL_EASE = 0.065;
+  var SLOW_FRAME_MS = 34;
 
-  const CHAPTER_COUNT = 8;
-  const SCROLL_EASE = 0.065;
-
-  /*
-    Quality tiers. Chosen from device capability.
-    "lite" = no WebGL at all (CSS background only).
-  */
-  const TIERS = {
-    high: {
-      maxPixelRatio: 1.75,
-      standard: true,
-      antialias: true,
-      precision: "highp"
-    },
-    medium: {
-      maxPixelRatio: 1.25,
-      standard: false,
-      antialias: false,
-      precision: "mediump"
-    }
+  /* Quality tiers used when WebGL is available */
+  var TIERS = {
+    high:   { pixelRatio: 1.75, antialias: true,  standard: true,  power: "high-performance" },
+    medium: { pixelRatio: 1.25, antialias: false, standard: false, power: "default" }
   };
 
-  const REDUCED_MOTION = !!(
-    window.matchMedia &&
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches
-  );
-
-  const UA = navigator.userAgent || "";
-  const IS_MOBILE =
-    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(UA) ||
-    (navigator.maxTouchPoints > 1 && /Macintosh/.test(UA));
-  const CORES = navigator.hardwareConcurrency || 4;
-  const MEMORY = navigator.deviceMemory || 0; // 0 = unknown
-
   /* Camera keyframes, one per chapter */
-  const CAM_KEYS = [
+  var CAM_KEYS = [
     { cam: [10, 7, 28], look: [0, 2, 0] },
     { cam: [13, 8, 25], look: [0, 4, 0] },
     { cam: [15, 6, 23], look: [0, 5, 0] },
@@ -1525,78 +1509,102 @@ h2{
     { cam: [0, 4, 12],  look: [0, 3, 0] }
   ];
 
-  /* Fade ranges for each 3D group (same order as "parts") */
-  const FADE_RANGES = [
+  /* Fade range for each 3D group (same order as "parts") */
+  var FADE_RANGES = [
     [0, 1.7], [0.3, 2.6], [0.8, 6.6], [1.0, 5.9],
     [2.4, 5.1], [3.5, 6.5], [4.5, 7.6], [5.8, 8.5]
   ];
 
-  /* Materials (colour + surface values) */
-  const PAL = {
-    white:    { color: 0xd9dcda, roughness: 0.72, metalness: 0.00 },
-    concrete: { color: 0x777d7d, roughness: 0.84, metalness: 0.00 },
+  /* Material palette */
+  var PAL = {
+    white:    { color: 0xd9dcda, roughness: 0.72, metalness: 0 },
+    concrete: { color: 0x777d7d, roughness: 0.84, metalness: 0 },
     dark:     { color: 0x101315, roughness: 0.58, metalness: 0.22 },
     steel:    { color: 0x4e5558, roughness: 0.30, metalness: 0.78 },
     red:      { color: 0xff5146, roughness: 0.38, metalness: 0.25 },
     blue:     { color: 0x55a8ff, roughness: 0.28, metalness: 0.35 },
     yellow:   { color: 0xffd34d, roughness: 0.38, metalness: 0.10 },
     glass:    { color: 0x6fa9c7, roughness: 0.12, metalness: 0.45 },
-    ink:      { color: 0x0a1522, roughness: 0.90, metalness: 0.00 },
-    skin:     { color: 0xb97959, roughness: 0.70, metalness: 0.00 },
-    hair:     { color: 0x171211, roughness: 0.65, metalness: 0.00 },
-    shirt:    { color: 0x202428, roughness: 0.70, metalness: 0.00 },
-    pants:    { color: 0x111214, roughness: 0.80, metalness: 0.00 }
+    ink:      { color: 0x0a1522, roughness: 0.90, metalness: 0 },
+    skin:     { color: 0xb97959, roughness: 0.70, metalness: 0 },
+    hair:     { color: 0x171211, roughness: 0.65, metalness: 0 },
+    shirt:    { color: 0x202428, roughness: 0.70, metalness: 0 },
+    pants:    { color: 0x111214, roughness: 0.80, metalness: 0 }
   };
+
+  /* =========================================================
+     DEVICE INFO
+  ========================================================= */
+
+  var REDUCED_MOTION = !!(window.matchMedia &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+
+  var UA = navigator.userAgent || "";
+  var IS_MOBILE = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(UA) ||
+    (navigator.maxTouchPoints > 1 && /Macintosh/.test(UA));
+  var CORES = navigator.hardwareConcurrency || 4;
+  var MEMORY = navigator.deviceMemory || 0; /* 0 = unknown */
 
   /* =========================================================
      DOM REFERENCES
   ========================================================= */
 
-  const canvas = document.getElementById("webgl");
-  const barEl = document.getElementById("bar");
-  const chapterNoEl = document.getElementById("chapterNo");
-  const loadingEl = document.getElementById("loading");
-  const loadbarEl = document.getElementById("loadbar");
-  const chapterEls = Array.prototype.slice.call(document.querySelectorAll(".chapter"));
-  const copyEls = chapterEls.map(function (c) { return c.querySelector(".copy"); });
-  const copyState = copyEls.map(function () { return { opacity: -1, vis: "" }; });
+  var canvas = document.getElementById("webgl");
+  var barEl = document.getElementById("bar");
+  var chapterNoEl = document.getElementById("chapterNo");
+  var veilEl = document.getElementById("transitionVeil");
+  var loadingEl = document.getElementById("loading");
+  var loadbarEl = document.getElementById("loadbar");
+  var modalEl = document.getElementById("modal");
+  var resumeEl = document.getElementById("resumeModal");
+  var modalEyebrow = document.getElementById("modalEyebrow");
+  var modalTitle = document.getElementById("modalTitle");
+  var modalText = document.getElementById("modalText");
+  var modalLink = document.getElementById("modalLink");
+
+  var chapterEls = Array.prototype.slice.call(document.querySelectorAll(".chapter"));
+  var copyEls = chapterEls.map(function (c) { return c.querySelector(".copy"); });
+  var copyState = copyEls.map(function () { return { opacity: -1, vis: "" }; });
 
   /* =========================================================
      STATE
   ========================================================= */
 
-  let renderer = null;
-  let scene = null;
-  let camera = null;
-  let tmpLook = null;
+  var renderer = null;
+  var scene = null;
+  var camera = null;
+  var tmpLook = null;
 
-  let world, blueprint, foundation, building, crane, survey, cad, projects, avatar;
-  let parts = [];
-  let useStandard = false;
+  var blueprint, foundation, building, crane, survey, cad, projects, avatar;
+  var parts = [];
+  var useStandard = false;
 
-  let webglActive = false;
-  let liteMode = false;
-  let appReady = false;
+  var webglOn = false;
+  var liteMode = false;
+  var modalOpen = false;
+  var activeModal = null;
+  var bootDone = false;
+  var minLoaderDone = false;
+  var loaderGone = false;
 
-  let targetScroll = window.scrollY || 0;
-  let scrollPos = targetScroll;
-  let chapterH = window.innerHeight || 800;
-  let maxScroll = 1;
+  var targetScroll = window.pageYOffset || 0;
+  var scrollPos = targetScroll;
+  var chapterH = window.innerHeight || 800;
+  var maxScroll = 1;
 
-  let lastBar = "";
-  let lastLabel = "";
-  let uiQueued = false;
+  var lastBar = "";
+  var lastLabel = "";
+  var rafId = 0;
+  var lastNow = 0;
+  var warmupUntil = 0;
+  var resizeTimer = 0;
 
-  let modalOpen = false;
-  let loopRunning = false;
-  let lastTick = 0;
-  let lastDrawAt = 0;
-  let warmupUntil = 0;
-  let resizeTimer = 0;
+  var sampleSum = 0;
+  var sampleCount = 0;
+  var quality = { base: 1, scale: 1 };
 
-  const quality = { base: 1, scale: 1, samples: [] };
-  const fadeCache = new Float32Array(FADE_RANGES.length).fill(-1);
-  const geometryCache = {};
+  var fadeCache = new Float32Array(FADE_RANGES.length).fill(-1);
+  var geoCache = {};
 
   /* =========================================================
      MATH HELPERS
@@ -1607,49 +1615,44 @@ h2{
   }
 
   function sceneFade(stage, from, to, range) {
-    const center = (from + to) / 2;
-    const width = (to - from) / 2;
-    const distance = Math.abs(stage - center);
-    return Math.max(0, 1 - Math.max(0, distance - width) / range);
+    var center = (from + to) / 2;
+    var half = (to - from) / 2;
+    var dist = Math.abs(stage - center);
+    return Math.max(0, 1 - Math.max(0, dist - half) / range);
   }
 
-  function copyFade(distance, viewport) {
-    const hold = viewport * 0.4;
-    const end = viewport * 1.2;
-    if (distance <= hold) return 1;
-    if (distance >= end) return 0;
-    const p = (distance - hold) / (end - hold);
+  function copyFade(dist, vh) {
+    var hold = vh * 0.4;
+    var end = vh * 1.2;
+    if (dist <= hold) return 1;
+    if (dist >= end) return 0;
+    var p = (dist - hold) / (end - hold);
     return 1 - p * p * (3 - 2 * p);
   }
 
-  function stageFromScroll(sp) {
+  function clampStage(sp) {
     return Math.min(CHAPTER_COUNT - 1, Math.max(0, sp / chapterH));
   }
 
-  /* =========================================================
-     MEASUREMENT (uses real chapter size, so mobile toolbars do not break sync)
-  ========================================================= */
-
   function measure() {
-    chapterH = Math.max(1, chapterEls[0].offsetHeight || window.innerHeight);
+    chapterH = Math.max(1, chapterEls[0].offsetHeight || window.innerHeight || 800);
     maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
   }
 
   /* =========================================================
-     TEXT / PROGRESS UI (only writes when something changed)
+     TEXT + PROGRESS UI (only writes when something changed)
   ========================================================= */
 
   function updateUI(sp) {
-    const ratio = Math.min(1, Math.max(0, sp / maxScroll));
-    const bar = ratio.toFixed(4);
+    var ratio = Math.min(1, Math.max(0, sp / maxScroll));
+    var bar = ratio.toFixed(4);
     if (bar !== lastBar) {
       barEl.style.transform = "scaleX(" + bar + ")";
       lastBar = bar;
     }
 
-    const stage = stageFromScroll(sp);
-    const label =
-      String(Math.min(CHAPTER_COUNT, Math.floor(stage) + 1)).padStart(2, "0") +
+    var label =
+      String(Math.min(CHAPTER_COUNT, Math.floor(clampStage(sp)) + 1)).padStart(2, "0") +
       " / " +
       String(CHAPTER_COUNT).padStart(2, "0");
     if (label !== lastLabel) {
@@ -1657,24 +1660,23 @@ h2{
       lastLabel = label;
     }
 
-    for (let i = 0; i < copyEls.length; i++) {
-      const el = copyEls[i];
+    for (var i = 0; i < copyEls.length; i++) {
+      var el = copyEls[i];
       if (!el) continue;
 
-      const fade = copyFade(Math.abs(sp - i * chapterH), chapterH);
-      const st = copyState[i];
+      var fade = copyFade(Math.abs(sp - i * chapterH), chapterH);
+      var st = copyState[i];
       if (Math.abs(fade - st.opacity) < 0.002) continue;
       st.opacity = fade;
 
-      const dir = i % 2 === 0 ? 1 : -1;
-      const ty = (1 - fade) * 30 * dir;
-      const sc = 0.975 + fade * 0.025;
+      var dir = i % 2 === 0 ? 1 : -1;
+      var ty = (1 - fade) * 30 * dir;
+      var sc = 0.975 + fade * 0.025;
 
       el.style.opacity = fade.toFixed(3);
-      el.style.transform =
-        "translate3d(0," + ty.toFixed(2) + "px,0) scale(" + sc.toFixed(4) + ")";
+      el.style.transform = "translate3d(0," + ty.toFixed(2) + "px,0) scale(" + sc.toFixed(4) + ")";
 
-      const vis = fade > 0.001 ? "visible" : "hidden";
+      var vis = fade > 0.001 ? "visible" : "hidden";
       if (vis !== st.vis) {
         el.style.visibility = vis;
         st.vis = vis;
@@ -1683,82 +1685,86 @@ h2{
   }
 
   /* =========================================================
-     3D HELPERS
+     3D HELPERS (materials and geometry are shared and cached)
   ========================================================= */
 
-  function makeMaterial(spec) {
-    if (useStandard) {
-      return new THREE.MeshStandardMaterial({
-        color: spec.color,
-        roughness: spec.roughness,
-        metalness: spec.metalness,
-        transparent: false,
-        opacity: 1
-      });
-    }
-    return new THREE.MeshLambertMaterial({
-      color: spec.color,
-      transparent: false,
-      opacity: 1
-    });
-  }
-
-  function trackMaterial(group, mat, base) {
-    mat.userData.base = base;
+  function matFor(group, name, base) {
+    if (!group.userData.cache) group.userData.cache = {};
     if (!group.userData.mats) group.userData.mats = [];
+
+    var key = name + "|" + base;
+    var cached = group.userData.cache[key];
+    if (cached) return cached;
+
+    var spec = PAL[name];
+    var mat = useStandard
+  ? new THREE.MeshStandardMaterial({
+      color: spec.color,
+      roughness: spec.roughness,
+      metalness: spec.metalness,
+      transparent: true,
+      opacity: base
+    })
+  : new THREE.MeshLambertMaterial({
+      color: spec.color,
+      transparent: true,
+      opacity: base
+    });
+
+mat.userData.base = base;
+
+    group.userData.cache[key] = mat;
     group.userData.mats.push(mat);
+    return mat;
   }
 
-  function boxGeometry(sx, sy, sz) {
-    const key = sx + "_" + sy + "_" + sz;
-    if (!geometryCache[key]) {
-      geometryCache[key] = new THREE.BoxGeometry(sx, sy, sz);
-    }
-    return geometryCache[key];
+  function boxGeo(sx, sy, sz) {
+    var key = sx + "_" + sy + "_" + sz;
+    if (!geoCache[key]) geoCache[key] = new THREE.BoxGeometry(sx, sy, sz);
+    return geoCache[key];
   }
 
-  function box(group, x, y, z, sx, sy, sz, spec, base) {
-    const mat = makeMaterial(spec);
-    const mesh = new THREE.Mesh(boxGeometry(sx, sy, sz), mat);
+  function box(group, x, y, z, sx, sy, sz, name, base) {
+    var mesh = new THREE.Mesh(
+      boxGeo(sx, sy, sz),
+      matFor(group, name, base === undefined ? 1 : base)
+    );
     mesh.position.set(x, y, z);
     group.add(mesh);
-    trackMaterial(group, mat, base === undefined ? 1 : base);
     return mesh;
   }
 
-  /* Many thin lines in one draw call */
-  function addLines(group, segments, color) {
-    const pos = new Float32Array(segments.length * 6);
-    for (let i = 0; i < segments.length; i++) {
-      const a = segments[i][0];
-      const b = segments[i][1];
-      const o = i * 6;
+  /* Many thin lines are drawn in one call */
+  function addLines(group, segs, color) {
+    var pos = new Float32Array(segs.length * 6);
+    for (var i = 0; i < segs.length; i++) {
+      var a = segs[i][0];
+      var b = segs[i][1];
+      var o = i * 6;
       pos[o] = a[0]; pos[o + 1] = a[1]; pos[o + 2] = a[2];
       pos[o + 3] = b[0]; pos[o + 4] = b[1]; pos[o + 5] = b[2];
     }
 
-    const geo = new THREE.BufferGeometry();
+    var geo = new THREE.BufferGeometry();
     geo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
 
-    const mat = new THREE.LineBasicMaterial({
-      color: color,
-      transparent: true,
-      opacity: 0
-    });
+    var mat = new THREE.LineBasicMaterial({ color: color, transparent: true, opacity: 0 });
+    mat.userData.base = 0.8;
 
-    const obj = new THREE.LineSegments(geo, mat);
+    if (!group.userData.mats) group.userData.mats = [];
+    group.userData.mats.push(mat);
+
+    var obj = new THREE.LineSegments(geo, mat);
     group.add(obj);
-    trackMaterial(group, mat, 0.8);
     return obj;
   }
 
   /* =========================================================
-     SCENE BUILD (same design as before)
+     SCENE BUILD (same design as the original)
   ========================================================= */
 
   function buildScene() {
-
-    world = new THREE.Group();
+    var world = new THREE.Group();
     scene.add(world);
 
     blueprint = new THREE.Group();  world.add(blueprint);
@@ -1775,164 +1781,159 @@ h2{
     /* Lights */
     scene.add(new THREE.HemisphereLight(0x9eb9d8, 0x17130d, 1.25));
 
-    const sun = new THREE.DirectionalLight(0xffd8a2, 2.4);
+    var sun = new THREE.DirectionalLight(0xffd8a2, 2.4);
     sun.position.set(-10, 18, 14);
     scene.add(sun);
 
-    const rim = new THREE.PointLight(0x3b7cff, 15, 90);
+    var rim = new THREE.PointLight(0x3b7cff, 15, 90);
     rim.position.set(12, 8, -12);
     scene.add(rim);
 
-    const redLight = new THREE.PointLight(0xff5146, 7, 45);
+    var redLight = new THREE.PointLight(0xff5146, 7, 45);
     redLight.position.set(-12, 5, 4);
     scene.add(redLight);
 
-    /* Ground + grid */
-    box(world, 0, -0.55, 0, 70, 1, 70, PAL.dark);
+    /* Ground and grid */
+    box(world, 0, -0.55, 0, 70, 1, 70, "dark");
 
-    const grid = new THREE.GridHelper(60, 30, 0x2b3032, 0x16191a);
+    var grid = new THREE.GridHelper(60, 30, 0x2b3032, 0x16191a);
     grid.position.y = -0.03;
     world.add(grid);
 
     /* Blueprint */
-    const bpLines = [];
-    for (let i = -12; i <= 12; i++) {
-      bpLines.push([[-12, 0.08, i], [12, 0.08, i]]);
-      bpLines.push([[i, 0.08, -12], [i, 0.08, 12]]);
+    var bp = [];
+    for (var i = -12; i <= 12; i++) {
+      bp.push([[-12, 0.08, i], [12, 0.08, i]]);
+      bp.push([[i, 0.08, -12], [i, 0.08, 12]]);
     }
-    addLines(blueprint, bpLines, 0x55a8ff);
-    box(blueprint, 0, 0.12, 0, 11, 0.08, 8, PAL.blue);
-    box(blueprint, 0, 0.20, 0, 10, 0.05, 7, PAL.ink);
+    addLines(blueprint, bp, 0x55a8ff);
+    box(blueprint, 0, 0.12, 0, 11, 0.08, 8, "blue");
+    box(blueprint, 0, 0.20, 0, 10, 0.05, 7, "ink");
 
     /* Foundation */
     [-5, 0, 5].forEach(function (x) {
       [-3.2, 3.2].forEach(function (z) {
-        box(foundation, x, 0.4, z, 2.4, 0.8, 1.8, PAL.concrete);
-        box(foundation, x, 0.9, z, 1.4, 0.25, 1.2, PAL.red);
+        box(foundation, x, 0.4, z, 2.4, 0.8, 1.8, "concrete");
+        box(foundation, x, 0.9, z, 1.4, 0.25, 1.2, "red");
       });
     });
 
-    /* Building frame */
-    for (let f = 0; f < 5; f++) {
-      const y = 1.2 + f * 2.25;
+    /* Building frame (5 floors) */
+    for (var f = 0; f < 5; f++) {
+      var fy = 1.2 + f * 2.25;
 
-      box(building, 0, y, 0, 12, 0.22, 8, PAL.concrete);
+      box(building, 0, fy, 0, 12, 0.22, 8, "concrete");
 
       [-5.2, 0, 5.2].forEach(function (x) {
         [-3.2, 3.2].forEach(function (z) {
-          box(building, x, y + 1.1, z, 0.35, 2.2, 0.35, PAL.red);
+          box(building, x, fy + 1.1, z, 0.35, 2.2, 0.35, "red");
         });
       });
 
       [-5.2, 0, 5.2].forEach(function (x) {
-        box(building, x, y + 1.1, 0, 0.30, 2.2, 0.30, PAL.red);
+        box(building, x, fy + 1.1, 0, 0.30, 2.2, 0.30, "red");
       });
 
-      box(building, 0, y + 1.1, -3.2, 12, 0.25, 0.25, PAL.red);
-      box(building, 0, y + 1.1, 3.2, 12, 0.25, 0.25, PAL.red);
+      box(building, 0, fy + 1.1, -3.2, 12, 0.25, 0.25, "red");
+      box(building, 0, fy + 1.1, 3.2, 12, 0.25, 0.25, "red");
     }
 
     /* Facade panels */
-    for (let f = 0; f < 4; f++) {
-      const y = 2.35 + f * 2.25;
-      box(building, -3.2, y, -3.28, 2.8, 1.6, 0.08, PAL.glass);
-      box(building, 3.2, y, -3.28, 2.8, 1.6, 0.08, PAL.glass);
+    for (var g = 0; g < 4; g++) {
+      var gy = 2.35 + g * 2.25;
+      box(building, -3.2, gy, -3.28, 2.8, 1.6, 0.08, "glass");
+      box(building, 3.2, gy, -3.28, 2.8, 1.6, 0.08, "glass");
     }
 
     /* Roof */
-    box(building, 0, 12.5, 0, 12.5, 0.3, 8.5, PAL.white);
-    box(building, 0, 13.2, 0, 2.4, 1.1, 2.4, PAL.steel);
+    box(building, 0, 12.5, 0, 12.5, 0.3, 8.5, "white");
+    box(building, 0, 13.2, 0, 2.4, 1.1, 2.4, "steel");
 
     /* Crane */
-    box(crane, -9, 7, 2, 0.25, 14, 0.25, PAL.yellow);
-    box(crane, -4.5, 13.7, 2, 9, 0.18, 0.18, PAL.yellow);
-    box(crane, -1, 13.2, 2, 0.12, 1.2, 0.12, PAL.yellow);
+    box(crane, -9, 7, 2, 0.25, 14, 0.25, "yellow");
+    box(crane, -4.5, 13.7, 2, 9, 0.18, 0.18, "yellow");
+    box(crane, -1, 13.2, 2, 0.12, 1.2, 0.12, "yellow");
     addLines(crane, [
       [[-8.8, 13.6, 2], [-1, 13.2, 2]],
       [[-8.8, 13.6, 2], [-8.8, 5, 2]]
     ], 0xffd34d);
 
     /* Surveying instrument */
-    box(survey, 0, 3, -1, 0.65, 0.3, 0.65, PAL.blue);
-    const surveyLines = [[-0.8, 0, -0.8], [0.8, 0, -0.8], [0, 0, 0.8]].map(function (p) {
+    box(survey, 0, 3, -1, 0.65, 0.3, 0.65, "blue");
+    var tri = [[-0.8, 0, -0.8], [0.8, 0, -0.8], [0, 0, 0.8]];
+    addLines(survey, tri.map(function (p) {
       return [[0, 2.9, -1], [p[0], 0.05, p[2] - 1]];
-    });
-    addLines(survey, surveyLines, 0x55a8ff);
-    box(survey, 0, 3.35, -1, 0.55, 0.18, 0.30, PAL.dark);
+    }), 0x55a8ff);
+    box(survey, 0, 3.35, -1, 0.55, 0.18, 0.30, "dark");
 
     /* CAD sheet */
-    box(cad, 0, 5, -1, 10, 6, 0.12, PAL.dark);
-    const cadLines = [];
-    for (let i = -4; i <= 4; i++) {
-      cadLines.push([[-5, 0.05, i * 0.55 - 1], [5, 0.05, i * 0.55 - 1]]);
+    box(cad, 0, 5, -1, 10, 6, 0.12, "dark");
+    var cadLines = [];
+    for (var c = -4; c <= 4; c++) {
+      cadLines.push([[-5, 0.05, c * 0.55 - 1], [5, 0.05, c * 0.55 - 1]]);
     }
-    for (let i = -5; i <= 5; i++) {
-      cadLines.push([[i * 0.9, 0.05, -4], [i * 0.9, 0.05, 4]]);
+    for (var d = -5; d <= 5; d++) {
+      cadLines.push([[d * 0.9, 0.05, -4], [d * 0.9, 0.05, 4]]);
     }
     addLines(cad, cadLines, 0x55a8ff);
-    box(cad, 0, 0.15, -1, 7, 0.05, 4, PAL.blue);
+    box(cad, 0, 0.15, -1, 7, 0.05, 4, "blue");
     cad.rotation.x = -0.38;
 
     /* Project objects */
-    box(projects, -7, 0.8, 5, 4, 0.2, 4, PAL.concrete);
-    box(projects, -7, 2, 5, 3.4, 2.3, 3.2, PAL.white);
-    box(projects, -7, 3.25, 5, 3.6, 0.18, 3.4, PAL.dark);
+    box(projects, -7, 0.8, 5, 4, 0.2, 4, "concrete");
+    box(projects, -7, 2, 5, 3.4, 2.3, 3.2, "white");
+    box(projects, -7, 3.25, 5, 3.6, 0.18, 3.4, "dark");
 
-    box(projects, 0, 0.8, 6, 5, 0.25, 3.5, PAL.concrete);
-    box(projects, -2, 2, 6, 0.18, 2.4, 3, PAL.glass);
-    box(projects, 2, 2, 6, 0.18, 2.4, 3, PAL.glass);
-    box(projects, 0, 3.3, 6, 5, 0.2, 3.5, PAL.dark);
+    box(projects, 0, 0.8, 6, 5, 0.25, 3.5, "concrete");
+    box(projects, -2, 2, 6, 0.18, 2.4, 3, "glass");
+    box(projects, 2, 2, 6, 0.18, 2.4, 3, "glass");
+    box(projects, 0, 3.3, 6, 5, 0.2, 3.5, "dark");
 
-    box(projects, 7, 0.7, 5, 5, 0.18, 2.5, PAL.concrete);
-    const bridgeLines = [];
-    for (let x = -2; x <= 2; x += 1) {
+    box(projects, 7, 0.7, 5, 5, 0.18, 2.5, "concrete");
+    var bridgeLines = [];
+    for (var x = -2; x <= 2; x += 1) {
       bridgeLines.push([[x + 7, 0.9, 4], [x + 7, 2.8, 4]]);
     }
     addLines(projects, bridgeLines, 0xff5146);
-    box(projects, 7, 2.8, 4, 5, 0.12, 0.12, PAL.red);
+    box(projects, 7, 2.8, 4, 5, 0.12, 0.12, "red");
 
     /* Avatar */
-    box(avatar, 0, 2.7, 0, 1.05, 1.8, 0.55, PAL.shirt);
-    box(avatar, 0, 4.05, 0, 0.82, 0.82, 0.72, PAL.skin);
-    box(avatar, 0, 4.48, -0.02, 0.84, 0.30, 0.75, PAL.hair);
-    box(avatar, -0.32, 1.45, 0, 0.35, 1.1, 0.4, PAL.pants);
-    box(avatar, 0.32, 1.45, 0, 0.35, 1.1, 0.4, PAL.pants);
-    box(avatar, -0.72, 2.7, 0, 0.3, 1.35, 0.32, PAL.skin);
-    box(avatar, 0.72, 2.7, 0, 0.3, 1.35, 0.32, PAL.skin);
-    box(avatar, -0.32, 0.78, 0.08, 0.42, 0.18, 0.65, PAL.dark);
-    box(avatar, 0.32, 0.78, 0.08, 0.42, 0.18, 0.65, PAL.dark);
+    box(avatar, 0, 2.7, 0, 1.05, 1.8, 0.55, "shirt");
+    box(avatar, 0, 4.05, 0, 0.82, 0.82, 0.72, "skin");
+    box(avatar, 0, 4.48, -0.02, 0.84, 0.30, 0.75, "hair");
+    box(avatar, -0.32, 1.45, 0, 0.35, 1.1, 0.4, "pants");
+    box(avatar, 0.32, 1.45, 0, 0.35, 1.1, 0.4, "pants");
+    box(avatar, -0.72, 2.7, 0, 0.3, 1.35, 0.32, "skin");
+    box(avatar, 0.72, 2.7, 0, 0.3, 1.35, 0.32, "skin");
+    box(avatar, -0.32, 0.78, 0.08, 0.42, 0.18, 0.65, "dark");
+    box(avatar, 0.32, 0.78, 0.08, 0.42, 0.18, 0.65, "dark");
   }
 
-  /*
-    Fades a group in or out. Caches the value so materials are only
-    updated when the change is visible, and hides fully invisible groups.
-  */
+  /* Fades a group. Caches the value so materials update only when it changes. */
   function applyGroupAlpha(group, k, alpha) {
-    const visible = alpha > 0.003;
+    var visible = alpha > 0.003;
     if (group.visible !== visible) group.visible = visible;
 
     if (Math.abs(fadeCache[k] - alpha) < 0.002) return;
     fadeCache[k] = alpha;
     if (!visible) return;
 
-    const mats = group.userData.mats;
+    var mats = group.userData.mats;
     if (!mats) return;
 
-    const opaque = alpha >= 0.999;
-    for (let i = 0; i < mats.length; i++) {
-      const m = mats[i];
-      const base = m.userData.base;
-      m.opacity = base * alpha;
-      m.transparent = !opaque || base < 1;
-    }
+    var full = alpha >= 0.999;
+    for (var i = 0; i < mats.length; i++) {
+  var m = mats[i];
+  m.opacity = m.userData.base * alpha;
+}
   }
 
   function updateCamera(stage) {
-    const index = Math.min(CAM_KEYS.length - 2, Math.floor(stage));
-    const t = stage - index;
-    const A = CAM_KEYS[index];
-    const B = CAM_KEYS[index + 1];
-    const m = window.innerWidth < 760 ? 1.1 : 1;
+    var index = Math.min(CAM_KEYS.length - 2, Math.floor(stage));
+    var t = stage - index;
+    var A = CAM_KEYS[index];
+    var B = CAM_KEYS[index + 1];
+    var m = window.innerWidth < 760 ? 1.1 : 1;
 
     camera.position.set(
       smooth(A.cam[0] * m, B.cam[0] * m, t),
@@ -1949,7 +1950,7 @@ h2{
   }
 
   function updateScene(stage) {
-    for (let k = 0; k < parts.length; k++) {
+    for (var k = 0; k < parts.length; k++) {
       applyGroupAlpha(
         parts[k],
         k,
@@ -1965,13 +1966,35 @@ h2{
     survey.position.z = -2 + (stage - 3) * 1.2;
     cad.rotation.y = -0.12 + (stage - 4) * 0.22;
     projects.position.y = Math.max(0, (stage - 5) * 0.2);
-    avatar.position.set(0, 0, Math.max(0, (stage - 6) * 1.3));
+    avatar.position.z = Math.max(0, (stage - 6) * 1.3);
     avatar.rotation.y = -0.2 + (stage - 6) * 0.45;
   }
 
   /* =========================================================
      RENDERER SETUP + QUALITY
   ========================================================= */
+
+  function hasWebGL() {
+    try {
+      var c = document.createElement("canvas");
+      return !!(window.WebGLRenderingContext &&
+        (c.getContext("webgl") || c.getContext("experimental-webgl")));
+    } catch (e) {
+      return false;
+    }
+  }
+
+  /* Picks the quality tier from the device. "lite" means no 3D at all. */
+  function pickTier() {
+    if (REDUCED_MOTION || !hasWebGL()) return "lite";
+    if (IS_MOBILE) {
+      return (MEMORY && MEMORY < 4) ? "lite" : "medium";
+    }
+    if (MEMORY && MEMORY <= 2) return "lite";
+    if (CORES <= 2) return "lite";
+    if (CORES >= 4 && (!MEMORY || MEMORY >= 4)) return "high";
+    return "medium";
+  }
 
   function resizeCamera() {
     camera.aspect = window.innerWidth / window.innerHeight;
@@ -1984,12 +2007,8 @@ h2{
     renderer.setSize(window.innerWidth, window.innerHeight, false);
   }
 
-  function initWebGL(tier) {
-    if (typeof THREE === "undefined") {
-      throw new Error("Three.js is not available");
-    }
-
-    const cfg = TIERS[tier];
+  function startWebGL(tier) {
+    var cfg = TIERS[tier];
     useStandard = cfg.standard;
 
     renderer = new THREE.WebGLRenderer({
@@ -1997,8 +2016,7 @@ h2{
       antialias: cfg.antialias,
       alpha: false,
       stencil: false,
-      precision: cfg.precision,
-      failIfMajorPerformanceCaveat: true
+      powerPreference: cfg.power
     });
     renderer.outputEncoding = THREE.sRGBEncoding;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -2008,77 +2026,68 @@ h2{
     scene.background = new THREE.Color(0x060708);
     scene.fog = new THREE.FogExp2(0x060708, 0.024);
 
-    camera = new THREE.PerspectiveCamera(
-      42,
-      window.innerWidth / window.innerHeight,
-      0.1,
-      500
-    );
+    camera = new THREE.PerspectiveCamera(42, window.innerWidth / window.innerHeight, 0.1, 500);
     tmpLook = new THREE.Vector3();
 
     buildScene();
 
-    quality.base = Math.min(window.devicePixelRatio || 1, cfg.maxPixelRatio);
+    quality.base = Math.min(window.devicePixelRatio || 1, cfg.pixelRatio);
     quality.scale = 1;
-    applyPixelRatio();
     resizeCamera();
+    applyPixelRatio();
 
-    try {
-      renderer.compile(scene, camera); // pre-compile shaders to avoid a stutter on first scroll
-    } catch (e) { /* non-fatal */ }
+    /* Do not force shader compilation on mobile.
+   Three.js will compile what is needed during normal rendering. */
+if (!IS_MOBILE) {
+  try {
+    renderer.compile(scene, camera);
+  } catch (e) {}
+}
 
-    canvas.addEventListener("webglcontextlost", onContextLost, false);
+    canvas.addEventListener("webglcontextlost", function (ev) {
+      if (ev && ev.preventDefault) ev.preventDefault();
+      enterLiteMode();
+    }, false);
+
     document.body.classList.add("tier-" + tier);
-
-    webglActive = true;
-    warmupUntil = performance.now() + 2500;
-    scrollPos = targetScroll;
-    measure();
-    kick();
-    appReady = true;
+    webglOn = true;
+    warmupUntil = performance.now() + 2000;
   }
 
-  function onContextLost(event) {
-    if (event && event.preventDefault) event.preventDefault();
-    enterLiteMode();
-  }
-
-  /* Stops WebGL entirely and switches to the lightweight background */
+  /* Stops WebGL completely and switches to the lightweight background */
   function enterLiteMode() {
     if (liteMode) return;
     liteMode = true;
-    webglActive = false;
-    loopRunning = false;
+    webglOn = false;
 
     if (renderer) {
       try {
         renderer.dispose();
         renderer.forceContextLoss();
       } catch (e) { /* ignore */ }
+      renderer = null;
     }
 
-    canvas.style.display = "none";
     document.body.classList.remove("tier-high", "tier-medium");
     document.body.classList.add("lite");
-    appReady = true;
-    requestUI();
+    requestFrame();
   }
 
-  /* Reduces resolution, then falls back to lite mode, if the frame rate stays low */
+  /* Lowers resolution when frames are slow, then falls back to lite mode */
   function sampleFrame(dt) {
-    const s = quality.samples;
-    s.push(dt);
-    if (s.length < 30) return;
+    sampleSum += dt;
+    sampleCount++;
+    if (sampleCount < 30) return;
 
-    let sum = 0;
-    for (let i = 0; i < s.length; i++) sum += s[i];
-    const avg = sum / s.length;
-    s.length = 0;
+    var avg = sampleSum / sampleCount;
+    sampleSum = 0;
+    sampleCount = 0;
 
-    if (avg > 36) degradeQuality();
+    if (avg > SLOW_FRAME_MS) degradeQuality();
   }
 
   function degradeQuality() {
+    if (!webglOn) return;
     if (quality.scale > 0.6) {
       quality.scale *= 0.8;
       applyPixelRatio();
@@ -2088,16 +2097,272 @@ h2{
   }
 
   /* =========================================================
-     RENDER LOOP (only runs while something is changing)
+     RENDER LOOP
+     Runs only while the page is scrolling or resizing.
+     When nothing moves, no frames are drawn and the GPU stays idle.
   ========================================================= */
 
-  function kick() {
-    if (!webglActive || modalOpen || loopRunning) return;
-    loopRunning = true;
-    lastTick = 0;
-    lastDrawAt = 0;
-    requestAnimationFrame(frame);
+  function requestFrame() {
+    if (rafId || modalOpen) return;
+    rafId = requestAnimationFrame(frame);
   }
 
   function frame(now) {
-    if (!webglActive || modalO
+    rafId = 0;
+
+    var continuous = lastNow !== 0;
+    var dt = continuous ? now - lastNow : 16.7;
+    lastNow = now;
+
+    /* Time-based easing, so smoothness is the same on 60 Hz and 120 Hz screens */
+    var k = 1 - Math.pow(1 - SCROLL_EASE, Math.min(dt, 100) / 16.67);
+    var diff = targetScroll - scrollPos;
+    scrollPos = Math.abs(diff) < 0.5 ? targetScroll : scrollPos + diff * k;
+
+    if (webglOn) {
+      var stage = clampStage(scrollPos);
+      updateCamera(stage);
+      updateScene(stage);
+      renderer.render(scene, camera);
+
+      if (continuous && dt < 100 && now > warmupUntil) {
+        sampleFrame(dt);
+      }
+    }
+
+    updateUI(scrollPos);
+
+    if (scrollPos !== targetScroll) {
+      requestFrame();
+    } else {
+      lastNow = 0;
+    }
+  }
+
+  /* =========================================================
+     EVENTS
+  ========================================================= */
+
+  window.addEventListener("scroll", function () {
+    targetScroll = window.pageYOffset || document.documentElement.scrollTop || 0;
+    requestFrame();
+  }, { passive: true });
+
+  window.addEventListener("resize", function () {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(onResize, 150);
+  });
+
+  function onResize() {
+    measure();
+    if (webglOn) {
+      resizeCamera();
+      applyPixelRatio();
+    }
+    requestFrame();
+  }
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") closeActive();
+  });
+
+  document.addEventListener("click", function (e) {
+    var t = e.target;
+    var el;
+
+    /* Click on the dark backdrop closes the modal */
+    if (t.classList && t.classList.contains("modal")) {
+      closeActive();
+      return;
+    }
+
+    if ((el = t.closest("[data-goto]"))) {
+      e.preventDefault();
+      goTo(parseInt(el.getAttribute("data-goto"), 10));
+      return;
+    }
+
+    if (t.closest("[data-open-resume]")) {
+      e.preventDefault();
+      openModal(resumeEl);
+      return;
+    }
+
+    if (t.closest("[data-close-modal], [data-close-resume]")) {
+      e.preventDefault();
+      closeActive();
+      return;
+    }
+
+    if ((el = t.closest("[data-info-title]"))) {
+      showInfo(el.getAttribute("data-info-title"), el.getAttribute("data-info-text"));
+      return;
+    }
+
+    if ((el = t.closest("[data-contact-url]"))) {
+      showContact(
+        el.getAttribute("data-contact-title"),
+        el.getAttribute("data-contact-text"),
+        el.getAttribute("data-contact-url")
+      );
+    }
+  });
+
+  /* =========================================================
+     TRANSITIONS, NAVIGATION, MODALS
+  ========================================================= */
+
+  function cinematicAction(fn) {
+    veilEl.classList.add("on");
+    setTimeout(function () {
+      fn();
+      setTimeout(function () {
+        veilEl.classList.remove("on");
+      }, 520);
+    }, 420);
+  }
+
+  function goTo(index) {
+    var i = Math.max(0, Math.min(CHAPTER_COUNT - 1, index || 0));
+    var top = i * chapterH;
+
+    cinematicAction(function () {
+      if ("scrollBehavior" in document.documentElement.style) {
+        window.scrollTo({ top: top, behavior: REDUCED_MOTION ? "auto" : "smooth" });
+      } else {
+        window.scrollTo(0, top);
+      }
+    });
+  }
+
+  function openModal(el) {
+    cinematicAction(function () {
+      el.classList.add("show");
+      el.setAttribute("aria-hidden", "false");
+      activeModal = el;
+      modalOpen = true;
+    });
+  }
+
+  function closeActive() {
+    if (!activeModal) return;
+    activeModal.classList.remove("show");
+    activeModal.setAttribute("aria-hidden", "true");
+    activeModal = null;
+    modalOpen = false;
+    requestFrame();
+  }
+
+  function showInfo(title, text) {
+    modalEyebrow.textContent = "Portfolio detail";
+    modalTitle.textContent = title;
+    modalText.textContent = text;
+    modalLink.hidden = true;
+    openModal(modalEl);
+  }
+
+  /* The link is a real anchor, so tapping it opens the app or site without a popup block */
+  function showContact(title, text, url) {
+    modalEyebrow.textContent = "Contact";
+    modalTitle.textContent = title;
+    modalText.textContent = text;
+
+    modalLink.setAttribute("href", url);
+    if (/^https?:/.test(url)) {
+      modalLink.setAttribute("target", "_blank");
+      modalLink.setAttribute("rel", "noopener noreferrer");
+    } else {
+      modalLink.removeAttribute("target");
+      modalLink.removeAttribute("rel");
+    }
+
+    modalLink.innerHTML = "Open " + title + ' <i class="fa-solid fa-arrow-up-right-from-square"></i>';
+    modalLink.hidden = false;
+    openModal(modalEl);
+  }
+
+  /* =========================================================
+     LOADER
+  ========================================================= */
+
+  function hideLoader() {
+    if (loaderGone) return;
+    loaderGone = true;
+    loadingEl.style.opacity = "0";
+    setTimeout(function () {
+      if (loadingEl.parentNode) loadingEl.parentNode.removeChild(loadingEl);
+    }, 900);
+  }
+
+  function tryHideLoader() {
+    if (minLoaderDone && bootDone) hideLoader();
+  }
+
+  function loadScript(src, timeoutMs) {
+    return new Promise(function (resolve, reject) {
+      var timer = setTimeout(function () {
+        reject(new Error("timeout"));
+      }, timeoutMs);
+
+      var s = document.createElement("script");
+      s.src = src;
+      s.onload = function () {
+        clearTimeout(timer);
+        resolve();
+      };
+      s.onerror = function () {
+        clearTimeout(timer);
+        reject(new Error("load failed"));
+      };
+      document.head.appendChild(s);
+    });
+  }
+
+  function finishBoot() {
+    measure();
+    scrollPos = targetScroll;
+    requestFrame();
+    bootDone = true;
+    tryHideLoader();
+  }
+
+  function boot() {
+    loadbarEl.style.width = "100%";
+    setTimeout(function () {
+      minLoaderDone = true;
+      tryHideLoader();
+    }, 1100);
+    setTimeout(hideLoader, 5000);
+
+    var tier = pickTier();
+
+    if (tier === "lite") {
+      enterLiteMode();
+      finishBoot();
+      return;
+    }
+
+    loadScript(THREE_SRC, 7000)
+      .then(function () {
+        startWebGL(tier);
+      })
+      .catch(function () {
+        enterLiteMode();
+      })
+      .then(finishBoot);
+  }
+
+  /* =========================================================
+     START
+  ========================================================= */
+
+  measure();
+  targetScroll = window.pageYOffset || document.documentElement.scrollTop || 0;
+  scrollPos = targetScroll;
+  boot();
+
+})();
+</script>
+
+</body>
+</html>
